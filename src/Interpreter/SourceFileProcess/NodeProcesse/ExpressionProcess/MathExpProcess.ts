@@ -9,7 +9,7 @@ import { CallExpProcess } from "./CallExpProcess";
 
 let _processFunc:Record<number,ExpProcess|null> = {
     [SyntaxKind.NumericLiteral]:NumMathExpProcess            ,//数字
-    [SyntaxKind.StringKeyword]:NumMathExpProcess             ,//字符串
+    [SyntaxKind.StringLiteral]:NumMathExpProcess             ,//字符串
     [SyntaxKind.CallExpression]:CallMathExpProcess           ,//函数
     [SyntaxKind.Identifier]:IdMathExpProcess                 ,//变量
     [SyntaxKind.BinaryExpression]:BinaryMathExpProcess       ,//表达式

@@ -15,6 +15,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./ExpressionProcess"), exports);
-__exportStar(require("./NumberExpProcess"), exports);
+__exportStar(require("./MathExpProcess"), exports);
 __exportStar(require("./CallExpProcess"), exports);
 //export {default} from './ExpressionProcess';

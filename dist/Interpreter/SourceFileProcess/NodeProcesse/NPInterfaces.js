@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VoidProcess = exports.getFuncReVal = exports.ProcessReturn = void 0;
+exports.VoidProcess = exports.ProcessReturn = void 0;
 class ProcessReturn {
     _preFuncs;
     _tokens;
@@ -19,7 +19,8 @@ class ProcessReturn {
         this.addPreFuncList(obj.getPreFuncs());
     }
     addToken(obj) {
-        this._tokens.push(obj);
+        if (obj != null)
+            this._tokens.push(obj);
     }
     addTokenList(objs) {
         for (let obj of objs)
@@ -35,17 +36,10 @@ class ProcessReturn {
         return this._preFuncs;
     }
     isVaild() {
-        return this._tokens.length > 0;
-    }
-    getFstToken() {
-        return this._tokens[0];
+        return this._tokens.length > 0 || this._preFuncs.length > 0;
     }
 }
 exports.ProcessReturn = ProcessReturn;
-function getFuncReVal(functionId) {
-    return functionId + "_return";
-}
-exports.getFuncReVal = getFuncReVal;
 function VoidProcess() {
     return new ProcessReturn();
 }

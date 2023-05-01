@@ -4,11 +4,14 @@ exports.CallExpProcess = void 0;
 const ts_morph_1 = require("ts-morph");
 const EPInterface_1 = require("./EPInterface");
 const Functions_1 = require("../../Functions");
-const NPInterfaces_1 = require("../NPInterfaces");
+const ExpressionProcess_1 = require("./ExpressionProcess");
 //特殊函数
 let _processFunc = {
     "EToken": ETokenProcess,
-    "u_val": DefaultProcess, //内置函数 转为字符串
+    "u_val": DefaultProcess,
+    "and": AndProcess,
+    "or": OrProcess,
+    "not": NotProcess,
 };
 //调用函数
 function CallExpProcess(node, sfd) {
@@ -18,8 +21,8 @@ function CallExpProcess(node, sfd) {
     let spFunc = _processFunc[id];
     if (spFunc != null)
         return spFunc(node, sfd);
-    out.addPreFunc({ "run_eocs": id });
-    out.setToken((0, NPInterfaces_1.getFuncReVal)(id));
+    out.addPreFunc({ "run_eocs": sfd.getBlockId(id) });
+    out.setToken(sfd.getReturnId(sfd.getBlockId(id)));
     return out;
 }
 exports.CallExpProcess = CallExpProcess;
@@ -40,5 +43,40 @@ function DefaultProcess(node, sfd) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpProcessReturn();
     out.setToken(node.getText());
+    return out;
+}
+function AndProcess(node, sfd) {
+    (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
+    let out = new EPInterface_1.ExpProcessReturn();
+    let arr = [];
+    let args = node.getArguments();
+    for (let arg of args) {
+        let result = (0, ExpressionProcess_1.AutoExpProcess)(arg, sfd);
+        out.mergePreFuncList(result);
+        arr.push(result.getToken());
+    }
+    out.setToken({ and: arr });
+    return out;
+}
+function OrProcess(node, sfd) {
+    (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
+    let out = new EPInterface_1.ExpProcessReturn();
+    let arr = [];
+    let args = node.getArguments();
+    for (let arg of args) {
+        let result = (0, ExpressionProcess_1.AutoExpProcess)(arg, sfd);
+        out.mergePreFuncList(result);
+        arr.push(result.getToken());
+    }
+    out.setToken({ or: arr });
+    return out;
+}
+function NotProcess(node, sfd) {
+    (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
+    let out = new EPInterface_1.ExpProcessReturn();
+    let arg = node.getArguments()[0];
+    let result = (0, ExpressionProcess_1.AutoExpProcess)(arg, sfd);
+    out.mergePreFuncList(result);
+    out.setToken({ not: result.getToken() });
     return out;
 }

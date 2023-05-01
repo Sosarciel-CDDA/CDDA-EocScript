@@ -1,76 +1,56 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ExpressionProcess = exports.ExpStatementProcess = void 0;
+exports.AutoExpProcess = exports.ExpressionProcess = void 0;
 const ts_morph_1 = require("ts-morph");
 const NPInterfaces_1 = require("../NPInterfaces");
-const EPInterface_1 = require("./EPInterface");
 const Functions_1 = require("../../Functions");
-const NumberExpProcess_1 = require("./NumberExpProcess");
 const CallExpProcess_1 = require("./CallExpProcess");
-let _processFunc = {
-    [ts_morph_1.SyntaxKind.VariableDeclaration]: VarDefineExpProcess,
-    [ts_morph_1.SyntaxKind.BinaryExpression]: BinaryDefineExpProcess,
-    [ts_morph_1.SyntaxKind.CallExpression]: CallDefineExpProcess,
-    [ts_morph_1.SyntaxKind.SemicolonToken]: EPInterface_1.VoidExpProcess, //分号
-};
-function ExpStatementProcess(node, sfd) {
+const CalcExpProcess_1 = require("./CalcExpProcess");
+const EPInterface_1 = require("./EPInterface");
+const ValExpProcess_1 = require("./ValExpProcess");
+//表达式申明处理
+function ExpressionProcess(node, sfd) {
     //常规表达式列表
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.ExpressionStatement);
+    //if(node.isKind(SyntaxKind.ExpressionStatement) || node.isKind())
     let out = new NPInterfaces_1.ProcessReturn();
     let subExp = node.getExpression();
-    let result = ExpressionProcess(subExp, sfd);
+    let result = AutoExpProcess(subExp, sfd);
     out.addPreFuncList(result.getPreFuncs());
     out.addToken(result.getToken());
     return out;
-}
-exports.ExpStatementProcess = ExpStatementProcess;
-//所有 (lval opera rval) 表达式
-//表达式处理路由
-function ExpressionProcess(node, sfd) {
-    let out = new EPInterface_1.ExpProcessReturn();
-    let func = _processFunc[node.getKind()];
-    if (func == null)
-        throw (0, Functions_1.throwLog)(node, "错误的 ExpressionProcess 表达式");
-    let result = func(node, sfd);
-    out.addPreFuncList(result.getPreFuncs());
-    out.setToken(result.getToken());
-    return out;
+    //throw throwLog(node,"未知的申明表达式类型");
 }
 exports.ExpressionProcess = ExpressionProcess;
-//变量定义
-function BinaryDefineExpProcess(node, sfd) {
-    (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.BinaryExpression);
-    let out = new EPInterface_1.ExpProcessReturn();
-    let lft = (0, NumberExpProcess_1.MathExpProcess)(node.getLeft(), sfd);
-    let rit = (0, NumberExpProcess_1.MathExpProcess)(node.getRight(), sfd);
-    let opera = node.getOperatorToken().getText();
-    out.addPreFuncList(lft.getPreFuncs());
-    out.addPreFuncList(rit.getPreFuncs());
-    let obj = {};
-    obj = { "math": [lft.getToken(), opera, rit.getToken()] };
-    out.setToken(obj);
-    return out;
+//表达式处理路由
+function AutoExpProcess(node, sfd) {
+    //直接调用函数
+    if (node.isKind(ts_morph_1.SyntaxKind.CallExpression))
+        return CallStateExpProcess(node, sfd);
+    //表达式
+    if (node.isKind(ts_morph_1.SyntaxKind.BinaryExpression)) {
+        let opera = node.getOperatorToken().getText();
+        if (['==', '>=', '<=', '>', '<', '=', '+=', '-=', '*=', '/=', '%='].includes(opera))
+            return (0, CalcExpProcess_1.CalcExpProcess)(node, sfd);
+        return (0, ValExpProcess_1.ValExpProcess)(node, sfd);
+    }
+    //单字
+    if (node.isKind(ts_morph_1.SyntaxKind.Identifier) ||
+        node.isKind(ts_morph_1.SyntaxKind.StringLiteral) ||
+        node.isKind(ts_morph_1.SyntaxKind.NumericLiteral))
+        return (0, ValExpProcess_1.ValExpProcess)(node, sfd);
+    return (0, CalcExpProcess_1.CalcExpProcess)(node, sfd);
+    //throw throwLog(node,"未知的申明表达式类型");
 }
-//变量定义
-function VarDefineExpProcess(node, sfd) {
-    (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.VariableDeclaration);
-    let out = new EPInterface_1.ExpProcessReturn();
-    let id = node.getName();
-    let rit = (0, NumberExpProcess_1.MathExpProcess)(node.getInitializerOrThrow(), sfd);
-    out.addPreFuncList(rit.getPreFuncs());
-    let obj = {};
-    obj = { "math": [id, "=", rit.getToken()] };
-    out.setToken(obj);
-    return out;
-}
-//单独的函数调用
-function CallDefineExpProcess(node, sfd) {
+exports.AutoExpProcess = AutoExpProcess;
+//直接调用函数
+function CallStateExpProcess(node, sfd) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpProcessReturn();
     let result = (0, CallExpProcess_1.CallExpProcess)(node, sfd);
     //判断是否有函数返回 用于判断EToken
     if (result.getPreFuncs().length > 0)
-        out.mergePreFuncList(result);
+        out.addPreFuncList(result.getPreFuncs());
     else //EToken无函数返回
         out.setToken(result.getToken());
     return out;

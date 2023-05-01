@@ -1,15 +1,18 @@
-import { Node,SyntaxKind } from "ts-morph";
-import { JArray, JToken } from "Utils";
+import { Node } from "ts-morph";
 import { SourceFileData } from "../../Interfaces";
-import { ProcessReturn, getFuncReVal } from "../NPInterfaces";
-import { throwLog } from "../../Functions";
+import { ExpProcessReturn } from "./EPInterface";
+import { MathExpProcess } from "./MathExpProcess";
 
 
 
-//单字处理
-export function ValExpProcess(node: Node,sfd:SourceFileData):ProcessReturn{
-    let outObj = new ProcessReturn();
-    throw throwLog(node,"未知的变量表达式");
-    //return outObj;
+//非赋值运算处理
+export function ValExpProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
+    let out = new ExpProcessReturn();
+
+    let exp = MathExpProcess(node,sfd);
+    out.addPreFuncList(exp.getPreFuncs());
+
+    out.setToken({"math":[exp.getToken()]});
+
+    return out;
 }
-

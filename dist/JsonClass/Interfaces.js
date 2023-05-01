@@ -11,6 +11,10 @@ function convertJsonModuleObjToJObject(obj) {
         const value = obj[key];
         if (value === null)
             continue;
+        if (Array.isArray(value) && value.length <= 0)
+            continue;
+        if (value === null || (typeof value === 'object' && Object.keys(value).length === 0))
+            continue;
         if (isJsonModule(value))
             result[key] = value.build();
         else

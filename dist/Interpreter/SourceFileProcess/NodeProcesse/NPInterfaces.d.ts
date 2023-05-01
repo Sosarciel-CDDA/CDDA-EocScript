@@ -15,7 +15,5 @@ export declare class ProcessReturn {
     getTokens(): JArray;
     getPreFuncs(): JArray;
     isVaild(): boolean;
-    getFstToken(): JToken;
 }
-export declare function getFuncReVal(functionId: string): string;
 export declare function VoidProcess(): ProcessReturn;

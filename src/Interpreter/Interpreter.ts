@@ -13,7 +13,7 @@ function clearFormat(obj:string){
 }
 function customStringify(obj:JToken) {
     let formattedData = JSON.stringify(obj, (key, value) => {
-        if (key === 'effect'){
+        if (key === 'effect' || key === 'false_effect'){
             return value.map((item:any) => {
                 //if(item.switch!=null)
                 //    return customStringify(item);

@@ -1,6 +1,6 @@
 import { JArray, JToken, deepClone } from "Utils";
 import { SourceFileData } from "../Interfaces";
-import { Node,SyntaxKind } from "ts-morph";
+import { Node } from "ts-morph";
 export type NodeProcess = (node:Node,sfd:SourceFileData,blockId?:string)=>ProcessReturn;
 
 export class ProcessReturn{
@@ -21,7 +21,8 @@ export class ProcessReturn{
         this.addPreFuncList(obj.getPreFuncs());
     }
     addToken(obj:JToken){
-        this._tokens.push(obj);
+        if(obj!=null)
+            this._tokens.push(obj);
     }
     addTokenList(objs:JArray){
         for(let obj of objs)
@@ -37,15 +38,10 @@ export class ProcessReturn{
         return this._preFuncs;
     }
     isVaild(){
-        return this._tokens.length>0;
-    }
-    getFstToken(){
-        return this._tokens[0];
+        return this._tokens.length>0 || this._preFuncs.length>0;
     }
 }
-export function getFuncReVal(functionId:string){
-    return functionId+"_return";
-}
+
 export function VoidProcess(){
     return new ProcessReturn();
 }

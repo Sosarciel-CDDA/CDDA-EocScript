@@ -1,12 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValExpProcess = void 0;
-const NPInterfaces_1 = require("../NPInterfaces");
-const Functions_1 = require("../../Functions");
-//单字处理
+const EPInterface_1 = require("./EPInterface");
+const MathExpProcess_1 = require("./MathExpProcess");
+//非赋值运算处理
 function ValExpProcess(node, sfd) {
-    let outObj = new NPInterfaces_1.ProcessReturn();
-    throw (0, Functions_1.throwLog)(node, "未知的变量表达式");
-    //return outObj;
+    let out = new EPInterface_1.ExpProcessReturn();
+    let exp = (0, MathExpProcess_1.MathExpProcess)(node, sfd);
+    out.addPreFuncList(exp.getPreFuncs());
+    out.setToken({ "math": [exp.getToken()] });
+    return out;
 }
 exports.ValExpProcess = ValExpProcess;
