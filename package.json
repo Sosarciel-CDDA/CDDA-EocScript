@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "ts-morph": "^18.0.0",
+    "tsconfig-paths": "^4.2.0"
+  }
+}

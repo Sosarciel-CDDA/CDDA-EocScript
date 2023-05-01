@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+	"allowJs": true,
+    "strict": true,
+    "target": "ES2022",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "declaration": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "Utils":       ["./src/Utils"]      ,
+      "JsonClass":   ["./src/JsonClass"]  ,
+      "Interpreter": ["./src/Interpreter"]
+    }
+  },
+  "include": ["./src/**/*.ts", "./src/**/*.js"],
+  "exclude": ["./node_modules/**/*"]
+}
