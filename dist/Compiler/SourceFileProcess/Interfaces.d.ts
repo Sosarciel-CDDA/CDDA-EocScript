@@ -1,9 +1,12 @@
 import { JArray, JObject, JToken } from "Utils";
+import { GlobalFunction } from "./CodeBlock/GlobalFunction";
+import { Node } from "ts-morph";
 export declare class SourceFileData {
     _id: string;
     _rootArray: JArray;
     _count: number;
     _serializedText: string | null;
+    _globalFuncTable: Record<string, GlobalFunction | null>;
     constructor(id: string, rootArray?: JArray);
     getCount(): number;
     getId(): string;
@@ -11,14 +14,8 @@ export declare class SourceFileData {
      * @returns 代码块ID
      */
     genRID(): number;
-    /**获取全局函数ID
-     * @param rawFuncName
-     */
-    getGlobalFuncID(rawFuncName: string): string;
-    /**获取全局函数返回值ID
-     * @param rawFuncName
-     */
-    getGlobalFuncReturnID(rawFuncName: string): string;
+    addGlobalFunction(node: Node): GlobalFunction;
+    getGlobalFunction(rawName: string): GlobalFunction | null;
     addEoc(eocobj: JToken): void;
     getRootArray(): JArray;
     getRootEoc(): JObject;

@@ -2,7 +2,7 @@ import { Node, SyntaxKind } from "ts-morph";
 import { checkKind } from '../Functions';
 import { CBPReturn } from "./NPInterfaces";
 import { BlockType, CodeBlock } from "./CodeBlock";
-import { CodeExpression, ExpressionProcess } from "./Expression";
+import { CodeExpression } from "./Expression";
 
 export function IfProcess(this:CodeBlock, node: Node):CBPReturn{
     checkKind(node,SyntaxKind.IfStatement);

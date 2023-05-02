@@ -12,21 +12,7 @@ import { JToken } from "@/src/Utils";
 
 
 
-//表达式申明处理
-export function ExpressionProcess(this:CodeBlock, node: Node):CBPReturn{
-    //常规表达式列表
-    checkKind(node, SyntaxKind.ExpressionStatement);
-    //if(node.isKind(SyntaxKind.ExpressionStatement) || node.isKind())
-    let out = new CBPReturn();
-    let subExp = node.getExpression();
 
-    let exp = new CodeExpression(subExp,this);
-    let result = exp.build();
-    out.addPreFuncList(result.getPreFuncs());
-    out.addToken(result.getToken());
-    return out;
-    //throw throwLog(node,"未知的申明表达式类型");
-}
 
 
 //直接调用函数
@@ -53,8 +39,8 @@ function ReturnStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{
 
     out.addPreFuncList(rit.getPreFuncs());
 
-    let obj:JToken = { "math": [ this.getCodeBlock().getReturnId(), "=", rit.getToken() ]};
-    out.setToken(obj);
+    //let obj:JToken = { "math": [ this.getCodeBlock().getReturnId(), "=", rit.getToken() ]};
+    out.setToken(rit.getToken());
     //return [{ "math": [ id, mid, lst ]}];
     return out;
 }

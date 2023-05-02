@@ -3,14 +3,14 @@ import { SourceFileData } from "../../Interfaces";
 import { ExpProcess, ExpPReturn, VoidExpProcess } from "./EPInterface";
 import { checkKind, throwLog } from "../../Functions";
 import { JToken } from "@/src/Utils";
-import { CodeExpression } from "./ExpressionProcess";
+import { CodeExpression } from "./Expression";
 import { MathExpProcess } from "./MathExpProcess";
 
 
 let _processFunc:Record<number,ExpProcess|null> = {
-    [SyntaxKind.VariableDeclaration]:VarCalcExpProcess      ,//变量申明表达式
-    [SyntaxKind.BinaryExpression]:BinaryCalcExpProcess      ,//表达式
-    [SyntaxKind.SemicolonToken]:VoidExpProcess              ,//分号
+    [SyntaxKind.VariableDeclaration ]:VarCalcExpProcess      ,//变量申明表达式
+    [SyntaxKind.BinaryExpression    ]:BinaryCalcExpProcess   ,//表达式
+    [SyntaxKind.SemicolonToken      ]:VoidExpProcess         ,//分号
 }
 
 //所有 (lval opera rval) 赋值/比较/定义 表达式

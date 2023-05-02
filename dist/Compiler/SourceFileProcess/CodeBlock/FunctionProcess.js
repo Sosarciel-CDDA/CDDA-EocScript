@@ -8,7 +8,8 @@ const NPInterfaces_1 = require("./NPInterfaces");
 //处理全局函数定义
 function FunctionProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.FunctionDeclaration);
-    let funcid = this.getSfd().getGlobalFuncID(node.getNameOrThrow());
+    let gfunc = this.getSfd().addGlobalFunction(node);
+    let funcid = gfunc.getId();
     let codeBody = node.getBodyOrThrow();
     let cb = new CodeBlock_1.CodeBlock(funcid, codeBody, this.getSfd());
     //let cb = new CodeBlock(codeBody,this._sfd,this._cbd.genSubBlock());

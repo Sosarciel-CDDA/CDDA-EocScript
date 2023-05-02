@@ -1,10 +1,15 @@
 import { JArray, JObject, JToken, deepClone } from "Utils";
+import { GlobalFunction } from "./CodeBlock/GlobalFunction";
+import { Node } from "ts-morph";
 
 export class SourceFileData{
     _id:string;
     _rootArray:JArray;
     _count:number=0;
     _serializedText:string|null=null;
+
+    _globalFuncTable:Record<string,GlobalFunction|null>={}
+
     constructor(id:string,rootArray?:JArray){
         this._id=id;
         this._rootArray=rootArray||[];
@@ -22,17 +27,14 @@ export class SourceFileData{
     genRID(){
         return this._count++;
     }
-    /**获取全局函数ID
-     * @param rawFuncName 
-     */
-    getGlobalFuncID(rawFuncName:string){
-        return this.getId()+"_"+rawFuncName;
+
+    addGlobalFunction(node:Node){
+        let gfunc = new GlobalFunction(node,this);
+        this._globalFuncTable[gfunc.getRawName()] = gfunc;
+        return gfunc;
     }
-    /**获取全局函数返回值ID
-     * @param rawFuncName 
-     */
-    getGlobalFuncReturnID(rawFuncName:string){
-        return this.getId()+"_"+rawFuncName+"_return";
+    getGlobalFunction(rawName:string){
+        return this._globalFuncTable[rawName];
     }
 
     addEoc(eocobj:JToken){

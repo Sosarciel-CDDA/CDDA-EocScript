@@ -2,11 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SourceFileData = void 0;
 const Utils_1 = require("Utils");
+const GlobalFunction_1 = require("./CodeBlock/GlobalFunction");
 class SourceFileData {
     _id;
     _rootArray;
     _count = 0;
     _serializedText = null;
+    _globalFuncTable = {};
     constructor(id, rootArray) {
         this._id = id;
         this._rootArray = rootArray || [];
@@ -23,17 +25,13 @@ class SourceFileData {
     genRID() {
         return this._count++;
     }
-    /**获取全局函数ID
-     * @param rawFuncName
-     */
-    getGlobalFuncID(rawFuncName) {
-        return this.getId() + "_" + rawFuncName;
+    addGlobalFunction(node) {
+        let gfunc = new GlobalFunction_1.GlobalFunction(node, this);
+        this._globalFuncTable[gfunc.getRawName()] = gfunc;
+        return gfunc;
     }
-    /**获取全局函数返回值ID
-     * @param rawFuncName
-     */
-    getGlobalFuncReturnID(rawFuncName) {
-        return this.getId() + "_" + rawFuncName + "_return";
+    getGlobalFunction(rawName) {
+        return this._globalFuncTable[rawName];
     }
     addEoc(eocobj) {
         this._rootArray.push(eocobj);

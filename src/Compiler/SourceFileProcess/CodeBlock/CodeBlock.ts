@@ -5,10 +5,11 @@ import { VariableProcess } from "./VariableProcess";
 import { checkKind, throwLog } from '../Functions';
 import { Eoc } from "JsonClass";
 import { FunctionProcess } from "./FunctionProcess";
-import { CodeExpression, ExpressionProcess } from "./Expression";
+import { CodeExpression } from "./Expression";
 import { NodeProcess, CBPReturn } from "./NPInterfaces";
 import { IfProcess } from "./IfProcess";
 import { SwitchProcess } from "./SwitchProcess";
+import { ExpressionProcess } from "./ExpressionProcess";
 
 
 export enum BlockType{

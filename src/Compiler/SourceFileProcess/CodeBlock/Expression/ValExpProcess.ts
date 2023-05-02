@@ -2,7 +2,7 @@ import { Node } from "ts-morph";
 import { SourceFileData } from "../../Interfaces";
 import { ExpPReturn } from "./EPInterface";
 import { MathExpProcess } from "./MathExpProcess";
-import { CodeExpression } from "./ExpressionProcess";
+import { CodeExpression } from "./Expression";
 
 
 

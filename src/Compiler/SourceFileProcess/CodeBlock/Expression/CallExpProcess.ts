@@ -2,8 +2,8 @@ import { Expression, Node, SyntaxKind } from "ts-morph";
 import { SourceFileData } from "../../Interfaces";
 import { ExpProcess, ExpPReturn } from "./EPInterface";
 import { checkKind, throwLog } from "../../Functions";
-import { JArray, JToken } from "@/src/Utils";
-import { CodeExpression } from "./ExpressionProcess";
+import { JArray, JToken } from "Utils";
+import { CodeExpression } from "./Expression";
 
 //特殊函数
 let _processFunc:Record<string,ExpProcess|null> = {
@@ -24,8 +24,12 @@ export function CallExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     if(spFunc!=null)
         return spFunc.bind(this)(node);
 
-    out.addPreFunc({ "run_eocs": this.getSfd().getGlobalFuncID(id) });
-    out.setToken(this.getSfd().getGlobalFuncReturnID(id));
+    let gfunc = this.getSfd().getGlobalFunction(id);
+    if(gfunc==null)
+        throw throwLog(node,"CallExpProcess 未找到 gfunc id:"+id);
+
+    out.addPreFunc({ "run_eocs": gfunc.getId() });
+    out.setToken(gfunc.getReturnID());
 
     return out;
 }

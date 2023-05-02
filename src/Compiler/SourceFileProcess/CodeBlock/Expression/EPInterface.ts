@@ -1,7 +1,7 @@
 import { JArray, JToken } from "@/src/Utils";
 import { SourceFileData } from "../../Interfaces";
 import { Node } from "ts-morph";
-import { CodeExpression } from "./ExpressionProcess";
+import { CodeExpression } from "./Expression";
 
 export type ExpProcess = (this:CodeExpression,node:Node)=>ExpPReturn;
 

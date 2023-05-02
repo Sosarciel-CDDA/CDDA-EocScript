@@ -10,7 +10,8 @@ import { CBPReturn } from "./NPInterfaces";
 export function FunctionProcess(this:CodeBlock,node: Node):CBPReturn{
     checkKind(node,SyntaxKind.FunctionDeclaration);
 
-    let funcid = this.getSfd().getGlobalFuncID(node.getNameOrThrow());
+    let gfunc = this.getSfd().addGlobalFunction(node);
+    let funcid = gfunc.getId();
     let codeBody = node.getBodyOrThrow();
     let cb = new CodeBlock(funcid,codeBody,this.getSfd());
     //let cb = new CodeBlock(codeBody,this._sfd,this._cbd.genSubBlock());

@@ -3,18 +3,18 @@ import { SourceFileData } from "../../Interfaces";
 import { checkKind, throwLog } from "../../Functions";
 import { ExpProcess, ExpPReturn } from "./EPInterface";
 import { CallExpProcess } from "./CallExpProcess";
-import { CodeExpression } from "./ExpressionProcess";
+import { CodeExpression } from "./Expression";
 
 
 
 
 let _processFunc:Record<number,ExpProcess|null> = {
-    [SyntaxKind.NumericLiteral]:NumMathExpProcess            ,//数字
-    [SyntaxKind.StringLiteral]:NumMathExpProcess             ,//字符串
-    [SyntaxKind.CallExpression]:CallMathExpProcess           ,//函数
-    [SyntaxKind.Identifier]:IdMathExpProcess                 ,//变量
-    [SyntaxKind.BinaryExpression]:BinaryMathExpProcess       ,//表达式
-    [SyntaxKind.ParenthesizedExpression]:ParentMathExpProcess,//括号
+    [SyntaxKind.NumericLiteral          ]:NumMathExpProcess         ,//数字
+    [SyntaxKind.StringLiteral           ]:NumMathExpProcess         ,//字符串
+    [SyntaxKind.CallExpression          ]:CallMathExpProcess        ,//函数
+    [SyntaxKind.Identifier              ]:IdMathExpProcess          ,//变量
+    [SyntaxKind.BinaryExpression        ]:BinaryMathExpProcess      ,//表达式
+    [SyntaxKind.ParenthesizedExpression ]:ParentMathExpProcess      ,//括号
 }
 
 //SyntaxKind:ParenthesizedExpression

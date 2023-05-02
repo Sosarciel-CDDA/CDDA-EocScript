@@ -10,6 +10,7 @@ const Expression_1 = require("./Expression");
 const NPInterfaces_1 = require("./NPInterfaces");
 const IfProcess_1 = require("./IfProcess");
 const SwitchProcess_1 = require("./SwitchProcess");
+const ExpressionProcess_1 = require("./ExpressionProcess");
 var BlockType;
 (function (BlockType) {
     BlockType["IF"] = "if";
@@ -20,7 +21,7 @@ var BlockType;
 let _processFunc = {
     [ts_morph_1.SyntaxKind.VariableStatement]: VariableProcess_1.VariableProcess,
     [ts_morph_1.SyntaxKind.FunctionDeclaration]: FunctionProcess_1.FunctionProcess,
-    [ts_morph_1.SyntaxKind.ExpressionStatement]: Expression_1.ExpressionProcess,
+    [ts_morph_1.SyntaxKind.ExpressionStatement]: ExpressionProcess_1.ExpressionProcess,
     [ts_morph_1.SyntaxKind.ReturnStatement]: ReturnProcess,
     [ts_morph_1.SyntaxKind.IfStatement]: IfProcess_1.IfProcess,
     [ts_morph_1.SyntaxKind.SwitchStatement]: SwitchProcess_1.SwitchProcess,
@@ -47,7 +48,7 @@ class CodeBlock {
     _processTable = {
         [ts_morph_1.SyntaxKind.VariableStatement]: VariableProcess_1.VariableProcess,
         [ts_morph_1.SyntaxKind.FunctionDeclaration]: FunctionProcess_1.FunctionProcess,
-        [ts_morph_1.SyntaxKind.ExpressionStatement]: Expression_1.ExpressionProcess,
+        [ts_morph_1.SyntaxKind.ExpressionStatement]: ExpressionProcess_1.ExpressionProcess,
         [ts_morph_1.SyntaxKind.ReturnStatement]: ReturnProcess,
         [ts_morph_1.SyntaxKind.IfStatement]: IfProcess_1.IfProcess,
         [ts_morph_1.SyntaxKind.SwitchStatement]: SwitchProcess_1.SwitchProcess,

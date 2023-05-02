@@ -20,8 +20,11 @@ function CallExpProcess(node) {
     let spFunc = _processFunc[id];
     if (spFunc != null)
         return spFunc.bind(this)(node);
-    out.addPreFunc({ "run_eocs": this.getSfd().getGlobalFuncID(id) });
-    out.setToken(this.getSfd().getGlobalFuncReturnID(id));
+    let gfunc = this.getSfd().getGlobalFunction(id);
+    if (gfunc == null)
+        throw (0, Functions_1.throwLog)(node, "CallExpProcess 未找到 gfunc id:" + id);
+    out.addPreFunc({ "run_eocs": gfunc.getId() });
+    out.setToken(gfunc.getReturnID());
     return out;
 }
 exports.CallExpProcess = CallExpProcess;
