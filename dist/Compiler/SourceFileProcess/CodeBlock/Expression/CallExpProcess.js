@@ -4,6 +4,7 @@ exports.CallExpProcess = void 0;
 const ts_morph_1 = require("ts-morph");
 const EPInterface_1 = require("./EPInterface");
 const Functions_1 = require("../../Functions");
+const CalcExpProcess_1 = require("./CalcExpProcess");
 //特殊函数
 let _processFunc = {
     "eobj": EObjProcess,
@@ -11,11 +12,39 @@ let _processFunc = {
     "and": AndProcess,
     "or": OrProcess,
     "not": NotProcess,
+    "required_event": FieldAddProcess,
+    "recurrence": FieldAddProcess,
+    "deactivate_condition": CondFieldAddProcess,
+    "global": FieldAddProcess,
+    "run_for_npcs": FieldAddProcess,
+    "EOC_TYPE": FieldAddProcess,
 };
 //处理并替换传入参数
 function argProcess(ce, nodes) {
     let args = nodes.map(val => ce.getLocalVal(val.getText()));
     return args;
+}
+//字段添加
+function FieldAddProcess(node) {
+    (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
+    let cb = this.getCodeBlock();
+    let id = node.getExpression().getText();
+    let text = node.getArguments()[0].getText();
+    //自动给OBJ括号
+    if (text[0] == "{" && text[text.length - 1] == "}")
+        text = "(" + text + ")";
+    let tokenObj = eval(text);
+    cb.addEocField(id, tokenObj);
+    return new EPInterface_1.ExpPReturn();
+}
+//条件字段添加
+function CondFieldAddProcess(node) {
+    (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
+    let cb = this.getCodeBlock();
+    let id = node.getExpression().getText();
+    let cond = node.getArguments()[0];
+    cb.addEocField(id, CalcExpProcess_1.CalcExpProcess.bind(this)(cond).getToken());
+    return new EPInterface_1.ExpPReturn();
 }
 //调用函数
 function CallExpProcess(node) {

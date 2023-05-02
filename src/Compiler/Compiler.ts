@@ -20,7 +20,8 @@ function customStringify(obj:JToken) {
                 return JSON.stringify(item)
             });
         }
-        if (key === 'condition')
+        if (key === 'condition'|| key === 'deactivate_condition' ||
+            key === 'recurrence')
             return JSON.stringify(value);
         return value;
     }, 2);

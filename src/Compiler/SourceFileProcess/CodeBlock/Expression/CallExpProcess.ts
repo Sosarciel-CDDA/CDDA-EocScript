@@ -4,6 +4,7 @@ import { ExpProcess, ExpPReturn } from "./EPInterface";
 import { checkKind, throwLog } from "../../Functions";
 import { JArray, JToken } from "Utils";
 import { CodeExpression } from "./Expression";
+import { CalcExpProcess } from "./CalcExpProcess";
 
 //特殊函数
 let _processFunc:Record<string,ExpProcess|null> = {
@@ -12,12 +13,43 @@ let _processFunc:Record<string,ExpProcess|null> = {
     "and"   :AndProcess         ,
     "or"    :OrProcess          ,
     "not"   :NotProcess         ,
+    "required_event"        : FieldAddProcess,
+    "recurrence"            : FieldAddProcess,
+    "deactivate_condition"  : CondFieldAddProcess,
+    "global"                : FieldAddProcess,
+    "run_for_npcs"          : FieldAddProcess,
+    "EOC_TYPE"              : FieldAddProcess,
 }
 
 //处理并替换传入参数
 function argProcess(ce:CodeExpression,nodes:Array<Node>){
     let args = nodes.map(val=>ce.getLocalVal(val.getText()));
     return args;
+}
+//字段添加
+function FieldAddProcess(this:CodeExpression,node: Node):ExpPReturn{
+    checkKind(node,SyntaxKind.CallExpression);
+    let cb = this.getCodeBlock();
+    let id = node.getExpression().getText();
+    let text = node.getArguments()[0].getText();
+    //自动给OBJ括号
+    if(text[0]=="{"&&text[text.length-1]=="}")
+        text = "("+text+")";
+
+    let tokenObj = eval(text);
+    cb.addEocField(id,tokenObj);
+    return new ExpPReturn();
+}
+
+//条件字段添加
+function CondFieldAddProcess(this:CodeExpression,node: Node):ExpPReturn{
+    checkKind(node,SyntaxKind.CallExpression);
+    let cb = this.getCodeBlock();
+    let id = node.getExpression().getText();
+    let cond = node.getArguments()[0];
+
+    cb.addEocField(id, CalcExpProcess.bind(this)(cond).getToken());
+    return new ExpPReturn();
 }
 
 //调用函数
@@ -127,3 +159,4 @@ function NotProcess(this:CodeExpression,node: Node):ExpPReturn{
     out.setToken({not:result.getToken()});
     return out;
 }
+

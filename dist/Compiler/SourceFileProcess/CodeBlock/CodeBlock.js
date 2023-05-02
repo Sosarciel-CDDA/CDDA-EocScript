@@ -55,6 +55,8 @@ class CodeBlock {
     };
     //传入参数表
     _passArgsTable = {};
+    //额外字段
+    _eocFieldTable = {};
     constructor(id, node, sfd, condition, falseNode) {
         this._id = id;
         this._node = node;
@@ -90,6 +92,10 @@ class CodeBlock {
         let tg = this._passArgsTable[origVal];
         return tg == null ? origVal : tg;
     }
+    //添加一个额外字段
+    addEocField(str, val) {
+        this._eocFieldTable[str] = val;
+    }
     /**处理代码块
      */
     build() {
@@ -100,8 +106,13 @@ class CodeBlock {
         if (this._falseNode != null)
             eoc.addFalseEffectList(this.processStatments(this._falseNode));
         let eocObj = eoc.build();
+        //额外字段
+        if (eocObj != null) {
+            for (let field in this._eocFieldTable)
+                eocObj[field] = this._eocFieldTable[field];
+        }
         this._sfd.addEoc(eocObj);
-        return new NPInterfaces_1.CBPReturn([eoc.build()]);
+        return new NPInterfaces_1.CBPReturn([eocObj]);
     }
     /**处理申明列表
      */

@@ -64,6 +64,9 @@ export class CodeBlock{
     //传入参数表
     _passArgsTable:Record<string,string|null> = {}
 
+    //额外字段
+    _eocFieldTable:Record<string,JToken>={}
+
     constructor(id:string,node: Node|Array<Node>,sfd:SourceFileData,condition?:JToken, falseNode?: Node|Array<Node>){
         this._id    =id         ;
         this._node  = node   ;
@@ -100,6 +103,10 @@ export class CodeBlock{
         let tg = this._passArgsTable[origVal];
         return tg==null? origVal:tg;
     }
+    //添加一个额外字段
+    addEocField(str:string,val:JToken){
+        this._eocFieldTable[str]=val;
+    }
 
     /**处理代码块
      */
@@ -114,8 +121,14 @@ export class CodeBlock{
             eoc.addFalseEffectList(this.processStatments(this._falseNode));
 
         let eocObj = eoc.build();
+        //额外字段
+        if(eocObj!=null){
+            for(let field in this._eocFieldTable)
+                (eocObj as any)[field] = this._eocFieldTable[field];
+        }
+
         this._sfd.addEoc(eocObj);
-        return new CBPReturn([eoc.build()]);
+        return new CBPReturn([eocObj]);
     }
     /**处理申明列表
      */
