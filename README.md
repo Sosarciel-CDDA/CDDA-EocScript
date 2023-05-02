@@ -8,7 +8,7 @@
 
 
 # 说明
-将JS编译为CDDA支持的jSON格式EOC
+将JS编译为CDDA支持的jSON格式EOC  
 cdda:https://github.com/CleverRaven/Cataclysm-DDA
 
 
