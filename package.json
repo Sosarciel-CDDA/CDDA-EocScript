@@ -1,6 +1,27 @@
 {
   "dependencies": {
+    "@types/node": "^18.16.3",
     "ts-morph": "^18.0.0",
     "tsconfig-paths": "^4.2.0"
-  }
+  },
+  "name": "cdda-eocscript",
+  "version": "1.0.0",
+  "description": "complie js to eocjson",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zwa73/CDDA-EocScript.git"
+  },
+  "keywords": [
+    "cdda"
+  ],
+  "author": "zwa73",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zwa73/CDDA-EocScript/issues"
+  },
+  "homepage": "https://github.com/zwa73/CDDA-EocScript#readme"
 }
