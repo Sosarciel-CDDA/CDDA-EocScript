@@ -48,10 +48,10 @@ function CallStateExpProcess(node, sfd) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpProcessReturn();
     let result = (0, CallExpProcess_1.CallExpProcess)(node, sfd);
-    //判断是否有函数返回 用于判断EToken
+    //判断是否有函数返回 用于判断EObj
     if (result.getPreFuncs().length > 0)
         out.addPreFuncList(result.getPreFuncs());
-    else //EToken无函数返回
+    else //EObj无函数返回
         out.setToken(result.getToken());
     return out;
 }

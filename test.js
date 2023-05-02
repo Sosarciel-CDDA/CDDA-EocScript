@@ -1,7 +1,7 @@
 const {Compiler} = require('./index');
 let compiler = new Compiler(`
-EToken({a:1,b:2});
-EToken((()=>{
+eobj({a:1,b:2});
+eobj((()=>{
     let obj = {};
     for (let i = 1; i <= 10; i++)
         obj[String.fromCharCode(64 + i)] = i;

@@ -7,7 +7,7 @@ const Functions_1 = require("../../Functions");
 const ExpressionProcess_1 = require("./ExpressionProcess");
 //特殊函数
 let _processFunc = {
-    "EToken": ETokenProcess,
+    "eobj": EObjProcess,
     "u_val": DefaultProcess,
     "and": AndProcess,
     "or": OrProcess,
@@ -27,7 +27,7 @@ function CallExpProcess(node, sfd) {
 }
 exports.CallExpProcess = CallExpProcess;
 //特殊函数EToken
-function ETokenProcess(node, sfd) {
+function EObjProcess(node, sfd) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpProcessReturn();
     let text = node.getArguments()[0].getText();

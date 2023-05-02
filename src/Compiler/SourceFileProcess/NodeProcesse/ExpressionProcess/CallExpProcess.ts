@@ -7,7 +7,7 @@ import { AutoExpProcess } from "./ExpressionProcess";
 
 //特殊函数
 let _processFunc:Record<string,ExpProcess|null> = {
-    "EToken":ETokenProcess      ,//变量申明表达式 运行js 返回obj
+    "eobj"  :EObjProcess        ,//变量申明表达式 运行js 返回obj
     "u_val" :DefaultProcess     ,//内置函数 转为字符串
     "and"   :AndProcess         ,
     "or"    :OrProcess          ,
@@ -31,7 +31,7 @@ export function CallExpProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
 }
 
 //特殊函数EToken
-function ETokenProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
+function EObjProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
     checkKind(node,SyntaxKind.CallExpression);
 
     let out = new ExpProcessReturn();

@@ -53,10 +53,10 @@ function CallStateExpProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
     let out = new ExpProcessReturn();
 
     let result = CallExpProcess(node,sfd);
-    //判断是否有函数返回 用于判断EToken
+    //判断是否有函数返回 用于判断EObj
     if(result.getPreFuncs().length>0)
         out.addPreFuncList(result.getPreFuncs());
-    else //EToken无函数返回
+    else //EObj无函数返回
         out.setToken(result.getToken());
     return out;
 }
