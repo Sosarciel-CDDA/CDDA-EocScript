@@ -27,7 +27,7 @@ function SwitchProcess(node) {
             out.mergePreFuncList(blockObj);
             switchObj.cases.push({
                 case: caToken,
-                effect: [{ "run_eocs": block.getId() }]
+                effect: [{ "run_eocs": block.getId() }] //辅助函数
             });
         }
     }

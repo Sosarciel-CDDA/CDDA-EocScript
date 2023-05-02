@@ -19,6 +19,7 @@ export function IfProcess(this:CodeBlock, node: Node):CBPReturn{
     let out = new CBPReturn();
     out.addPreFuncList(conditionObj.getPreFuncs());
     out.mergePreFuncList(ifBlockObj);
+    //辅助函数
     out.addToken({ "run_eocs": ifBlock.getId() });
 
     return out;

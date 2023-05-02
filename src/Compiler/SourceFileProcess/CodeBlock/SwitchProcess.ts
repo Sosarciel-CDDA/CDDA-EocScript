@@ -29,7 +29,7 @@ export function SwitchProcess(this:CodeBlock, node: Node):CBPReturn{
             out.mergePreFuncList(blockObj);
             (switchObj.cases as JArray).push({
                 case:caToken,
-                effect:[{ "run_eocs": block.getId() }]
+                effect:[{ "run_eocs": block.getId() }]//辅助函数
             })
         }
     }

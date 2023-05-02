@@ -14,6 +14,12 @@ let _processFunc:Record<string,ExpProcess|null> = {
     "not"   :NotProcess         ,
 }
 
+//处理并替换传入参数
+function argProcess(ce:CodeExpression,nodes:Array<Node>){
+    let args = nodes.map(val=>ce.getLocalVal(val.getText()));
+    return args;
+}
+
 //调用函数
 export function CallExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
@@ -26,11 +32,17 @@ export function CallExpProcess(this:CodeExpression, node: Node):ExpPReturn{
 
     //全局函数
     let gfunc = this.getSfd().getGlobalFunction(id);
-    if(gfunc==null)
-        throw throwLog(node,"CallExpProcess 未找到 gfunc id:"+id);
-    let args = node.getArguments();
+    if(gfunc==null){//调用eoc
+        out.addPreFunc({ "run_eocs": id });
+        return out;
+        //throw throwLog(node,"CallExpProcess 未找到 gfunc id:"+id);
+    }
+    let args = argProcess(this,node.getArguments());
 
-    out.addPreFunc({ "run_eocs": gfunc.getId() });
+    //动态创建代码块
+    let cb = gfunc.getCodeBlock(args);
+
+    out.addPreFunc({ "run_eocs": gfunc.getId(args) });
     out.setToken(gfunc.getReturnID());
 
     return out;
@@ -56,7 +68,24 @@ function EObjProcess(this:CodeExpression,node: Node):ExpPReturn{
 function DefaultProcess(this:CodeExpression,node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
     let out = new ExpPReturn();
-    out.setToken(node.getText());
+    //替换参数然后输出字符串
+    //node.getArguments();
+    let args = argProcess(this,node.getArguments());
+
+    let text = node.getText();
+    let regex = /.*\((.*)\)/;
+    let argsText = "";
+    for(let arg of args){
+        if(argsText!="")
+            argsText+=",";
+        argsText+=arg
+    }
+
+    text = text.replace(regex, (match, p1) => {
+        return match.replace(p1, argsText);
+    });
+
+    out.setToken(text);
     return out;
 }
 

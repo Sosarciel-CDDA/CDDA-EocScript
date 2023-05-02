@@ -12,6 +12,11 @@ let _processFunc = {
     "or": OrProcess,
     "not": NotProcess,
 };
+//处理并替换传入参数
+function argProcess(ce, nodes) {
+    let args = nodes.map(val => ce.getLocalVal(val.getText()));
+    return args;
+}
 //调用函数
 function CallExpProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
@@ -22,10 +27,15 @@ function CallExpProcess(node) {
         return spFunc.bind(this)(node);
     //全局函数
     let gfunc = this.getSfd().getGlobalFunction(id);
-    if (gfunc == null)
-        throw (0, Functions_1.throwLog)(node, "CallExpProcess 未找到 gfunc id:" + id);
-    let args = node.getArguments();
-    out.addPreFunc({ "run_eocs": gfunc.getId() });
+    if (gfunc == null) { //调用eoc
+        out.addPreFunc({ "run_eocs": id });
+        return out;
+        //throw throwLog(node,"CallExpProcess 未找到 gfunc id:"+id);
+    }
+    let args = argProcess(this, node.getArguments());
+    //动态创建代码块
+    let cb = gfunc.getCodeBlock(args);
+    out.addPreFunc({ "run_eocs": gfunc.getId(args) });
     out.setToken(gfunc.getReturnID());
     return out;
 }
@@ -46,7 +56,21 @@ function EObjProcess(node) {
 function DefaultProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpPReturn();
-    out.setToken(node.getText());
+    //替换参数然后输出字符串
+    //node.getArguments();
+    let args = argProcess(this, node.getArguments());
+    let text = node.getText();
+    let regex = /.*\((.*)\)/;
+    let argsText = "";
+    for (let arg of args) {
+        if (argsText != "")
+            argsText += ",";
+        argsText += arg;
+    }
+    text = text.replace(regex, (match, p1) => {
+        return match.replace(p1, argsText);
+    });
+    out.setToken(text);
     return out;
 }
 function AndProcess(node) {

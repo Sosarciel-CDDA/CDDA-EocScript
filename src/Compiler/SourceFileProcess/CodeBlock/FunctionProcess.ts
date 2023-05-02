@@ -11,11 +11,7 @@ export function FunctionProcess(this:CodeBlock,node: Node):CBPReturn{
     checkKind(node,SyntaxKind.FunctionDeclaration);
 
     let gfunc = this.getSfd().addGlobalFunction(node);
-    let funcid = gfunc.getId();
-    let codeBody = node.getBodyOrThrow();
-    let cb = new CodeBlock(funcid,codeBody,this.getSfd());
-    //let cb = new CodeBlock(codeBody,this._sfd,this._cbd.genSubBlock());
-    cb.build();
+    gfunc.getCodeBlock();
     return new CBPReturn();
 }
 

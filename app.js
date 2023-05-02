@@ -32,7 +32,7 @@ for(let filePath of fileList){
         writeJSONFileByText(outFilePath,text);
         console.log("compile: "+filePath+" success");
     }catch(e){
-        console.log("编译 "+path+" 时出现错误");
+        console.log("编译 "+filePath+" 时出现错误");
         console.log(e);
     }
 }

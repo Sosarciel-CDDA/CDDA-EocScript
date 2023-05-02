@@ -14,7 +14,7 @@ class GlobalFunction {
         (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.FunctionDeclaration);
         this._node = node;
         this._sfd = sfd;
-        this._params = node.getParameters();
+        this._params = node.getParameters().map((value) => value.getText());
     }
     getNode() {
         return this._node;
@@ -32,7 +32,7 @@ class GlobalFunction {
         let base = this.getSfd().getId() + "_" + this.getRawName();
         if (args != null) {
             for (let arg of args)
-                base += "_" + arg.getText();
+                base += "_" + arg;
         }
         return base;
     }
@@ -40,14 +40,16 @@ class GlobalFunction {
         let cid = this.getId(args);
         if (this._dynamicCodeBlockTable[cid] != null)
             return this._dynamicCodeBlockTable[cid];
-        let funcid = this.getId();
+        let funcid = this.getId(args);
         let codeBody = this.getNode().getBodyOrThrow();
         let cb = new CodeBlock_1.default(funcid, codeBody, this.getSfd());
         //传参
         if (args == null)
             args = [];
+        if (args.length > this._params.length)
+            throw (0, Functions_1.throwLog)(this._node, "传入参数超出定义个数");
         for (let i in args)
-            cb.addPassArgs(this._params[i].getText(), args[i].getText());
+            cb.addPassArgs(this._params[i], args[i]);
         //let cb = new CodeBlock(codeBody,this._sfd,this._cbd.genSubBlock());
         cb.build();
         this._dynamicCodeBlockTable[cid] = cb;
