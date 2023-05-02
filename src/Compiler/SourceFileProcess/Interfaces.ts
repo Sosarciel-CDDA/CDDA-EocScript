@@ -1,12 +1,5 @@
 import { JArray, JObject, JToken, deepClone } from "Utils";
 
-export enum BlockType{
-    IF      = "if"      ,
-    ELSE    = "else"    ,
-    CLAUSE  = "clause"  ,
-    OTHER   = "other"   ,
-}
-
 export class SourceFileData{
     _id:string;
     _rootArray:JArray;
@@ -22,32 +15,24 @@ export class SourceFileData{
     getId(){
         return this._id;
     }
-    //特殊代码块ID
-    /**根据代码块类型自动生成一个ID
-     * @param blockType 代码块类型
+
+    /**获取一个不重复的随机ID
      * @returns 代码块ID
      */
-    genBlockId(blockType:BlockType){
-        let eocid = this.getId();
-        if(blockType!=null)
-            eocid+="_"+blockType;
-        eocid+="_"+this.getCount();
-        this._count+=1;
-        return eocid;
+    genRID(){
+        return this._count++;
     }
-    /**根据原始函数ID获取代码块ID
-     * @param rawId 原始函数ID
-     * @returns 代码块ID
+    /**获取全局函数ID
+     * @param rawFuncName 
      */
-    getBlockId(rawId:string){
-        return this.getId()+"_"+rawId;
+    getGlobalFuncID(rawFuncName:string){
+        return this.getId()+"_"+rawFuncName;
     }
-    /**根据代码块名获得此代码块的返回值ID
-     * @param blockId 代码块ID
-     * @returns 代码块返回值ID
+    /**获取全局函数返回值ID
+     * @param rawFuncName 
      */
-    getReturnId(blockId:string){
-        return blockId+"_return";
+    getGlobalFuncReturnID(rawFuncName:string){
+        return this.getId()+"_"+rawFuncName+"_return";
     }
 
     addEoc(eocobj:JToken){

@@ -1,14 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SourceFileData = exports.BlockType = void 0;
+exports.SourceFileData = void 0;
 const Utils_1 = require("Utils");
-var BlockType;
-(function (BlockType) {
-    BlockType["IF"] = "if";
-    BlockType["ELSE"] = "else";
-    BlockType["CLAUSE"] = "clause";
-    BlockType["OTHER"] = "other";
-})(BlockType = exports.BlockType || (exports.BlockType = {}));
 class SourceFileData {
     _id;
     _rootArray;
@@ -24,32 +17,23 @@ class SourceFileData {
     getId() {
         return this._id;
     }
-    //特殊代码块ID
-    /**根据代码块类型自动生成一个ID
-     * @param blockType 代码块类型
+    /**获取一个不重复的随机ID
      * @returns 代码块ID
      */
-    genBlockId(blockType) {
-        let eocid = this.getId();
-        if (blockType != null)
-            eocid += "_" + blockType;
-        eocid += "_" + this.getCount();
-        this._count += 1;
-        return eocid;
+    genRID() {
+        return this._count++;
     }
-    /**根据原始函数ID获取代码块ID
-     * @param rawId 原始函数ID
-     * @returns 代码块ID
+    /**获取全局函数ID
+     * @param rawFuncName
      */
-    getBlockId(rawId) {
-        return this.getId() + "_" + rawId;
+    getGlobalFuncID(rawFuncName) {
+        return this.getId() + "_" + rawFuncName;
     }
-    /**根据代码块名获得此代码块的返回值ID
-     * @param blockId 代码块ID
-     * @returns 代码块返回值ID
+    /**获取全局函数返回值ID
+     * @param rawFuncName
      */
-    getReturnId(blockId) {
-        return blockId + "_return";
+    getGlobalFuncReturnID(rawFuncName) {
+        return this.getId() + "_" + rawFuncName + "_return";
     }
     addEoc(eocobj) {
         this._rootArray.push(eocobj);

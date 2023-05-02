@@ -1,7 +1,8 @@
 import { JArray, JToken } from "Utils";
 import { SourceFileData } from "../Interfaces";
 import { Node } from "ts-morph";
-export type NodeProcess = (node:Node,sfd:SourceFileData,blockId?:string)=>ProcessReturn;
+import { CodeBlock } from "./CodeBlock";
+export type NodeProcess = (this:CodeBlock,node:Node)=>ProcessReturn;
 
 export class ProcessReturn{
     _preFuncs:JArray;

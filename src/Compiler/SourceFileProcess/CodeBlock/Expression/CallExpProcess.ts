@@ -24,8 +24,8 @@ export function CallExpProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
     if(spFunc!=null)
         return spFunc(node,sfd);
 
-    out.addPreFunc({ "run_eocs": sfd.getBlockId(id) });
-    out.setToken(sfd.getReturnId(sfd.getBlockId(id)));
+    out.addPreFunc({ "run_eocs": sfd.getGlobalFuncID(id) });
+    out.setToken(sfd.getGlobalFuncReturnID(id));
 
     return out;
 }

@@ -1,17 +1,16 @@
 import { JArray, JToken } from "Utils";
 import { Node, SyntaxKind, ts } from "ts-morph";
 import { checkKind } from '../Functions';
-import { BlockType, SourceFileData } from "../Interfaces";
 import { ProcessReturn } from "./NPInterfaces";
-import CodeBlockProcess from "./CodeBlockProcess";
-import { AutoExpProcess } from "./ExpressionProcess";
+import { BlockType, CodeBlock } from "./CodeBlock";
+import { AutoExpProcess } from "./Expression";
 
-export function SwitchProcess(node: Node,sfd:SourceFileData):ProcessReturn{
+export function SwitchProcess(this:CodeBlock, node: Node):ProcessReturn{
     checkKind(node,ts.SyntaxKind.SwitchStatement);
     let out = new ProcessReturn();
 
     let switchObj:JToken={
-        "switch": AutoExpProcess(node.getExpression(),sfd).getToken(),
+        "switch": AutoExpProcess(node.getExpression(),this.getSfd()).getToken(),
         "cases":[],
     };
 
@@ -20,13 +19,14 @@ export function SwitchProcess(node: Node,sfd:SourceFileData):ProcessReturn{
     for(let caseClause of cases){
         if(caseClause.isKind(SyntaxKind.CaseClause)){
             let caToken = parseInt(caseClause.getExpression().getText());
-            let caseid = sfd.genBlockId(BlockType.CLAUSE);
+            //let caseid = this.getSfd().genBlockId(BlockType.CLAUSE);
             //let blockObj = ca.getFirstDescendantByKindOrThrow(SyntaxKind.Block);
-            let block = CodeBlockProcess(caseClause,sfd,caseid);
-            out.mergePreFuncList(block);
+            let block = this.genSubBlock(BlockType.CLAUSE,caseClause,this.getSfd());
+            let blockObj = block.build();
+            out.mergePreFuncList(blockObj);
             (switchObj.cases as JArray).push({
                 case:caToken,
-                effect:[{ "run_eocs": caseid }]
+                effect:[{ "run_eocs": block.getId() }]
             })
         }
     }
