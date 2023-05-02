@@ -15,10 +15,8 @@ tsconfigPaths.register({
     paths,
 });
 
-const {Compiler} = require("./dist");
-module.exports = {
-    Compiler
-};
+const dist = require("./dist");
+module.exports = dist;
 
 
 //https://ts-ast-viewer.com/
