@@ -59,6 +59,9 @@ export class CodeExpression{
     getSfd(){
         return this.getCodeBlock().getSfd();
     }
+    getLocalVal(origVal:string){
+        return this.getCodeBlock().getLocalVal(origVal);
+    }
 
     build(){
         return this.process(this._node);

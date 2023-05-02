@@ -32,7 +32,7 @@ exports.MathExpProcess = MathExpProcess;
 function IdMathExpProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.Identifier);
     let outObj = new EPInterface_1.ExpPReturn();
-    let name = node.getText();
+    let name = this.getLocalVal(node.getText());
     outObj.setToken(name);
     return outObj;
 }

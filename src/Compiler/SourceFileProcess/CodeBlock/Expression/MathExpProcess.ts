@@ -37,7 +37,7 @@ export function MathExpProcess(this:CodeExpression, node: Node):ExpPReturn{
 function IdMathExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.Identifier);
     let outObj = new ExpPReturn();
-    let name = node.getText();
+    let name = this.getLocalVal(node.getText());
     outObj.setToken(name);
     return outObj;
 }

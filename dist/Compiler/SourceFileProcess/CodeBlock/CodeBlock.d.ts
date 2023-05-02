@@ -16,17 +16,20 @@ export declare class CodeBlock {
     _condition?: JToken | null;
     _falseNode?: Node | Array<Node>;
     _processTable: Record<number, NodeProcess | null>;
+    _passArgsTable: Record<string, string | null>;
     constructor(id: string, node: Node | Array<Node>, sfd: SourceFileData, condition?: JToken, falseNode?: Node | Array<Node>);
     getId(): string;
     getReturnId(): string;
     getParentBlock(): CodeBlock | undefined;
     genSubBlock(id: BlockType, node: Node | Array<Node>, sfd: SourceFileData, condition?: JToken, falseNode?: Node | Array<Node>): CodeBlock;
     getSfd(): SourceFileData;
+    addPassArgs(origVal: string, targetVal: string): void;
+    getLocalVal(origVal: string): string;
     /**处理代码块
      */
     build(): CBPReturn;
     /**处理申明列表
      */
-    processStatments(node: Node | Array<Node>): (string | number | boolean | JArray | import("Utils").JObject | null)[];
+    processStatments(node: Node | Array<Node>): (string | number | boolean | import("Utils").JObject | JArray | null)[];
 }
 export default CodeBlock;

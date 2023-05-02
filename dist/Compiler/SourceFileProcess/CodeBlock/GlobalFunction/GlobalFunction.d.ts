@@ -1,16 +1,20 @@
 import { FunctionDeclaration, Node } from "ts-morph";
 import { SourceFileData } from "../../Interfaces";
+import CodeBlock from "../CodeBlock";
 export declare class GlobalFunction {
     _node: FunctionDeclaration;
     _sfd: SourceFileData;
+    _params: Array<Node>;
+    _dynamicCodeBlockTable: Record<string, CodeBlock | null>;
     constructor(node: Node, sfd: SourceFileData);
     getNode(): FunctionDeclaration;
     getSfd(): SourceFileData;
     getRawName(): string;
     /**获取全局函数ID
-     * @param rawFuncName
+     * @param args 参数
      */
-    getId(): string;
+    getId(args?: Array<Node>): string;
+    getCodeBlock(args?: Array<Node>): CodeBlock | null;
     /**获取全局函数返回值ID
      * @param rawFuncName
      */

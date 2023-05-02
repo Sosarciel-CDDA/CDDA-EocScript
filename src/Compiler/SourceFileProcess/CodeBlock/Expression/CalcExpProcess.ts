@@ -53,7 +53,7 @@ function VarCalcExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.VariableDeclaration);
     let out = new ExpPReturn();
 
-    let id = node.getName();
+    let id = this.getLocalVal(node.getName());
     let rit = MathExpProcess.bind(this)(node.getInitializerOrThrow());
 
     out.addPreFuncList(rit.getPreFuncs());

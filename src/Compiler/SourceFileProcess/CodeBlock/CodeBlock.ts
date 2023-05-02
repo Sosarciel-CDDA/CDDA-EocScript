@@ -61,6 +61,9 @@ export class CodeBlock{
         [SyntaxKind.IfStatement         ]:IfProcess         ,
         [SyntaxKind.SwitchStatement     ]:SwitchProcess     ,
     };
+    //传入参数表
+    _passArgsTable:Record<string,string|null> = {}
+
     constructor(id:string,node: Node|Array<Node>,sfd:SourceFileData,condition?:JToken, falseNode?: Node|Array<Node>){
         this._id    =id         ;
         this._node  = node   ;
@@ -86,6 +89,16 @@ export class CodeBlock{
     }
     getSfd(){
         return this._sfd;
+    }
+
+    //增加一个传入参数
+    addPassArgs(origVal:string,targetVal:string){
+        this._passArgsTable[origVal]=targetVal;
+    }
+    //获取局部变量
+    getLocalVal(origVal:string){
+        let tg = this._passArgsTable[origVal];
+        return tg==null? origVal:tg;
     }
 
     /**处理代码块

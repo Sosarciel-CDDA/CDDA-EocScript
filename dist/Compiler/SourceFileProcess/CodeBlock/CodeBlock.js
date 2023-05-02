@@ -53,6 +53,8 @@ class CodeBlock {
         [ts_morph_1.SyntaxKind.IfStatement]: IfProcess_1.IfProcess,
         [ts_morph_1.SyntaxKind.SwitchStatement]: SwitchProcess_1.SwitchProcess,
     };
+    //传入参数表
+    _passArgsTable = {};
     constructor(id, node, sfd, condition, falseNode) {
         this._id = id;
         this._node = node;
@@ -78,6 +80,15 @@ class CodeBlock {
     }
     getSfd() {
         return this._sfd;
+    }
+    //增加一个传入参数
+    addPassArgs(origVal, targetVal) {
+        this._passArgsTable[origVal] = targetVal;
+    }
+    //获取局部变量
+    getLocalVal(origVal) {
+        let tg = this._passArgsTable[origVal];
+        return tg == null ? origVal : tg;
     }
     /**处理代码块
      */

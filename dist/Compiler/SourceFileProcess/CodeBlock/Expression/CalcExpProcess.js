@@ -41,7 +41,7 @@ function BinaryCalcExpProcess(node) {
 function VarCalcExpProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.VariableDeclaration);
     let out = new EPInterface_1.ExpPReturn();
-    let id = node.getName();
+    let id = this.getLocalVal(node.getName());
     let rit = MathExpProcess_1.MathExpProcess.bind(this)(node.getInitializerOrThrow());
     out.addPreFuncList(rit.getPreFuncs());
     let obj = {};

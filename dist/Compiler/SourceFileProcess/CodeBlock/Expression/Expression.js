@@ -44,6 +44,9 @@ class CodeExpression {
     getSfd() {
         return this.getCodeBlock().getSfd();
     }
+    getLocalVal(origVal) {
+        return this.getCodeBlock().getLocalVal(origVal);
+    }
     build() {
         return this.process(this._node);
         //throw throwLog(node,"未知的申明表达式类型");

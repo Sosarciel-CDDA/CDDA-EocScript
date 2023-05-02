@@ -8,6 +8,7 @@ export declare class CodeExpression {
     constructor(node: Node, codeBlock: CodeBlock);
     getCodeBlock(): CodeBlock;
     getSfd(): SourceFileData;
+    getLocalVal(origVal: string): string;
     build(): ExpPReturn;
     process(node: Node): ExpPReturn;
 }
