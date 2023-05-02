@@ -1,10 +1,10 @@
 import { Node, SyntaxKind } from "ts-morph";
 import { checkKind } from '../Functions';
-import { ProcessReturn } from "./NPInterfaces";
+import { CBPReturn } from "./NPInterfaces";
 import { BlockType, CodeBlock } from "./CodeBlock";
 import { AutoExpProcess } from "./Expression";
 
-export function IfProcess(this:CodeBlock, node: Node):ProcessReturn{
+export function IfProcess(this:CodeBlock, node: Node):CBPReturn{
     checkKind(node,SyntaxKind.IfStatement);
     let condition = node.getExpression();
     let conditionObj = AutoExpProcess(condition,this.getSfd());
@@ -15,7 +15,7 @@ export function IfProcess(this:CodeBlock, node: Node):ProcessReturn{
     let ifBlock = this.genSubBlock(BlockType.IF,ifBlockStat,this.getSfd(),conditionObj.getToken(),elseBlock);
     let ifBlockObj = ifBlock.build();
 
-    let out = new ProcessReturn();
+    let out = new CBPReturn();
     out.addPreFuncList(conditionObj.getPreFuncs());
     out.mergePreFuncList(ifBlockObj);
     out.addToken({ "run_eocs": ifBlock.getId() });

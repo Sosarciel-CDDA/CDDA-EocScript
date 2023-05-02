@@ -6,7 +6,7 @@ import { checkKind, throwLog } from '../Functions';
 import { Eoc } from "JsonClass";
 import { FunctionProcess } from "./FunctionProcess";
 import { ExpressionProcess, MathExpProcess } from "./Expression";
-import { NodeProcess, ProcessReturn } from "./NPInterfaces";
+import { NodeProcess, CBPReturn } from "./NPInterfaces";
 import { IfProcess } from "./IfProcess";
 import { SwitchProcess } from "./SwitchProcess";
 
@@ -28,10 +28,10 @@ let _processFunc:Record<number,NodeProcess|null> = {
 };
 
 
-function ReturnProcess(this:CodeBlock, node: Node):ProcessReturn{
+function ReturnProcess(this:CodeBlock, node: Node):CBPReturn{
     checkKind(node,SyntaxKind.ReturnStatement);
 
-    let outlist = new ProcessReturn();
+    let outlist = new CBPReturn();
     let rit = MathExpProcess(node.getExpressionOrThrow(),this.getSfd());
 
     outlist.addPreFuncList(rit.getPreFuncs());
@@ -98,7 +98,7 @@ export class CodeBlock{
 
         let eocObj = eoc.build();
         this._sfd.addEoc(eocObj);
-        return new ProcessReturn([eoc.build()]);
+        return new CBPReturn([eoc.build()]);
     }
     /**处理申明列表
      */

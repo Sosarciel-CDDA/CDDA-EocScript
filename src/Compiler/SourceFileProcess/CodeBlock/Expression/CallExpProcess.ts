@@ -1,6 +1,6 @@
 import { Node, SyntaxKind } from "ts-morph";
 import { SourceFileData } from "../../Interfaces";
-import { ExpProcess, ExpProcessReturn } from "./EPInterface";
+import { ExpProcess, ExpPReturn } from "./EPInterface";
 import { checkKind, throwLog } from "../../Functions";
 import { JArray, JToken } from "@/src/Utils";
 import { AutoExpProcess } from "./ExpressionProcess";
@@ -15,9 +15,9 @@ let _processFunc:Record<string,ExpProcess|null> = {
 }
 
 //调用函数
-export function CallExpProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
+export function CallExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
-    let out = new ExpProcessReturn();
+    let out = new ExpPReturn();
 
     let id = node.getExpression().getText();
     let spFunc = _processFunc[id];
@@ -31,10 +31,10 @@ export function CallExpProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
 }
 
 //特殊函数EToken
-function EObjProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
+function EObjProcess(node: Node,sfd:SourceFileData):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
 
-    let out = new ExpProcessReturn();
+    let out = new ExpPReturn();
 
     let text = node.getArguments()[0].getText();
     //自动给OBJ括号
@@ -47,16 +47,16 @@ function EObjProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
 }
 
 //直接输出字符串
-function DefaultProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
+function DefaultProcess(node: Node,sfd:SourceFileData):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
-    let out = new ExpProcessReturn();
+    let out = new ExpPReturn();
     out.setToken(node.getText());
     return out;
 }
 
-function AndProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
+function AndProcess(node: Node,sfd:SourceFileData):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
-    let out = new ExpProcessReturn();
+    let out = new ExpPReturn();
     let arr:JArray = [];
     let args = node.getArguments();
     for(let arg of args){
@@ -67,9 +67,9 @@ function AndProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
     out.setToken({and:arr});
     return out;
 }
-function OrProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
+function OrProcess(node: Node,sfd:SourceFileData):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
-    let out = new ExpProcessReturn();
+    let out = new ExpPReturn();
     let arr:JArray = [];
     let args = node.getArguments();
     for(let arg of args){
@@ -80,9 +80,9 @@ function OrProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
     out.setToken({or:arr});
     return out;
 }
-function NotProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
+function NotProcess(node: Node,sfd:SourceFileData):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
-    let out = new ExpProcessReturn();
+    let out = new ExpPReturn();
 
     let arg = node.getArguments()[0];
 

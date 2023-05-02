@@ -2,9 +2,9 @@ import { JArray, JToken } from "Utils";
 import { SourceFileData } from "../Interfaces";
 import { Node } from "ts-morph";
 import { CodeBlock } from "./CodeBlock";
-export type NodeProcess = (this:CodeBlock,node:Node)=>ProcessReturn;
+export type NodeProcess = (this:CodeBlock,node:Node)=>CBPReturn;
 
-export class ProcessReturn{
+export class CBPReturn{
     _preFuncs:JArray;
     _tokens:JArray;
     constructor(tokens?:JArray,preFuncs?:JArray){
@@ -18,7 +18,7 @@ export class ProcessReturn{
         for(let obj of objs)
             this.addPreFunc(obj);
     }
-    mergePreFuncList(obj:ProcessReturn){
+    mergePreFuncList(obj:CBPReturn){
         this.addPreFuncList(obj.getPreFuncs());
     }
     addToken(obj:JToken){
@@ -29,7 +29,7 @@ export class ProcessReturn{
         for(let obj of objs)
             this.addToken(obj);
     }
-    mergeTokenList(obj:ProcessReturn){
+    mergeTokenList(obj:CBPReturn){
         this.addTokenList(obj.getTokens());
     }
     getTokens(){
@@ -44,5 +44,5 @@ export class ProcessReturn{
 }
 
 export function VoidProcess(){
-    return new ProcessReturn();
+    return new CBPReturn();
 }

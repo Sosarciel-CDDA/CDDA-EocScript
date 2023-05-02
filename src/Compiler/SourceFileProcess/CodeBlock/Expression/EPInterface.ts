@@ -2,9 +2,9 @@ import { JArray, JToken } from "@/src/Utils";
 import { SourceFileData } from "../../Interfaces";
 import { Node } from "ts-morph";
 
-export type ExpProcess = (node:Node,sfd:SourceFileData,blockId?:string)=>ExpProcessReturn;
+export type ExpProcess = (node:Node,sfd:SourceFileData,blockId?:string)=>ExpPReturn;
 
-export class ExpProcessReturn{
+export class ExpPReturn{
     _preFuncs:JArray;
     _token:JToken;
     constructor(token?:JToken,preFuncs?:JArray){
@@ -18,7 +18,7 @@ export class ExpProcessReturn{
         for(let obj of objs)
             this.addPreFunc(obj);
     }
-    mergePreFuncList(obj:ExpProcessReturn){
+    mergePreFuncList(obj:ExpPReturn){
         this.addPreFuncList(obj.getPreFuncs());
     }
     setToken(obj:JToken){
@@ -36,5 +36,5 @@ export class ExpProcessReturn{
 }
 
 export function VoidExpProcess(){
-    return new ExpProcessReturn();
+    return new ExpPReturn();
 }

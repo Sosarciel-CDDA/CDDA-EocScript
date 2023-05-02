@@ -1,21 +1,21 @@
 import { Node, SyntaxKind } from "ts-morph";
 import { SourceFileData } from "../../Interfaces";
-import { NodeProcess, ProcessReturn } from "../NPInterfaces";
+import { NodeProcess, CBPReturn } from "../NPInterfaces";
 import { checkKind, throwLog } from "../../Functions";
 import { CallExpProcess } from "./CallExpProcess";
 import { CalcExpProcess } from "./CalcExpProcess";
-import { ExpProcessReturn } from "./EPInterface";
+import { ExpPReturn } from "./EPInterface";
 import { ValExpProcess } from "./ValExpProcess";
 import { CodeBlock } from "../CodeBlock";
 
 
 
 //表达式申明处理
-export function ExpressionProcess(this:CodeBlock, node: Node):ProcessReturn{
+export function ExpressionProcess(this:CodeBlock, node: Node):CBPReturn{
     //常规表达式列表
     checkKind(node, SyntaxKind.ExpressionStatement);
     //if(node.isKind(SyntaxKind.ExpressionStatement) || node.isKind())
-    let out = new ProcessReturn();
+    let out = new CBPReturn();
     let subExp = node.getExpression();
 
     let result = AutoExpProcess(subExp,this.getSfd());
@@ -29,14 +29,14 @@ export function ExpressionProcess(this:CodeBlock, node: Node):ProcessReturn{
 
 
 //表达式处理路由
-export function AutoExpProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{
+export function AutoExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
     
 }
 //直接调用函数
-function CallStateExpProcess(node: Node,sfd:SourceFileData):ExpProcessReturn{ 
+function CallStateExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{ 
     checkKind(node,SyntaxKind.CallExpression);
 
-    let out = new ExpProcessReturn();
+    let out = new ExpPReturn();
 
     let result = CallExpProcess(node,sfd);
     //判断是否有函数返回 用于判断EObj

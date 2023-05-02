@@ -1,13 +1,13 @@
 import { JArray, JToken } from "Utils";
 import { Node, SyntaxKind, ts } from "ts-morph";
 import { checkKind } from '../Functions';
-import { ProcessReturn } from "./NPInterfaces";
+import { CBPReturn } from "./NPInterfaces";
 import { BlockType, CodeBlock } from "./CodeBlock";
 import { AutoExpProcess } from "./Expression";
 
-export function SwitchProcess(this:CodeBlock, node: Node):ProcessReturn{
+export function SwitchProcess(this:CodeBlock, node: Node):CBPReturn{
     checkKind(node,ts.SyntaxKind.SwitchStatement);
-    let out = new ProcessReturn();
+    let out = new CBPReturn();
 
     let switchObj:JToken={
         "switch": AutoExpProcess(node.getExpression(),this.getSfd()).getToken(),
