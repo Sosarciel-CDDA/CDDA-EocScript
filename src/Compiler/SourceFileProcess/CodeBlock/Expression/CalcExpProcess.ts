@@ -2,8 +2,9 @@ import { Node, SyntaxKind } from "ts-morph";
 import { SourceFileData } from "../../Interfaces";
 import { ExpProcess, ExpPReturn, VoidExpProcess } from "./EPInterface";
 import { checkKind, throwLog } from "../../Functions";
-import { MathExpProcess } from "./MathExpProcess";
 import { JToken } from "@/src/Utils";
+import { CodeExpression } from "./ExpressionProcess";
+import { MathExpProcess } from "./MathExpProcess";
 
 
 let _processFunc:Record<number,ExpProcess|null> = {
@@ -14,26 +15,26 @@ let _processFunc:Record<number,ExpProcess|null> = {
 
 //所有 (lval opera rval) 赋值/比较/定义 表达式
 //表达式处理路由
-export function CalcExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+export function CalcExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let out = new ExpPReturn();
 
     let func = _processFunc[node.getKind()];
     if(func==null)
         throw throwLog(node,"错误的 CalcExpProcess 表达式");
 
-    let result = func(node,sfd);
+    let result = func.bind(this)(node);
     out.addPreFuncList(result.getPreFuncs());
     out.setToken(result.getToken());
     return out;
 }
 
 //变量定义
-function BinaryCalcExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+function BinaryCalcExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.BinaryExpression);
     let out = new ExpPReturn();
 
-    let lft = MathExpProcess(node.getLeft(),sfd);
-    let rit = MathExpProcess(node.getRight(),sfd);
+    let lft = MathExpProcess.bind(this)(node.getLeft());
+    let rit = MathExpProcess.bind(this)(node.getRight());
     let opera = node.getOperatorToken().getText();
 
     out.addPreFuncList(lft.getPreFuncs());
@@ -48,12 +49,12 @@ function BinaryCalcExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
 }
 
 //变量定义
-function VarCalcExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+function VarCalcExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.VariableDeclaration);
     let out = new ExpPReturn();
 
     let id = node.getName();
-    let rit = MathExpProcess(node.getInitializerOrThrow(),sfd);
+    let rit = MathExpProcess.bind(this)(node.getInitializerOrThrow());
 
     out.addPreFuncList(rit.getPreFuncs());
     let obj:JToken = {};

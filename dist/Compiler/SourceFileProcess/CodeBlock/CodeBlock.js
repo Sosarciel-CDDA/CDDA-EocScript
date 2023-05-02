@@ -28,7 +28,9 @@ let _processFunc = {
 function ReturnProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.ReturnStatement);
     let outlist = new NPInterfaces_1.CBPReturn();
-    let rit = (0, Expression_1.MathExpProcess)(node.getExpressionOrThrow(), this.getSfd());
+    //特殊调用
+    let exp = new Expression_1.CodeExpression(node, this);
+    let rit = exp.build();
     outlist.addPreFuncList(rit.getPreFuncs());
     let obj = { "math": [this.getReturnId(), "=", rit.getToken()] };
     outlist.addToken(obj);

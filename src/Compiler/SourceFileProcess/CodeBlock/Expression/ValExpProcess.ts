@@ -2,14 +2,15 @@ import { Node } from "ts-morph";
 import { SourceFileData } from "../../Interfaces";
 import { ExpPReturn } from "./EPInterface";
 import { MathExpProcess } from "./MathExpProcess";
+import { CodeExpression } from "./ExpressionProcess";
 
 
 
 //非赋值运算处理
-export function ValExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+export function ValExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let out = new ExpPReturn();
 
-    let exp = MathExpProcess(node,sfd);
+    let exp = MathExpProcess.bind(this)(node);
     out.addPreFuncList(exp.getPreFuncs());
 
     out.setToken({"math":[exp.getToken()]});

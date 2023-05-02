@@ -11,7 +11,8 @@ function VariableProcess(node) {
     let declarationList = node.getDeclarationList().getDeclarations();
     let out = new NPInterfaces_1.CBPReturn();
     for (let declaration of declarationList) {
-        let result = (0, Expression_1.AutoExpProcess)(declaration, this._sfd);
+        let exp = new Expression_1.CodeExpression(declaration, this);
+        let result = exp.build();
         out.addPreFuncList(result.getPreFuncs());
         out.addToken(result.getToken());
     }

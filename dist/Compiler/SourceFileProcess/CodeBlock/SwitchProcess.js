@@ -9,8 +9,11 @@ const Expression_1 = require("./Expression");
 function SwitchProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.ts.SyntaxKind.SwitchStatement);
     let out = new NPInterfaces_1.CBPReturn();
+    let exp = new Expression_1.CodeExpression(node.getExpression(), this);
+    let expObj = exp.build();
+    out.addPreFuncList(expObj.getPreFuncs());
     let switchObj = {
-        "switch": (0, Expression_1.AutoExpProcess)(node.getExpression(), this.getSfd()).getToken(),
+        "switch": expObj.getToken(),
         "cases": [],
     };
     let cases = node.getCaseBlock().getClauses();

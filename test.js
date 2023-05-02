@@ -29,7 +29,7 @@ let sss = test2();
 if(a==tsfunc()){
     b=2;
 }
-if(EToken({testEtoken:1})){
+if(eobj({testEtoken:1})){
     b=2;
 }
 if(and(a==1,b==2,c==3,or(d==4,e==5,not(f==6)))){

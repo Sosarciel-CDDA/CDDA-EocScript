@@ -5,7 +5,7 @@ import { VariableProcess } from "./VariableProcess";
 import { checkKind, throwLog } from '../Functions';
 import { Eoc } from "JsonClass";
 import { FunctionProcess } from "./FunctionProcess";
-import { ExpressionProcess, MathExpProcess } from "./Expression";
+import { CodeExpression, ExpressionProcess } from "./Expression";
 import { NodeProcess, CBPReturn } from "./NPInterfaces";
 import { IfProcess } from "./IfProcess";
 import { SwitchProcess } from "./SwitchProcess";
@@ -32,7 +32,10 @@ function ReturnProcess(this:CodeBlock, node: Node):CBPReturn{
     checkKind(node,SyntaxKind.ReturnStatement);
 
     let outlist = new CBPReturn();
-    let rit = MathExpProcess(node.getExpressionOrThrow(),this.getSfd());
+
+    //特殊调用
+    let exp = new CodeExpression(node,this);
+    let rit = exp.build();
 
     outlist.addPreFuncList(rit.getPreFuncs());
 

@@ -1,7 +1,7 @@
 import { JArray, JToken } from "@/src/Utils";
-import { SourceFileData } from "../../Interfaces";
 import { Node } from "ts-morph";
-export type ExpProcess = (node: Node, sfd: SourceFileData, blockId?: string) => ExpPReturn;
+import { CodeExpression } from "./ExpressionProcess";
+export type ExpProcess = (this: CodeExpression, node: Node) => ExpPReturn;
 export declare class ExpPReturn {
     _preFuncs: JArray;
     _token: JToken;

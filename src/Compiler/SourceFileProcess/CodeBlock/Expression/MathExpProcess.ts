@@ -3,6 +3,7 @@ import { SourceFileData } from "../../Interfaces";
 import { checkKind, throwLog } from "../../Functions";
 import { ExpProcess, ExpPReturn } from "./EPInterface";
 import { CallExpProcess } from "./CallExpProcess";
+import { CodeExpression } from "./ExpressionProcess";
 
 
 
@@ -19,13 +20,13 @@ let _processFunc:Record<number,ExpProcess|null> = {
 //SyntaxKind:ParenthesizedExpression
 //处理表达式
 //计算 返回Math右值字符串值
-export function MathExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+export function MathExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let out = new ExpPReturn();
     let func = _processFunc[node.getKind()];
     if(func==null)
         throw throwLog(node,"错误的 NumberExpProcess 表达式");
 
-    let result = func(node,sfd);
+    let result = func.bind(this)(node);
     out.addPreFuncList(result.getPreFuncs());
     out.setToken(result.getToken());
     return out;
@@ -33,7 +34,7 @@ export function MathExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
     //return outObj;
 }
 
-function IdMathExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+function IdMathExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.Identifier);
     let outObj = new ExpPReturn();
     let name = node.getText();
@@ -41,24 +42,24 @@ function IdMathExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
     return outObj;
 }
 
-function NumMathExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+function NumMathExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let outObj = new ExpPReturn();
     let name = node.getText();
     outObj.setToken(name);
     return outObj;
 }
 
-function CallMathExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+function CallMathExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
-    return CallExpProcess(node,sfd);
+    return CallExpProcess.bind(this)(node);
 }
 
-function BinaryMathExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+function BinaryMathExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.BinaryExpression);
     let outObj = new ExpPReturn();
 
-    let lft = MathExpProcess(node.getLeft(),sfd);
-    let rit = MathExpProcess(node.getRight(),sfd);
+    let lft = MathExpProcess.bind(this)(node.getLeft());
+    let rit = MathExpProcess.bind(this)(node.getRight());
     let ope = node.getOperatorToken().getText();
 
     if(!lft.isVaild() || !rit.isVaild() || ope==null)
@@ -70,10 +71,10 @@ function BinaryMathExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
     return outObj;
     //return { "math": [fst,mid,lst]}
 }
-function ParentMathExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+function ParentMathExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.ParenthesizedExpression);
     let outObj = new ExpPReturn();
-    let subObj = MathExpProcess(node.getExpression(),sfd);
+    let subObj = MathExpProcess.bind(this)(node.getExpression());
     outObj.mergePreFuncList(subObj);
     outObj.setToken("("+subObj.getToken()+")");
     return outObj;

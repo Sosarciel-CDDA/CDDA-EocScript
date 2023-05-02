@@ -9,7 +9,8 @@ const Expression_1 = require("./Expression");
 function IfProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.IfStatement);
     let condition = node.getExpression();
-    let conditionObj = (0, Expression_1.AutoExpProcess)(condition, this.getSfd());
+    let exp = new Expression_1.CodeExpression(condition, this);
+    let conditionObj = exp.build();
     let ifBlockStat = node.getThenStatement();
     let elseBlock = node.getElseStatement();
     //let ifid = this.getSfd().genBlockId(BlockType.IF);

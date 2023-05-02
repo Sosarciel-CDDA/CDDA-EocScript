@@ -1,9 +1,9 @@
-import { Node, SyntaxKind } from "ts-morph";
+import { Expression, Node, SyntaxKind } from "ts-morph";
 import { SourceFileData } from "../../Interfaces";
 import { ExpProcess, ExpPReturn } from "./EPInterface";
 import { checkKind, throwLog } from "../../Functions";
 import { JArray, JToken } from "@/src/Utils";
-import { AutoExpProcess } from "./ExpressionProcess";
+import { CodeExpression } from "./ExpressionProcess";
 
 //特殊函数
 let _processFunc:Record<string,ExpProcess|null> = {
@@ -15,23 +15,23 @@ let _processFunc:Record<string,ExpProcess|null> = {
 }
 
 //调用函数
-export function CallExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+export function CallExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
     let out = new ExpPReturn();
 
     let id = node.getExpression().getText();
     let spFunc = _processFunc[id];
     if(spFunc!=null)
-        return spFunc(node,sfd);
+        return spFunc.bind(this)(node);
 
-    out.addPreFunc({ "run_eocs": sfd.getGlobalFuncID(id) });
-    out.setToken(sfd.getGlobalFuncReturnID(id));
+    out.addPreFunc({ "run_eocs": this.getSfd().getGlobalFuncID(id) });
+    out.setToken(this.getSfd().getGlobalFuncReturnID(id));
 
     return out;
 }
 
 //特殊函数EToken
-function EObjProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+function EObjProcess(this:CodeExpression,node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
 
     let out = new ExpPReturn();
@@ -47,46 +47,46 @@ function EObjProcess(node: Node,sfd:SourceFileData):ExpPReturn{
 }
 
 //直接输出字符串
-function DefaultProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+function DefaultProcess(this:CodeExpression,node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
     let out = new ExpPReturn();
     out.setToken(node.getText());
     return out;
 }
 
-function AndProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+function AndProcess(this:CodeExpression,node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
     let out = new ExpPReturn();
     let arr:JArray = [];
     let args = node.getArguments();
     for(let arg of args){
-        let result = AutoExpProcess(arg,sfd);
+        let result = this.process(arg);
         out.mergePreFuncList(result);
         arr.push(result.getToken());
     }
     out.setToken({and:arr});
     return out;
 }
-function OrProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+function OrProcess(this:CodeExpression,node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
     let out = new ExpPReturn();
     let arr:JArray = [];
     let args = node.getArguments();
     for(let arg of args){
-        let result = AutoExpProcess(arg,sfd);
+        let result = this.process(arg);
         out.mergePreFuncList(result);
         arr.push(result.getToken());
     }
     out.setToken({or:arr});
     return out;
 }
-function NotProcess(node: Node,sfd:SourceFileData):ExpPReturn{
+function NotProcess(this:CodeExpression,node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
     let out = new ExpPReturn();
 
     let arg = node.getArguments()[0];
 
-    let result = AutoExpProcess(arg,sfd);
+    let result = this.process(arg);
     out.mergePreFuncList(result);
 
     out.setToken({not:result.getToken()});

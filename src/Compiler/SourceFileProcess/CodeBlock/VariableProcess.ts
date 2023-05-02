@@ -1,10 +1,8 @@
-import { JArray, JToken } from "Utils";
-import { Node, VariableStatement,VariableDeclaration, SyntaxKind } from "ts-morph";
+import { Node, SyntaxKind } from "ts-morph";
 import { checkKind, logKind, throwLog } from '../Functions';
-import { SourceFileData } from "../Interfaces";
 import { CBPReturn } from "./NPInterfaces";
-import { AutoExpProcess } from "./Expression";
 import { CodeBlock } from "./CodeBlock";
+import { CodeExpression } from "./Expression";
 
 //变量声明处理
 export function VariableProcess(this:CodeBlock, node: Node):CBPReturn{
@@ -13,7 +11,8 @@ export function VariableProcess(this:CodeBlock, node: Node):CBPReturn{
     let declarationList = node.getDeclarationList().getDeclarations();
     let out = new CBPReturn();
     for(let declaration of declarationList){
-        let result = AutoExpProcess(declaration,this._sfd);
+        let exp = new CodeExpression(declaration,this);
+        let result = exp.build();
         out.addPreFuncList(result.getPreFuncs());
         out.addToken(result.getToken());
     }
