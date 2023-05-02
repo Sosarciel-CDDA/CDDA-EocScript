@@ -1,2 +1,2 @@
-node test
+node --trace-uncaught test.js
 pause

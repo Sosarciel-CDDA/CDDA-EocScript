@@ -21,13 +21,5 @@ module.exports = {
 };
 
 
-//import { register } from "esm-resolve";
-//
-//register({
-//  baseUrl: ".", // 项目根目录
-//  paths: {
-//    "@/*": ["dist/*"], // 将 @ 映射到 dist 目录
-//  },
-//});
-//
-//import("./dist/index.js");
+//https://ts-ast-viewer.com/
+//https://github.com/CleverRaven/Cataclysm-DDA/blob/master/doc/NPCs.md

@@ -37,7 +37,7 @@ if(and(a==1,b==2,c==3,or(d==4,e==5,not(f==6)))){
 }
 `);
 let sfd = compiler.build("testProject");
-//console.log(sfd.getSerializedText());
+console.log(sfd.getSerializedText());
 let compiler1 = new Compiler(`
     if(u_val(mana)<u_val(mana_max))
         u_val(mana)+=u_val(mana_max)/10;
@@ -47,4 +47,4 @@ let compiler1 = new Compiler(`
         c=1
 `);
 let sfd1 = compiler1.build("testProject");
-console.log(sfd1.getSerializedText());
+//console.log(sfd1.getSerializedText());
