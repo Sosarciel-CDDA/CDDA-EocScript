@@ -8,6 +8,7 @@ const CalcExpProcess_1 = require("./CalcExpProcess");
 //特殊函数
 let _processFunc = {
     "eobj": EObjProcess,
+    "earr": EArrProcess,
     "u_val": DefaultProcess,
     "and": AndProcess,
     "or": OrProcess,
@@ -79,6 +80,14 @@ function EObjProcess(node) {
         text = "(" + text + ")";
     let tokenObj = eval(text);
     out.setToken(tokenObj);
+    return out;
+}
+function EArrProcess(node) {
+    (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
+    let out = new EPInterface_1.ExpPReturn();
+    let text = node.getArguments()[0].getText();
+    let tokenArr = eval(text);
+    out.addPreFuncList(tokenArr);
     return out;
 }
 //直接输出字符串

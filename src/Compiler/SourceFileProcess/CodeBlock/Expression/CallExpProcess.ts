@@ -8,7 +8,8 @@ import { CalcExpProcess } from "./CalcExpProcess";
 
 //特殊函数
 let _processFunc:Record<string,ExpProcess|null> = {
-    "eobj"  :EObjProcess        ,//变量申明表达式 运行js 返回obj
+    "eobj"  :EObjProcess        ,//变量申明表达式 运行js 返回 obj
+    "earr"  :EArrProcess        ,//变量申明表达式 运行js 返回 array 多个preFunc
     "u_val" :DefaultProcess     ,//内置函数 转为字符串
     "and"   :AndProcess         ,
     "or"    :OrProcess          ,
@@ -93,6 +94,16 @@ function EObjProcess(this:CodeExpression,node: Node):ExpPReturn{
 
     let tokenObj = eval(text);
     out.setToken(tokenObj);
+    return out;
+}
+function EArrProcess(this:CodeExpression,node: Node):ExpPReturn{
+    checkKind(node,SyntaxKind.CallExpression);
+
+    let out = new ExpPReturn();
+
+    let text = node.getArguments()[0].getText();
+    let tokenArr = eval(text);
+    out.addPreFuncList(tokenArr);
     return out;
 }
 
