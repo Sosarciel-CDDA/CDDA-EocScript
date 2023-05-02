@@ -1,7 +1,7 @@
 import { Node } from "ts-morph";
 import { JArray, JToken } from "Utils";
 import { SourceFileData } from "../Interfaces";
-import { NodeProcess, ProcessReturn } from "./NPInterfaces";
+import { NodeProcess, CBPReturn } from "./NPInterfaces";
 export declare enum BlockType {
     IF = "if",
     ELSE = "else",
@@ -24,7 +24,7 @@ export declare class CodeBlock {
     getSfd(): SourceFileData;
     /**处理代码块
      */
-    build(): ProcessReturn;
+    build(): CBPReturn;
     /**处理申明列表
      */
     processStatments(node: Node | Array<Node>): (string | number | boolean | import("Utils").JObject | JArray | null)[];

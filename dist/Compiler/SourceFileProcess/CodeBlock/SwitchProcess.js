@@ -5,12 +5,12 @@ const ts_morph_1 = require("ts-morph");
 const Functions_1 = require("../Functions");
 const NPInterfaces_1 = require("./NPInterfaces");
 const CodeBlock_1 = require("./CodeBlock");
-const ExpressionProcess_1 = require("./ExpressionProcess");
+const Expression_1 = require("./Expression");
 function SwitchProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.ts.SyntaxKind.SwitchStatement);
-    let out = new NPInterfaces_1.ProcessReturn();
+    let out = new NPInterfaces_1.CBPReturn();
     let switchObj = {
-        "switch": (0, ExpressionProcess_1.AutoExpProcess)(node.getExpression(), this.getSfd()).getToken(),
+        "switch": (0, Expression_1.AutoExpProcess)(node.getExpression(), this.getSfd()).getToken(),
         "cases": [],
     };
     let cases = node.getCaseBlock().getClauses();

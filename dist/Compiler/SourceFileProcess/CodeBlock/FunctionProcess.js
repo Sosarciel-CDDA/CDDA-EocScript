@@ -13,6 +13,6 @@ function FunctionProcess(node) {
     let cb = new CodeBlock_1.CodeBlock(funcid, codeBody, this.getSfd());
     //let cb = new CodeBlock(codeBody,this._sfd,this._cbd.genSubBlock());
     cb.build();
-    return new NPInterfaces_1.ProcessReturn();
+    return new NPInterfaces_1.CBPReturn();
 }
 exports.FunctionProcess = FunctionProcess;

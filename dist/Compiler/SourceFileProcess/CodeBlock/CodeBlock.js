@@ -6,7 +6,7 @@ const VariableProcess_1 = require("./VariableProcess");
 const Functions_1 = require("../Functions");
 const JsonClass_1 = require("JsonClass");
 const FunctionProcess_1 = require("./FunctionProcess");
-const ExpressionProcess_1 = require("./ExpressionProcess");
+const Expression_1 = require("./Expression");
 const NPInterfaces_1 = require("./NPInterfaces");
 const IfProcess_1 = require("./IfProcess");
 const SwitchProcess_1 = require("./SwitchProcess");
@@ -20,15 +20,15 @@ var BlockType;
 let _processFunc = {
     [ts_morph_1.SyntaxKind.VariableStatement]: VariableProcess_1.VariableProcess,
     [ts_morph_1.SyntaxKind.FunctionDeclaration]: FunctionProcess_1.FunctionProcess,
-    [ts_morph_1.SyntaxKind.ExpressionStatement]: ExpressionProcess_1.ExpressionProcess,
+    [ts_morph_1.SyntaxKind.ExpressionStatement]: Expression_1.ExpressionProcess,
     [ts_morph_1.SyntaxKind.ReturnStatement]: ReturnProcess,
     [ts_morph_1.SyntaxKind.IfStatement]: IfProcess_1.IfProcess,
     [ts_morph_1.SyntaxKind.SwitchStatement]: SwitchProcess_1.SwitchProcess,
 };
 function ReturnProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.ReturnStatement);
-    let outlist = new NPInterfaces_1.ProcessReturn();
-    let rit = (0, ExpressionProcess_1.MathExpProcess)(node.getExpressionOrThrow(), this.getSfd());
+    let outlist = new NPInterfaces_1.CBPReturn();
+    let rit = (0, Expression_1.MathExpProcess)(node.getExpressionOrThrow(), this.getSfd());
     outlist.addPreFuncList(rit.getPreFuncs());
     let obj = { "math": [this.getReturnId(), "=", rit.getToken()] };
     outlist.addToken(obj);
@@ -45,7 +45,7 @@ class CodeBlock {
     _processTable = {
         [ts_morph_1.SyntaxKind.VariableStatement]: VariableProcess_1.VariableProcess,
         [ts_morph_1.SyntaxKind.FunctionDeclaration]: FunctionProcess_1.FunctionProcess,
-        [ts_morph_1.SyntaxKind.ExpressionStatement]: ExpressionProcess_1.ExpressionProcess,
+        [ts_morph_1.SyntaxKind.ExpressionStatement]: Expression_1.ExpressionProcess,
         [ts_morph_1.SyntaxKind.ReturnStatement]: ReturnProcess,
         [ts_morph_1.SyntaxKind.IfStatement]: IfProcess_1.IfProcess,
         [ts_morph_1.SyntaxKind.SwitchStatement]: SwitchProcess_1.SwitchProcess,
@@ -87,7 +87,7 @@ class CodeBlock {
             eoc.addFalseEffectList(this.processStatments(this._falseNode));
         let eocObj = eoc.build();
         this._sfd.addEoc(eocObj);
-        return new NPInterfaces_1.ProcessReturn([eoc.build()]);
+        return new NPInterfaces_1.CBPReturn([eoc.build()]);
     }
     /**处理申明列表
      */

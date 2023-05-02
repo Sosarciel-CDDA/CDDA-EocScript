@@ -30,7 +30,26 @@ export function ExpressionProcess(this:CodeBlock, node: Node):CBPReturn{
 
 //表达式处理路由
 export function AutoExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{
-    
+    //直接调用函数
+    if(node.isKind(SyntaxKind.CallExpression))
+    return CallStateExpProcess(node,sfd);
+
+    //表达式
+    if(node.isKind(SyntaxKind.BinaryExpression)){
+        let opera = node.getOperatorToken().getText();
+        if (['==', '>=', '<=', '>', '<', '=', '+=', '-=', '*=', '/=', '%='].includes(opera))
+            return CalcExpProcess(node,sfd);
+        return ValExpProcess(node,sfd);
+    }
+
+    //单字
+    if( node.isKind(SyntaxKind.Identifier)      ||
+        node.isKind(SyntaxKind.StringLiteral)   ||
+        node.isKind(SyntaxKind.NumericLiteral))
+        return ValExpProcess(node,sfd);
+
+    return CalcExpProcess(node,sfd);
+    //throw throwLog(node,"未知的申明表达式类型");
 }
 //直接调用函数
 function CallStateExpProcess(node: Node,sfd:SourceFileData):ExpPReturn{ 
