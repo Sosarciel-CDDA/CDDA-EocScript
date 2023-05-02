@@ -11,7 +11,7 @@
       "@/*": ["./*"],
       "Utils":       ["./src/Utils"]      ,
       "JsonClass":   ["./src/JsonClass"]  ,
-      "Interpreter": ["./src/Interpreter"]
+      "Compiler":    ["./src/Compiler"]
     }
   },
   "include": ["./src/**/*.ts", "./src/**/*.js"],

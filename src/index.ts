@@ -1,11 +1,12 @@
 export * from "./Utils";
 export * from "./JsonClass";
-export * from "./Interpreter";
+export * from "./Compiler";
 //https://ts-ast-viewer.com/
 //https://github.com/CleverRaven/Cataclysm-DDA/blob/master/doc/NPCs.md
+import Compiler from "./Compiler";
+if(false){
 
-import Interpreter from "./Interpreter";
-let inte = new Interpreter(`
+let inte = new Compiler(`
 EToken({a:1,b:2});
 EToken((()=>{
     let obj = {};
@@ -43,8 +44,8 @@ if(and(a==1,b==2,c==3,or(d==4,e==5,not(f==6)))){
 }
 `);
 let sfd = inte.build("testProject");
-//console.log(sfd.getSerializedText());
-let inte1 = new Interpreter(`
+console.log(sfd.getSerializedText());
+let inte1 = new Compiler(`
     if(u_val(mana)<u_val(mana_max))
         u_val(mana)+=u_val(mana_max)/10;
     else if(a==1)
@@ -53,4 +54,5 @@ let inte1 = new Interpreter(`
         c=1
 `);
 let sfd1 = inte1.build("testProject");
-console.log(sfd1.getSerializedText());
+//console.log(sfd1.getSerializedText());
+}

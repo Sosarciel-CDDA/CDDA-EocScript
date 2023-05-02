@@ -1,5 +1,3 @@
-//const tsconfig = require("./tsconfig.json");
-//console.log(tsconfig.compilerOptions);
 const tsconfigPaths = require("tsconfig-paths");
 
 const baseUrl = "."; // 项目根目录
@@ -7,7 +5,7 @@ const paths = {
     "@/*"                   : ["./*"]                       ,
     "@/src/*"               : ["./dist/*"]                  , // 将 @ 映射到 dist 目录
     "Utils"                 : ["./dist/Utils"]              ,
-    "Interpreter"           : ["./dist/Interpreter"]        ,
+    "Compiler"              : ["./dist/Compiler"]           ,
     "JsonClass"             : ["./dist/JsonClass"]          ,
 };
 
@@ -17,7 +15,11 @@ tsconfigPaths.register({
     paths,
 });
 
-require("./dist");
+const {Compiler} = require("./dist");
+module.exports = {
+    Compiler
+};
+
 
 //import { register } from "esm-resolve";
 //

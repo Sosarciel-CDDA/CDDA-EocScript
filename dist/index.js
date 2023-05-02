@@ -16,11 +16,12 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./Utils"), exports);
 __exportStar(require("./JsonClass"), exports);
-__exportStar(require("./Interpreter"), exports);
+__exportStar(require("./Compiler"), exports);
 //https://ts-ast-viewer.com/
 //https://github.com/CleverRaven/Cataclysm-DDA/blob/master/doc/NPCs.md
-const Interpreter_1 = require("./Interpreter");
-let inte = new Interpreter_1.default(`
+const Compiler_1 = require("./Compiler");
+if (false) {
+    let inte = new Compiler_1.default(`
 EToken({a:1,b:2});
 EToken((()=>{
     let obj = {};
@@ -57,9 +58,9 @@ if(and(a==1,b==2,c==3,or(d==4,e==5,not(f==6)))){
     b=2;
 }
 `);
-let sfd = inte.build("testProject");
-//console.log(sfd.getSerializedText());
-let inte1 = new Interpreter_1.default(`
+    let sfd = inte.build("testProject");
+    console.log(sfd.getSerializedText());
+    let inte1 = new Compiler_1.default(`
     if(u_val(mana)<u_val(mana_max))
         u_val(mana)+=u_val(mana_max)/10;
     else if(a==1)
@@ -67,5 +68,6 @@ let inte1 = new Interpreter_1.default(`
     else
         c=1
 `);
-let sfd1 = inte1.build("testProject");
-console.log(sfd1.getSerializedText());
+    let sfd1 = inte1.build("testProject");
+    //console.log(sfd1.getSerializedText());
+}
