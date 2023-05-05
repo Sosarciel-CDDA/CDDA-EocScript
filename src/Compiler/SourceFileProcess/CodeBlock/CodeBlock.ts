@@ -28,7 +28,7 @@ let _processFunc:Record<number,NodeProcess|null> = {
     [SyntaxKind.SwitchStatement     ]:SwitchProcess     ,
 };
 
-
+//处理retur表达式
 function ReturnProcess(this:CodeBlock, node: Node):CBPReturn{
     checkKind(node,SyntaxKind.ReturnStatement);
 

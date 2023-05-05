@@ -1,6 +1,6 @@
 [
   {
-    "id": "if-test_if_0_if_1",
+    "id": "if_test_if_0_if_1",
     "type": "effect_on_condition",
     "effect": [
       {"math":["c","=","4"]}
@@ -11,22 +11,22 @@
     "condition": {"math":["b","==","1"]}
   },
   {
-    "id": "if-test_if_0",
+    "id": "if_test_if_0",
     "type": "effect_on_condition",
     "effect": [
       {"math":["a","=","2"]},
       {"math":["b","=","3"]}
     ],
     "false_effect": [
-      {"run_eocs":"if-test_if_0_if_1"}
+      {"run_eocs":"if_test_if_0_if_1"}
     ],
     "condition": {"math":["a","==","1"]}
   },
   {
-    "id": "if-test",
+    "id": "if_test",
     "type": "effect_on_condition",
     "effect": [
-      {"run_eocs":"if-test_if_0"}
+      {"run_eocs":"if_test_if_0"}
     ]
   }
 ]

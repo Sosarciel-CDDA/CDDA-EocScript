@@ -58,8 +58,10 @@ class GlobalFunction {
     /**获取全局函数返回值ID
      * @param rawFuncName
      */
-    getReturnID() {
-        return this.getSfd().getId() + "_" + this.getRawName() + "_return";
+    getReturnID(args) {
+        //let cid = this.getId(args);
+        //return this.getSfd().getId()+"_"+this.getRawName()+"_"+cid+"_return";
+        return this.getCodeBlock(args)?.getReturnId();
     }
 }
 exports.GlobalFunction = GlobalFunction;

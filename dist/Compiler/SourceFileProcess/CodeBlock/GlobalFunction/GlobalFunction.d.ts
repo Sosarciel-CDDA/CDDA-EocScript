@@ -18,5 +18,5 @@ export declare class GlobalFunction {
     /**获取全局函数返回值ID
      * @param rawFuncName
      */
-    getReturnID(): string;
+    getReturnID(args?: Array<string>): string | undefined;
 }

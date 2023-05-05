@@ -26,7 +26,18 @@ for(let filePath of fileList){
         const outFilePath = filePath.replace(path.normalize(input),path.normalize(output)).replace(path.extname(fileName), ".json");
 
         let compiler = new Compiler(fileContent);
-        let sfd = compiler.build(baseName);
+
+        let eocname = baseName;
+        //替换特殊符号
+        let regex = /[+\-*/><]/g;
+        if (regex.test(eocname)) {
+            eocname = baseName.replace(regex, '_');
+            console.log(`Change eoc name:`);
+            console.log(`Original file name: ${baseName}`);
+            console.log(`Replaced eoc name: ${eocname}`);
+        }
+
+        let sfd = compiler.build(eocname);
         let text = sfd.getSerializedText();
         //console.log(text);
         writeJSONFileByText(outFilePath,text);

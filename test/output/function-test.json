@@ -1,36 +1,36 @@
 [
   {
-    "id": "function-test_regenVal",
+    "id": "function_test_regenVal",
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val(id)","+=","1"]},
-      {"math":["function-test_regenVal_return","=","123"]}
+      {"math":["function_test_regenVal_return","=","123"]}
     ]
   },
   {
-    "id": "function-test_regenVal_a",
+    "id": "function_test_regenVal_a",
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val(a)","+=","1"]},
-      {"math":["function-test_regenVal_a_return","=","123"]}
+      {"math":["function_test_regenVal_a_return","=","123"]}
     ]
   },
   {
-    "id": "function-test_regenVal_b",
+    "id": "function_test_regenVal_b",
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val(b)","+=","1"]},
-      {"math":["function-test_regenVal_b_return","=","123"]}
+      {"math":["function_test_regenVal_b_return","=","123"]}
     ]
   },
   {
-    "id": "function-test",
+    "id": "function_test",
     "type": "effect_on_condition",
     "effect": [
-      {"run_eocs":"function-test_regenVal_a"},
-      {"run_eocs":"function-test_regenVal_b"},
-      {"run_eocs":"function-test_regenVal_b"},
-      {"math":["c","=","function-test_regenVal_return+1"]}
+      {"run_eocs":"function_test_regenVal_a"},
+      {"run_eocs":"function_test_regenVal_b"},
+      {"run_eocs":"function_test_regenVal_b"},
+      {"math":["c","=","function_test_regenVal_b_return+1"]}
     ]
   }
 ]

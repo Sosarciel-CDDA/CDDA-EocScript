@@ -1,6 +1,6 @@
 [
   {
-    "id": "expression-test",
+    "id": "expression_test",
     "type": "effect_on_condition",
     "effect": [
       {"math":["a","=","1"]},

@@ -76,7 +76,10 @@ export function CallExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let cb = gfunc.getCodeBlock(args);
 
     out.addPreFunc({ "run_eocs": gfunc.getId(args) });
-    out.setToken(gfunc.getReturnID());
+
+    let returnid = gfunc.getReturnID(args);
+    if(returnid!=null)
+        out.setToken(returnid);
 
     return out;
 }

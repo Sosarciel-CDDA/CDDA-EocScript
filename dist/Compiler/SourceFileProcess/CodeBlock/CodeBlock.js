@@ -26,6 +26,7 @@ let _processFunc = {
     [ts_morph_1.SyntaxKind.IfStatement]: IfProcess_1.IfProcess,
     [ts_morph_1.SyntaxKind.SwitchStatement]: SwitchProcess_1.SwitchProcess,
 };
+//处理retur表达式
 function ReturnProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.ReturnStatement);
     let outlist = new NPInterfaces_1.CBPReturn();

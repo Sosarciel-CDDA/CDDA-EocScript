@@ -66,7 +66,9 @@ function CallExpProcess(node) {
     //动态创建代码块
     let cb = gfunc.getCodeBlock(args);
     out.addPreFunc({ "run_eocs": gfunc.getId(args) });
-    out.setToken(gfunc.getReturnID());
+    let returnid = gfunc.getReturnID(args);
+    if (returnid != null)
+        out.setToken(returnid);
     return out;
 }
 exports.CallExpProcess = CallExpProcess;
