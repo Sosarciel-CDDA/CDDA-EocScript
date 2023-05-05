@@ -1,0 +1,11 @@
+[
+  {
+    "id": "expression-test",
+    "type": "effect_on_condition",
+    "effect": [
+      {"math":["a","=","1"]},
+      {"math":["a","+=","1"]},
+      {"math":["b","=","a+c"]}
+    ]
+  }
+]

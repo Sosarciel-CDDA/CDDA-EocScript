@@ -1,0 +1,23 @@
+[
+  {
+    "id": "switch-test_clause_0",
+    "type": "effect_on_condition",
+    "effect": [
+      {"math":["b","=","1"]}
+    ]
+  },
+  {
+    "id": "switch-test_clause_1",
+    "type": "effect_on_condition",
+    "effect": [
+      {"math":["b","=","2"]}
+    ]
+  },
+  {
+    "id": "switch-test",
+    "type": "effect_on_condition",
+    "effect": [
+      {"switch":{"math":["a"]},"cases":[{"case":1,"effect":[{"run_eocs":"switch-test_clause_0"}]},{"case":2,"effect":[{"run_eocs":"switch-test_clause_1"}]}]}
+    ]
+  }
+]

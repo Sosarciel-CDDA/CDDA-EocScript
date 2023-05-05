@@ -1,0 +1,9 @@
+[
+  {
+    "id": "let-test",
+    "type": "effect_on_condition",
+    "effect": [
+      {"math":["a","=","1"]}
+    ]
+  }
+]
