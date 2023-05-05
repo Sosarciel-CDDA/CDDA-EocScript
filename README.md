@@ -74,7 +74,7 @@ let c = regenVal(b)+1;
 函数 | 描述
 --- | ---
 `eobj(obj)`                 |在当前代码块中添加一个不会被编译的对象 `eobj({message:"hello world"})`
-`earr(obj[])`               |在当前代码块中添加多个不会被编译的对象，无法在表达式中使用 `eobj([{num:1},{num:2}])`
+`earr(obj[])`               |在当前代码块中添加多个不会被编译的对象，无法在表达式中使用 `earr([{num:1},{num:2}])`
 `u_val(...)`                |math所支持的函数只会解析传入参数，不会作其它改变
 `and(...exps)`              |将参数组合为eoc所支持的and运算块 `if(and(a==1,b==2,c==3))`
 `or(...exps)`               |将参数组合为or所支持的or运算块
