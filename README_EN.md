@@ -1,4 +1,7 @@
 
+[**中文简体**](./README.md) | [**English**](./README_EN.md)
+
+
 - [description](#Description)
 - [Use](#Use)
 - [Syntax](#syntax)
