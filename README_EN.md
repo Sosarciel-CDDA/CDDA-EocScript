@@ -29,16 +29,22 @@ Type | Description
 
 ## Implemented Syntax Or Keywords
 ### expression
+[**js**](./test/input/expression-test.js)
+[**json**](./test/output/expression-test.json)
 ```
 a=1;
 a+=1;
 b=a+c;
 ```
 ### let
+[**js**](./test/input/let-test.js)
+[**json**](./test/output/let-test.json)
 ```js
 let a=1;
 ```
 ### if
+[**js**](./test/input/if-test.js)
+[**json**](./test/output/if-test.json)
 ```js
 if(a==1){
   a=2;
@@ -49,6 +55,8 @@ else
   d=5;
 ```
 ### switch
+[**js**](./test/input/switch-test.js)
+[**json**](./test/output/switch-test.json)
 ```js
 switch(a){
   case 1:
@@ -58,6 +66,8 @@ switch(a){
 }
 ```
 ### function
+[**js**](./test/input/function-test.js)
+[**json**](./test/output/function-test.json)
 ```js
 function regenVal(id){
   u_val(id)+=1;
