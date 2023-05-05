@@ -73,15 +73,15 @@ let c = regenVal(b)+1;
 ## 特殊函数
 函数 | 描述
 --- | ---
-`eobj(obj)`                 |在当前代码块中添加一个不会被编译的对象
-`earr(obj[])`               |在当前代码块中添加多个不会被编译的对象，无法在表达式中使用
+`eobj(obj)`                 |在当前代码块中添加一个不会被编译的对象 `eobj({message:"hello world"})`
+`earr(obj[])`               |在当前代码块中添加多个不会被编译的对象，无法在表达式中使用 `eobj([{num:1},{num:2}])`
 `u_val(...)`                |math所支持的函数只会解析传入参数，不会作其它改变
-`and(...exps)`              |将参数组合为eoc所支持的and运算块
+`and(...exps)`              |将参数组合为eoc所支持的and运算块 `if(and(a==1,b==2,c==3))`
 `or(...exps)`               |将参数组合为or所支持的or运算块
 `not(exp)`                  |将参数组合为or所支持的not运算块
-`required_event(obj)`       |将当前代码块对应的eoc上的`required_event`字段设置为`obj`,
-`recurrence(obj)`           |将当前代码块对应的eoc上的`recurrence`字段设置为`obj`,
-`deactivate_condition(exp)` |将当前代码块对应的eoc上的`deactivate_condition`字段设置为`exp`所编译的obj,
-`global(obj)`               |将当前代码块对应的eoc上的`global`字段设置为`obj`,
-`run_for_npcs(obj)`         |将当前代码块对应的eoc上的`run_for_npcs`字段设置为`obj`,
-`EOC_TYPE(obj)`             |将当前代码块对应的eoc上的`EOC_TYPE`字段设置为`obj`,
+`required_event(obj)`       |将当前代码块对应的eoc上的`required_event`字段设置为`obj`
+`recurrence(obj)`           |将当前代码块对应的eoc上的`recurrence`字段设置为`obj` `recurrence([10,20])`
+`deactivate_condition(exp)` |将当前代码块对应的eoc上的`deactivate_condition`字段设置为`exp`所编译的obj
+`global(obj)`               |将当前代码块对应的eoc上的`global`字段设置为`obj`
+`run_for_npcs(obj)`         |将当前代码块对应的eoc上的`run_for_npcs`字段设置为`obj`
+`EOC_TYPE(obj)`             |将当前代码块对应的eoc上的`EOC_TYPE`字段设置为`obj`
