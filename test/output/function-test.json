@@ -4,7 +4,7 @@
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val('mana')","+=","num"]},
-      {"math":["function_test_regenMana_return","=","123"]}
+      {"math":["function_test_regenMana_rtn","=","123"]}
     ]
   },
   {
@@ -12,23 +12,23 @@
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val(id,bp)","+=","1"]},
-      {"math":["function_test_regenVal_return","=","123"]}
+      {"math":["function_test_regenVal_rtn","=","123"]}
     ]
   },
   {
-    "id": "function_test_regenVal_'hp'_'bp1'",
+    "id": "function_test_regenVal_hp_bp1",
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val('hp','bp1')","+=","1"]},
-      {"math":["function_test_regenVal_'hp'_'bp1'_return","=","123"]}
+      {"math":["function_test_regenVal_hp_bp1_rtn","=","123"]}
     ]
   },
   {
-    "id": "function_test_regenVal_'hp'_'bp2'",
+    "id": "function_test_regenVal_hp_bp2",
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val('hp','bp2')","+=","1"]},
-      {"math":["function_test_regenVal_'hp'_'bp2'_return","=","123"]}
+      {"math":["function_test_regenVal_hp_bp2_rtn","=","123"]}
     ]
   },
   {
@@ -36,17 +36,17 @@
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val('mana')","+=","10"]},
-      {"math":["function_test_regenMana_10_return","=","123"]}
+      {"math":["function_test_regenMana_10_rtn","=","123"]}
     ]
   },
   {
     "id": "function_test",
     "type": "effect_on_condition",
     "effect": [
-      {"run_eocs":"function_test_regenVal_'hp'_'bp1'"},
-      {"run_eocs":"function_test_regenVal_'hp'_'bp2'"},
-      {"run_eocs":"function_test_regenVal_'hp'_'bp2'"},
-      {"math":["c","=","function_test_regenVal_'hp'_'bp2'_return+1"]},
+      {"run_eocs":"function_test_regenVal_hp_bp1"},
+      {"run_eocs":"function_test_regenVal_hp_bp2"},
+      {"run_eocs":"function_test_regenVal_hp_bp2"},
+      {"math":["c","=","function_test_regenVal_hp_bp2_rtn+1"]},
       {"run_eocs":"function_test_regenMana_10"}
     ]
   }

@@ -37,7 +37,7 @@ export class GlobalFunction{
             for(let arg of args)
                 base+="_"+arg;
         }
-
+        base = base.replace(/[+\-*/><']/g,"");
         return base;
     }
     getCodeBlock(args?:Array<string>){

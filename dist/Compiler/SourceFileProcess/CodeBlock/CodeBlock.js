@@ -14,9 +14,9 @@ const ExpressionProcess_1 = require("./ExpressionProcess");
 var BlockType;
 (function (BlockType) {
     BlockType["IF"] = "if";
-    BlockType["ELSE"] = "else";
-    BlockType["CLAUSE"] = "clause";
-    BlockType["OTHER"] = "other";
+    BlockType["ELSE"] = "el";
+    BlockType["CLAUSE"] = "ca";
+    BlockType["OTHER"] = "ot";
 })(BlockType = exports.BlockType || (exports.BlockType = {}));
 let _processFunc = {
     [ts_morph_1.SyntaxKind.VariableStatement]: VariableProcess_1.VariableProcess,
@@ -69,7 +69,7 @@ class CodeBlock {
         return this._id;
     }
     getReturnId() {
-        return this.getId() + "_return";
+        return this.getId() + "_rtn";
     }
     getParentBlock() {
         return this._parentBlock;

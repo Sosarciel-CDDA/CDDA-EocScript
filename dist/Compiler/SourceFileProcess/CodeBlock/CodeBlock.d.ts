@@ -4,9 +4,9 @@ import { SourceFileData } from "../Interfaces";
 import { NodeProcess, CBPReturn } from "./NPInterfaces";
 export declare enum BlockType {
     IF = "if",
-    ELSE = "else",
-    CLAUSE = "clause",
-    OTHER = "other"
+    ELSE = "el",
+    CLAUSE = "ca",
+    OTHER = "ot"
 }
 export declare class CodeBlock {
     _id: string;
