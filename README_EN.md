@@ -74,7 +74,7 @@ Function | Description
 `eobj(obj)`                 |Add an object to the current block of code that will not be compiled
 `earr(obj[])`               |Add multiple objects to the current block of code that will not be compiled and cannot be used in an expression
 `u_val(...)`                |The functions supported by math only parse incoming parameters and make no other changes
-`and(...exps)`              |Combining parameters into 'and' blocks supported by eoc 'if(and(a==1,b==2,c==3))'
+`and(...exps)`              |Combining parameters into 'and' blocks supported by eoc `if(and(a==1,b==2,c==3))`
 `or(...exps)`               |Combining parameters into 'or' blocks supported by eoc
 `not(exp)`                  |Combining parameters into 'not' blocks supported by eoc
 `required_event(obj)`       |Set the current block of code corresponding to the eoc on the `required_event` field set to `obj`,
