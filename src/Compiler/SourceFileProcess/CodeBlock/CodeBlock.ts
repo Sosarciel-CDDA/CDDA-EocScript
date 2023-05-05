@@ -13,10 +13,10 @@ import { ExpressionProcess } from "./ExpressionProcess";
 
 
 export enum BlockType{
-    IF      = "if"      ,
-    ELSE    = "else"    ,
-    CLAUSE  = "clause"  ,
-    OTHER   = "other"   ,
+    IF      = "if"    ,
+    ELSE    = "el"    ,
+    CLAUSE  = "ca"    ,
+    OTHER   = "ot"    ,
 }
 
 let _processFunc:Record<number,NodeProcess|null> = {
@@ -78,7 +78,7 @@ export class CodeBlock{
         return this._id;
     }
     getReturnId(){
-        return this.getId()+"_return";
+        return this.getId()+"_rtn";
     }
     getParentBlock(){
         return this._parentBlock;

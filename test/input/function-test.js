@@ -1,7 +1,12 @@
-function regenVal(id){
-  u_val(id)+=1;
+function regenMana(num){
+  u_val('mana')+=num;
   return 123;
 }
-regenVal(a)
-regenVal(b)
-let c = regenVal(b)+1;
+function regenVal(id,bp){
+  u_val(id,bp)+=1;
+  return 123;
+}
+regenVal('hp','bp1')
+regenVal('hp','bp2')
+let c = regenVal('hp','bp2')+1;
+regenMana(10);
