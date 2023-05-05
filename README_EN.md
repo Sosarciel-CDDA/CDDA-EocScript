@@ -37,14 +37,14 @@ a+=1;
 b=a+c;
 ```
 ### let
-sample [**js**](./test/input/let-test.js)
-sample [**json**](./test/output/let-test.json)
+sample [**js**](./test/input/let-test.js)  
+sample [**json**](./test/output/let-test.json)  
 ```js
 let a=1;
 ```
 ### if
-sample [**js**](./test/input/if-test.js)
-sample [**json**](./test/output/if-test.json)
+sample [**js**](./test/input/if-test.js)  
+sample [**json**](./test/output/if-test.json)  
 ```js
 if(a==1){
   a=2;
@@ -55,8 +55,8 @@ else
   d=5;
 ```
 ### switch
-sample [**js**](./test/input/switch-test.js)
-sample [**json**](./test/output/switch-test.json)
+sample [**js**](./test/input/switch-test.js)  
+sample [**json**](./test/output/switch-test.json)  
 ```js
 switch(a){
   case 1:
@@ -66,8 +66,8 @@ switch(a){
 }
 ```
 ### function
-sample [**js**](./test/input/function-test.js)
-sample [**json**](./test/output/function-test.json)
+sample [**js**](./test/input/function-test.js)  
+sample [**json**](./test/output/function-test.json)  
 ```js
 function regenVal(id){
   u_val(id)+=1;
