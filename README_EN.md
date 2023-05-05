@@ -65,7 +65,7 @@ regenVal(b)
 let c = regenVal(b)+1;
 ```
 
-## Combining parameters into 'and' blocks supported by eoc
+## Special Functions
 Function | Description
 --- | ---
 `eobj(obj)`                 |Add an object to the current block of code that will not be compiled
