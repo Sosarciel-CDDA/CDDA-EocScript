@@ -68,7 +68,7 @@ export class CodeBlock{
     _eocFieldTable:Record<string,JToken>={}
 
     constructor(id:string,node: Node|Array<Node>,sfd:SourceFileData,condition?:JToken, falseNode?: Node|Array<Node>){
-        this._id    =id         ;
+        this._id    = id     ;
         this._node  = node   ;
         this._sfd   = sfd    ;
         this._condition = condition;
@@ -77,19 +77,29 @@ export class CodeBlock{
     getId(){
         return this._id;
     }
+
+    getRootId(){
+        return this.getSfd().getId();
+    }
+
     getReturnId(){
         return this.getId()+"_rtn";
     }
     getParentBlock(){
         return this._parentBlock;
     }
-    genSubBlock(id:BlockType,node: Node|Array<Node>,sfd:SourceFileData,condition?:JToken, falseNode?: Node|Array<Node>){
-        let rid = sfd.genRID();
-        let subBlockId = this.getId()+"_"+id+"_"+rid;
-        let subBolck = new CodeBlock(subBlockId,node,sfd,condition,falseNode);
-        subBolck._parentBlock = this;
-        return subBolck;
+    setParentBlock(block:CodeBlock){
+        this._parentBlock = block;
     }
+
+    genSubBlock(id:BlockType,node: Node|Array<Node>,condition?:JToken, falseNode?: Node|Array<Node>){
+        let sfd = this.getSfd();
+        let subBlockId = this.getRootId()+"_"+id+sfd.genRID();
+        let subBlopck = new CodeBlock(subBlockId,node,sfd,condition,falseNode);
+        subBlopck.setParentBlock(this);
+        return subBlopck;
+    }
+
     getSfd(){
         return this._sfd;
     }

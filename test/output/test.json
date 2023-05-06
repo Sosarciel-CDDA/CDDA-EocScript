@@ -35,7 +35,7 @@
     ]
   },
   {
-    "id": "test_if_0",
+    "id": "test_if0",
     "type": "effect_on_condition",
     "effect": [
       {"math":["i","=","0"]},
@@ -51,7 +51,7 @@
     "type": "effect_on_condition",
     "effect": [
       {"math":["i","+=","1"]},
-      {"run_eocs":"test_if_0"},
+      {"run_eocs":"test_if0"},
       {"earrt":1},
       {"earrt":2}
     ],

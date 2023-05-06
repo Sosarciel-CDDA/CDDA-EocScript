@@ -20,9 +20,11 @@ export declare class CodeBlock {
     _eocFieldTable: Record<string, JToken>;
     constructor(id: string, node: Node | Array<Node>, sfd: SourceFileData, condition?: JToken, falseNode?: Node | Array<Node>);
     getId(): string;
+    getRootId(): string;
     getReturnId(): string;
     getParentBlock(): CodeBlock | undefined;
-    genSubBlock(id: BlockType, node: Node | Array<Node>, sfd: SourceFileData, condition?: JToken, falseNode?: Node | Array<Node>): CodeBlock;
+    setParentBlock(block: CodeBlock): void;
+    genSubBlock(id: BlockType, node: Node | Array<Node>, condition?: JToken, falseNode?: Node | Array<Node>): CodeBlock;
     getSfd(): SourceFileData;
     addPassArgs(origVal: string, targetVal: string): void;
     getLocalVal(origVal: string): string;

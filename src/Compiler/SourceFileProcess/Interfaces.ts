@@ -1,6 +1,7 @@
 import { JArray, JObject, JToken, deepClone } from "Utils";
 import { GlobalFunction } from "./CodeBlock/GlobalFunction";
 import { Node } from "ts-morph";
+import { BlockType, CodeBlock } from "./CodeBlock";
 
 export class SourceFileData{
     _id:string;
@@ -8,7 +9,8 @@ export class SourceFileData{
     _count:number=0;
     _serializedText:string|null=null;
 
-    _globalFuncTable:Record<string,GlobalFunction|null>={}
+    //全局函数ID表 用于确认是否有对应参数的全局函数
+    _globalFuncTable:Record<string,GlobalFunction|null>={};
 
     constructor(id:string,rootArray?:JArray){
         this._id=id;

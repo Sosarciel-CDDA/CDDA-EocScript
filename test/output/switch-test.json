@@ -1,13 +1,13 @@
 [
   {
-    "id": "switch_test_ca_0",
+    "id": "switch_test_ca0",
     "type": "effect_on_condition",
     "effect": [
       {"math":["b","=","1"]}
     ]
   },
   {
-    "id": "switch_test_ca_1",
+    "id": "switch_test_ca1",
     "type": "effect_on_condition",
     "effect": [
       {"math":["b","=","2"]}
@@ -17,7 +17,7 @@
     "id": "switch_test",
     "type": "effect_on_condition",
     "effect": [
-      {"switch":{"math":["a"]},"cases":[{"case":1,"effect":[{"run_eocs":"switch_test_ca_0"}]},{"case":2,"effect":[{"run_eocs":"switch_test_ca_1"}]}]}
+      {"switch":{"math":["a"]},"cases":[{"case":1,"effect":[{"run_eocs":"switch_test_ca0"}]},{"case":2,"effect":[{"run_eocs":"switch_test_ca1"}]}]}
     ]
   }
 ]

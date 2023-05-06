@@ -68,18 +68,24 @@ class CodeBlock {
     getId() {
         return this._id;
     }
+    getRootId() {
+        return this.getSfd().getId();
+    }
     getReturnId() {
         return this.getId() + "_rtn";
     }
     getParentBlock() {
         return this._parentBlock;
     }
-    genSubBlock(id, node, sfd, condition, falseNode) {
-        let rid = sfd.genRID();
-        let subBlockId = this.getId() + "_" + id + "_" + rid;
-        let subBolck = new CodeBlock(subBlockId, node, sfd, condition, falseNode);
-        subBolck._parentBlock = this;
-        return subBolck;
+    setParentBlock(block) {
+        this._parentBlock = block;
+    }
+    genSubBlock(id, node, condition, falseNode) {
+        let sfd = this.getSfd();
+        let subBlockId = this.getRootId() + "_" + id + sfd.genRID();
+        let subBlopck = new CodeBlock(subBlockId, node, sfd, condition, falseNode);
+        subBlopck.setParentBlock(this);
+        return subBlopck;
     }
     getSfd() {
         return this._sfd;

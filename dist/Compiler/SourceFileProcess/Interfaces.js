@@ -8,6 +8,7 @@ class SourceFileData {
     _rootArray;
     _count = 0;
     _serializedText = null;
+    //全局函数ID表 用于确认是否有对应参数的全局函数
     _globalFuncTable = {};
     constructor(id, rootArray) {
         this._id = id;

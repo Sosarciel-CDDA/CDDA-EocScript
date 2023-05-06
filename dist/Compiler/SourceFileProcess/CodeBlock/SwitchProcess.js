@@ -22,7 +22,7 @@ function SwitchProcess(node) {
             let caToken = parseInt(caseClause.getExpression().getText());
             //let caseid = this.getSfd().genBlockId(BlockType.CLAUSE);
             //let blockObj = ca.getFirstDescendantByKindOrThrow(SyntaxKind.Block);
-            let block = this.genSubBlock(CodeBlock_1.BlockType.CLAUSE, caseClause, this.getSfd());
+            let block = this.genSubBlock(CodeBlock_1.BlockType.CLAUSE, caseClause);
             let blockObj = block.build();
             out.mergePreFuncList(blockObj);
             switchObj.cases.push({

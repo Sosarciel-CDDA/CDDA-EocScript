@@ -19,21 +19,21 @@
     ]
   },
   {
-    "id": "test_ca_0",
+    "id": "test_ca0",
     "type": "effect_on_condition",
     "effect": [
       {"math":["a","=","1"]}
     ]
   },
   {
-    "id": "test_ca_1",
+    "id": "test_ca1",
     "type": "effect_on_condition",
     "effect": [
       {"math":["b","=","1"]}
     ]
   },
   {
-    "id": "test_if_2",
+    "id": "test_if2",
     "type": "effect_on_condition",
     "effect": [
       {"math":["b","=","2"]}
@@ -41,14 +41,14 @@
     "condition": {"math":["a","==","test_tsfunc_rtn"]}
   },
   {
-    "id": "test_if_3",
+    "id": "test_if3",
     "type": "effect_on_condition",
     "effect": [
       {"math":["b","=","2"]}
     ]
   },
   {
-    "id": "test_if_4",
+    "id": "test_if4",
     "type": "effect_on_condition",
     "effect": [
       {"math":["b","=","2"]}
@@ -62,16 +62,16 @@
       {"A":1,"B":2,"C":3,"D":4,"E":5,"F":6,"G":7,"H":8,"I":9,"J":10},
       {"math":["a","=","1"]},
       {"math":["b","=","2+(a+3)+c+d*2"]},
-      {"switch":{"math":["a"]},"cases":[{"case":1,"effect":[{"run_eocs":"test_ca_0"}]},{"case":2,"effect":[{"run_eocs":"test_ca_1"}]}]},
+      {"switch":{"math":["a"]},"cases":[{"case":1,"effect":[{"run_eocs":"test_ca0"}]},{"case":2,"effect":[{"run_eocs":"test_ca1"}]}]},
       {"math":["c","=","3"]},
       {"run_eocs":"test_tsfunc"},
       {"run_eocs":"test_test2"},
       {"math":["sss","=","test_test2_rtn"]},
       {"run_eocs":"test_tsfunc"},
-      {"run_eocs":"test_if_2"},
+      {"run_eocs":"test_if2"},
       {"run_eocs":"EToken"},
-      {"run_eocs":"test_if_3"},
-      {"run_eocs":"test_if_4"}
+      {"run_eocs":"test_if3"},
+      {"run_eocs":"test_if4"}
     ]
   }
 ]

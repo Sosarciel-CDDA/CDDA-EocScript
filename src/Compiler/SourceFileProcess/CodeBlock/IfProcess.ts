@@ -13,7 +13,7 @@ export function IfProcess(this:CodeBlock, node: Node):CBPReturn{
     let ifBlockStat = node.getThenStatement();
     let elseBlock = node.getElseStatement();
     //let ifid = this.getSfd().genBlockId(BlockType.IF);
-    let ifBlock = this.genSubBlock(BlockType.IF,ifBlockStat,this.getSfd(),conditionObj.getToken(),elseBlock);
+    let ifBlock = this.genSubBlock(BlockType.IF,ifBlockStat,conditionObj.getToken(),elseBlock);
     let ifBlockObj = ifBlock.build();
 
     let out = new CBPReturn();

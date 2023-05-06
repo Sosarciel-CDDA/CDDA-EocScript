@@ -14,7 +14,7 @@ function IfProcess(node) {
     let ifBlockStat = node.getThenStatement();
     let elseBlock = node.getElseStatement();
     //let ifid = this.getSfd().genBlockId(BlockType.IF);
-    let ifBlock = this.genSubBlock(CodeBlock_1.BlockType.IF, ifBlockStat, this.getSfd(), conditionObj.getToken(), elseBlock);
+    let ifBlock = this.genSubBlock(CodeBlock_1.BlockType.IF, ifBlockStat, conditionObj.getToken(), elseBlock);
     let ifBlockObj = ifBlock.build();
     let out = new NPInterfaces_1.CBPReturn();
     out.addPreFuncList(conditionObj.getPreFuncs());

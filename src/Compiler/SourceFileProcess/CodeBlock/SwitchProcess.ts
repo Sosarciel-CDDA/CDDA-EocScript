@@ -24,7 +24,7 @@ export function SwitchProcess(this:CodeBlock, node: Node):CBPReturn{
             let caToken = parseInt(caseClause.getExpression().getText());
             //let caseid = this.getSfd().genBlockId(BlockType.CLAUSE);
             //let blockObj = ca.getFirstDescendantByKindOrThrow(SyntaxKind.Block);
-            let block = this.genSubBlock(BlockType.CLAUSE,caseClause,this.getSfd());
+            let block = this.genSubBlock(BlockType.CLAUSE,caseClause);
             let blockObj = block.build();
             out.mergePreFuncList(blockObj);
             (switchObj.cases as JArray).push({
