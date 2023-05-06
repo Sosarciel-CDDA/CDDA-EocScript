@@ -5,7 +5,7 @@
     "tsconfig-paths": "^4.2.0"
   },
   "name": "cdda-eocscript",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "complie js to eocjson",
   "main": "index.js",
   "scripts": {
