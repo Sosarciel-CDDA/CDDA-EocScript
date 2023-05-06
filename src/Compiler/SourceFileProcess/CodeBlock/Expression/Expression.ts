@@ -22,11 +22,8 @@ function CallStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let out = new ExpPReturn();
 
     let result = CallExpProcess.bind(this)(node);
-    //判断是否有函数返回 用于判断EObj
-    if(result.getPreFuncs().length>0)
-        out.addPreFuncList(result.getPreFuncs());
-    else //EObj无函数返回
-        out.setToken(result.getToken());
+    //直接调用只取preFunc
+    out.addPreFuncList(result.getPreFuncs());
     return out;
 }
 

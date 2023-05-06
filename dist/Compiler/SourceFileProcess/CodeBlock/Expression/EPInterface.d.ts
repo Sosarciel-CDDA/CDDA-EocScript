@@ -5,6 +5,7 @@ export type ExpProcess = (this: CodeExpression, node: Node) => ExpPReturn;
 export declare class ExpPReturn {
     _preFuncs: JArray;
     _token: JToken;
+    _noFuncReq: boolean;
     constructor(token?: JToken, preFuncs?: JArray);
     addPreFunc(obj: JToken): void;
     addPreFuncList(objs: JArray): void;
@@ -13,5 +14,7 @@ export declare class ExpPReturn {
     getToken(): JToken;
     getPreFuncs(): JArray;
     isVaild(): boolean;
+    isRtnNofuncReq(): boolean;
+    setRtnNofuncReq(): void;
 }
 export declare function VoidExpProcess(): ExpPReturn;

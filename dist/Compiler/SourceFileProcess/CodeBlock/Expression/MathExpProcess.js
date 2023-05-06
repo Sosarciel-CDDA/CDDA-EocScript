@@ -44,7 +44,12 @@ function NumMathExpProcess(node) {
 }
 function CallMathExpProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
-    return CallExpProcess_1.CallExpProcess.bind(this)(node);
+    let out = new EPInterface_1.ExpPReturn();
+    let result = CallExpProcess_1.CallExpProcess.bind(this)(node);
+    if (!result.isRtnNofuncReq())
+        out.mergePreFuncList(result);
+    out.setToken(result.getToken());
+    return out;
 }
 function BinaryMathExpProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.BinaryExpression);

@@ -9,13 +9,14 @@ const CalcExpProcess_1 = require("./CalcExpProcess");
 let _processFunc = {
     "eobj": EObjProcess,
     "earr": EArrProcess,
-    "u_val": DefaultProcess,
+    //"u_val" :DefaultProcess     ,//内置函数 转为字符串
     "and": AndProcess,
     "or": OrProcess,
     "not": NotProcess,
     "required_event": FieldAddProcess,
     "recurrence": FieldAddProcess,
     "deactivate_condition": CondFieldAddProcess,
+    "condition": CondFieldAddProcess,
     "global": FieldAddProcess,
     "run_for_npcs": FieldAddProcess,
     "EOC_TYPE": FieldAddProcess,
@@ -52,16 +53,15 @@ function CallExpProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpPReturn();
     let id = node.getExpression().getText();
+    //特殊函数
     let spFunc = _processFunc[id];
     if (spFunc != null)
         return spFunc.bind(this)(node);
-    //全局函数
     let gfunc = this.getSfd().getGlobalFunction(id);
-    if (gfunc == null) { //调用eoc
-        out.addPreFunc({ "run_eocs": id });
-        return out;
-        //throw throwLog(node,"CallExpProcess 未找到 gfunc id:"+id);
-    }
+    //预留内置函数
+    if (gfunc == null)
+        return DefaultProcess.bind(this)(node);
+    //全局函数处理
     let args = argProcess(this, node.getArguments());
     //动态创建代码块
     let cb = gfunc.getCodeBlock(args);
@@ -82,6 +82,8 @@ function EObjProcess(node) {
         text = "(" + text + ")";
     let tokenObj = eval(text);
     out.setToken(tokenObj);
+    out.addPreFunc(tokenObj);
+    out.setRtnNofuncReq();
     return out;
 }
 function EArrProcess(node) {
@@ -92,7 +94,7 @@ function EArrProcess(node) {
     out.addPreFuncList(tokenArr);
     return out;
 }
-//直接输出字符串
+//处理内置函数或eoc
 function DefaultProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpPReturn();
@@ -110,7 +112,10 @@ function DefaultProcess(node) {
     text = text.replace(regex, (match, p1) => {
         return match.replace(p1, argsText);
     });
+    let id = node.getExpression().getText();
+    out.addPreFunc({ "run_eocs": id });
     out.setToken(text);
+    out.setRtnNofuncReq();
     return out;
 }
 function AndProcess(node) {

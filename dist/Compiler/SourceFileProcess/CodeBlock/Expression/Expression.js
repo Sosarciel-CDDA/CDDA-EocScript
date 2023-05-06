@@ -13,11 +13,8 @@ function CallStateExpProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpPReturn();
     let result = CallExpProcess_1.CallExpProcess.bind(this)(node);
-    //判断是否有函数返回 用于判断EObj
-    if (result.getPreFuncs().length > 0)
-        out.addPreFuncList(result.getPreFuncs());
-    else //EObj无函数返回
-        out.setToken(result.getToken());
+    //直接调用只取preFunc
+    out.addPreFuncList(result.getPreFuncs());
     return out;
 }
 //return申明

@@ -10,13 +10,14 @@ import { CalcExpProcess } from "./CalcExpProcess";
 let _processFunc:Record<string,ExpProcess|null> = {
     "eobj"  :EObjProcess        ,//变量申明表达式 运行js 返回 obj
     "earr"  :EArrProcess        ,//变量申明表达式 运行js 返回 array 多个preFunc
-    "u_val" :DefaultProcess     ,//内置函数 转为字符串
+    //"u_val" :DefaultProcess     ,//内置函数 转为字符串
     "and"   :AndProcess         ,
     "or"    :OrProcess          ,
     "not"   :NotProcess         ,
     "required_event"        : FieldAddProcess,
     "recurrence"            : FieldAddProcess,
     "deactivate_condition"  : CondFieldAddProcess,
+    "condition"             : CondFieldAddProcess,
     "global"                : FieldAddProcess,
     "run_for_npcs"          : FieldAddProcess,
     "EOC_TYPE"              : FieldAddProcess,
@@ -59,17 +60,20 @@ export function CallExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let out = new ExpPReturn();
 
     let id = node.getExpression().getText();
+
+    //特殊函数
     let spFunc = _processFunc[id];
     if(spFunc!=null)
         return spFunc.bind(this)(node);
 
-    //全局函数
+
     let gfunc = this.getSfd().getGlobalFunction(id);
-    if(gfunc==null){//调用eoc
-        out.addPreFunc({ "run_eocs": id });
-        return out;
-        //throw throwLog(node,"CallExpProcess 未找到 gfunc id:"+id);
-    }
+    //预留内置函数
+    if(gfunc==null)
+        return DefaultProcess.bind(this)(node);
+
+    //全局函数处理
+
     let args = argProcess(this,node.getArguments());
 
     //动态创建代码块
@@ -97,6 +101,8 @@ function EObjProcess(this:CodeExpression,node: Node):ExpPReturn{
 
     let tokenObj = eval(text);
     out.setToken(tokenObj);
+    out.addPreFunc(tokenObj);
+    out.setRtnNofuncReq();
     return out;
 }
 function EArrProcess(this:CodeExpression,node: Node):ExpPReturn{
@@ -110,7 +116,7 @@ function EArrProcess(this:CodeExpression,node: Node):ExpPReturn{
     return out;
 }
 
-//直接输出字符串
+//处理内置函数或eoc
 function DefaultProcess(this:CodeExpression,node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
     let out = new ExpPReturn();
@@ -131,7 +137,10 @@ function DefaultProcess(this:CodeExpression,node: Node):ExpPReturn{
         return match.replace(p1, argsText);
     });
 
+    let id = node.getExpression().getText();
+    out.addPreFunc({ "run_eocs": id });
     out.setToken(text);
+    out.setRtnNofuncReq();
     return out;
 }
 

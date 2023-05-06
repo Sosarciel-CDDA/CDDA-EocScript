@@ -15,7 +15,7 @@ export class Eoc implements JsonModule{
         false_effect:Array<JToken>          ,
         condition   :JToken                 ,
     }={
-        id           :""                    ,
+        id           : ""                   ,
         type         : "effect_on_condition",
         recurrence   :null                  ,
         effect       :this._effect          ,

@@ -51,7 +51,12 @@ function NumMathExpProcess(this:CodeExpression, node: Node):ExpPReturn{
 
 function CallMathExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
-    return CallExpProcess.bind(this)(node);
+    let out = new ExpPReturn();
+    let result = CallExpProcess.bind(this)(node);
+    if(!result.isRtnNofuncReq())
+        out.mergePreFuncList(result);
+    out.setToken(result.getToken());
+    return out;
 }
 
 function BinaryMathExpProcess(this:CodeExpression, node: Node):ExpPReturn{

@@ -8,6 +8,7 @@ export type ExpProcess = (this:CodeExpression,node:Node)=>ExpPReturn;
 export class ExpPReturn{
     _preFuncs:JArray;
     _token:JToken;
+    _noFuncReq:boolean = false;
     constructor(token?:JToken,preFuncs?:JArray){
         this._preFuncs = preFuncs||[];
         this._token = token||null;
@@ -33,6 +34,14 @@ export class ExpPReturn{
     }
     isVaild(){
         return this._token!=null;
+    }
+    //不需要调用函数
+    //在嵌入表达式时不添加preFunc
+    isRtnNofuncReq(){
+        return this._noFuncReq;
+    }
+    setRtnNofuncReq(){
+        this._noFuncReq=true;
     }
 }
 

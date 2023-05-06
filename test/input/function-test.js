@@ -4,6 +4,8 @@ function regenMana(num){
 }
 function regenVal(id,bp){
   u_val(id,bp)+=1;
+  anyUDefMathFunc(id);
+  a+=anyUDefMathFunc(bp);
   return 123;
 }
 regenVal('hp','bp1')
