@@ -83,13 +83,14 @@ Function | Description
 --- | ---
 `eobj(obj)`                 |Add an object to the current block of code that will not be compiled  `eobj({message:"hello world"})`
 `earr(obj[])`               |Add multiple objects to the current block of code that will not be compiled and cannot be used in an expression  `earr([{num:1},{num:2}])`
-`u_val(...)`                |The functions supported by math only parse incoming parameters and make no other changes
-`and(...exps)`              |Combining parameters into 'and' blocks supported by eoc `if(and(a==1,b==2,c==3))`
-`or(...exps)`               |Combining parameters into 'or' blocks supported by eoc
-`not(exp)`                  |Combining parameters into 'not' blocks supported by eoc
-`required_event(obj)`       |Set the current block of code corresponding to the eoc on the `required_event` field set to `obj`
-`recurrence(obj)`           |Set the current block of code corresponding to the eoc on the `recurrence` field set to `obj`  `recurrence([10,20])`
-`deactivate_condition(exp)` |Set the current block of code corresponding to the eoc on the `deactivate_condition` field set to the obj compiled by `exp`
-`global(obj)`               |Set the current block of code corresponding to the eoc on the `global` field set to `obj`
-`run_for_npcs(obj)`         |Set the current block of code corresponding to the eoc on the `run_for_npcs` field set to `obj`
-`EOC_TYPE(obj)`             |Set the current block of code corresponding to the eoc on the `EOC_TYPE` field set to `obj`
+`and(...exps)`              |Combining parameters into 'and'  blocks supported by eoc `if(and(a==1,b==2,c==3))`
+`or(...exps)`               |Combining parameters into 'or'   blocks supported by eoc
+`not(exp)`                  |Combining parameters into 'not'  blocks supported by eoc
+`required_event(obj)`       |Set the `required_event`       field on the eoc corresponding to the current code block to `obj`
+`recurrence(obj)`           |Set the `recurrence`           field on the eoc corresponding to the current code block to `obj`  `recurrence([10,20])`
+`condition(exp)`            |Set the `condition`            field on the eoc corresponding to the current code block to the `obj` compiled by `exp`
+`deactivate_condition(exp)` |Set the `deactivate_condition` field on the eoc corresponding to the current code block to the `obj` compiled by `exp`
+`global(obj)`               |Set the `global`               field on the eoc corresponding to the current code block to `obj`
+`run_for_npcs(obj)`         |Set the `run_for_npcs`         field on the eoc corresponding to the current code block to `obj`
+`EOC_TYPE(obj)`             |Set the `EOC_TYPE`             field on the eoc corresponding to the current code block to `obj'
+`'any other function'(...)`	|Any function not declared with the `function` keyword will only resolve the incoming arguments and make no other changes, and will run the eoc of the same name when called directly
