@@ -3,7 +3,7 @@ import { SourceFileData } from "../../Interfaces";
 import { ExpProcess, ExpPReturn } from "./EPInterface";
 import { checkKind, throwLog } from "../../Functions";
 import { JArray, JToken } from "Utils";
-import { CodeExpression } from "./Expression";
+import { CodeExpression, IfStateExpProcess } from "./Expression";
 import { CalcExpProcess } from "./CalcExpProcess";
 
 //特殊函数
@@ -150,7 +150,8 @@ function AndProcess(this:CodeExpression,node: Node):ExpPReturn{
     let arr:JArray = [];
     let args = node.getArguments();
     for(let arg of args){
-        let result = this.process(arg);
+        //let result = this.process(arg);
+        let result = IfStateExpProcess.bind(this)(arg);
         out.mergePreFuncList(result);
         arr.push(result.getToken());
     }
@@ -163,7 +164,8 @@ function OrProcess(this:CodeExpression,node: Node):ExpPReturn{
     let arr:JArray = [];
     let args = node.getArguments();
     for(let arg of args){
-        let result = this.process(arg);
+        //let result = this.process(arg);
+        let result = IfStateExpProcess.bind(this)(arg);
         out.mergePreFuncList(result);
         arr.push(result.getToken());
     }
@@ -176,7 +178,8 @@ function NotProcess(this:CodeExpression,node: Node):ExpPReturn{
 
     let arg = node.getArguments()[0];
 
-    let result = this.process(arg);
+    //let result = this.process(arg);
+    let result = IfStateExpProcess.bind(this)(arg);
     out.mergePreFuncList(result);
 
     out.setToken({not:result.getToken()});

@@ -8,8 +8,9 @@ const CodeBlock_1 = require("./CodeBlock");
 const Expression_1 = require("./Expression");
 function IfProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.IfStatement);
-    let condition = node.getExpression();
-    let exp = new Expression_1.CodeExpression(condition, this);
+    //let condition = node.getExpression();
+    //console.log(SyntaxKind[node.getKind()])
+    let exp = new Expression_1.CodeExpression(node, this);
     let conditionObj = exp.build();
     let ifBlockStat = node.getThenStatement();
     let elseBlock = node.getElseStatement();

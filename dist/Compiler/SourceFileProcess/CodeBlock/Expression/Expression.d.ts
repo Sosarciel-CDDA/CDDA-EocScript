@@ -2,6 +2,7 @@ import { Node } from "ts-morph";
 import { SourceFileData } from "../../Interfaces";
 import { ExpPReturn } from "./EPInterface";
 import { CodeBlock } from "../CodeBlock";
+export declare function IfStateExpProcess(this: CodeExpression, node: Node): ExpPReturn;
 export declare class CodeExpression {
     _node: Node;
     _codeBlock: CodeBlock;

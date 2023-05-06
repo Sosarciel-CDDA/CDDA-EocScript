@@ -6,8 +6,9 @@ import { CodeExpression } from "./Expression";
 
 export function IfProcess(this:CodeBlock, node: Node):CBPReturn{
     checkKind(node,SyntaxKind.IfStatement);
-    let condition = node.getExpression();
-    let exp = new CodeExpression(condition,this);
+    //let condition = node.getExpression();
+    //console.log(SyntaxKind[node.getKind()])
+    let exp = new CodeExpression(node,this);
     let conditionObj = exp.build();
 
     let ifBlockStat = node.getThenStatement();

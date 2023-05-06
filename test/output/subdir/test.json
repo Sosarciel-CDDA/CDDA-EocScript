@@ -45,14 +45,16 @@
     "type": "effect_on_condition",
     "effect": [
       {"math":["b","=","2"]}
-    ]
+    ],
+    "condition": {"testEtoken":1}
   },
   {
     "id": "test_if4",
     "type": "effect_on_condition",
     "effect": [
       {"math":["b","=","2"]}
-    ]
+    ],
+    "condition": {"and":[{"math":["a","==","1"]},{"math":["b","==","2"]},{"math":["c","==","3"]},{"or":[{"math":["d","==","4"]},{"math":["e","==","5"]},{"not":{"math":["f","==","6"]}}]}]}
   },
   {
     "id": "test",
@@ -69,7 +71,6 @@
       {"math":["sss","=","test_test2_rtn"]},
       {"run_eocs":"test_tsfunc"},
       {"run_eocs":"test_if2"},
-      {"run_eocs":"EToken"},
       {"run_eocs":"test_if3"},
       {"run_eocs":"test_if4"}
     ]

@@ -34,6 +34,6 @@ export declare class CodeBlock {
     build(): CBPReturn;
     /**处理申明列表
      */
-    processStatments(node: Node | Array<Node>): (string | number | boolean | import("Utils").JObject | JArray | null)[];
+    processStatments(node: Node | Array<Node>): (string | number | boolean | JArray | import("Utils").JObject | null)[];
 }
 export default CodeBlock;

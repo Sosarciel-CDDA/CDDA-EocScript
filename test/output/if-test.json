@@ -8,7 +8,7 @@
     "false_effect": [
       {"math":["d","=","5"]}
     ],
-    "condition": {"math":["b","==","1"]}
+    "condition": {"and":[{"math":["1"]},{"u_has_hp":10}]}
   },
   {
     "id": "if_test_if0",

@@ -24,6 +24,30 @@ function CallStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let result = CallExpProcess.bind(this)(node);
     //直接调用只取preFunc
     out.addPreFuncList(result.getPreFuncs());
+    //out.setToken(result.getToken());
+    return out;
+}
+
+//条件表达式特殊处理 考虑分离
+export function IfStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{ 
+    //checkKind(node,SyntaxKind.IfStatement);
+    let out = new ExpPReturn();
+
+    let exp = node;
+    if(node.isKind(SyntaxKind.IfStatement))
+        exp = node.getExpression();
+
+    let result = new ExpPReturn();
+
+    if(exp.isKind(SyntaxKind.CallExpression))
+        result = CallExpProcess.bind(this)(exp);
+    else
+        result = this.process(exp);
+
+    //取preFunc与token
+    out.setToken(result.getToken());
+    if(!result.isRtnNofuncReq())
+        out.addPreFuncList(result.getPreFuncs());
     return out;
 }
 
@@ -74,6 +98,12 @@ export class CodeExpression{
         //直接调用函数
         if(node.isKind(SyntaxKind.CallExpression))
             return CallStateExpProcess.bind(this)(node);
+
+        //条件表达式
+        if(node.isKind(SyntaxKind.IfStatement)){
+            //return new ExpPReturn();
+            return IfStateExpProcess.bind(this)(node);
+        }
 
         //表达式
         if(node.isKind(SyntaxKind.BinaryExpression)){
