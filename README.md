@@ -94,5 +94,5 @@ let c = regenVal(b)+1;
 `deactivate_condition(exp)` |将当前代码块对应的eoc上的`deactivate_condition` 字段设置为`exp`所编译的obj
 `global(obj)`               |将当前代码块对应的eoc上的`global`               字段设置为`obj`
 `run_for_npcs(obj)`         |将当前代码块对应的eoc上的`run_for_npcs`         字段设置为`obj`
-`EOC_TYPE(obj)`             |将当前代码块对应的eoc上的`EOC_TYPE`             字段设置为`obj`
+`eoc_type(obj)`             |将当前代码块对应的eoc上的`eoc_type`             字段设置为`obj`
 `'任何其他函数'(...)`        |任何没用`function`关键字申明的函数只会解析传入参数，不会作其它改变，直接调用时将运行同名eoc
