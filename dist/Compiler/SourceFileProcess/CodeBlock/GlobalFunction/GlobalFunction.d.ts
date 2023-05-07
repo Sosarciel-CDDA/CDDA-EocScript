@@ -15,6 +15,7 @@ export declare class GlobalFunction {
      */
     getId(args?: Array<string>): string;
     getCodeBlock(args?: Array<string>): CodeBlock | null;
+    getParams(): string[];
     /**获取全局函数返回值ID
      * @param rawFuncName
      */

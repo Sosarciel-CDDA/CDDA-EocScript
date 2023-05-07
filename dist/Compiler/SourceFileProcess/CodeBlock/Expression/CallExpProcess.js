@@ -81,6 +81,15 @@ function EObjProcess(node) {
     //自动给OBJ括号
     if (text[0] == "{" && text[text.length - 1] == "}")
         text = "(" + text + ")";
+    //console.log(text)
+    //替换变量
+    let argMap = this.getLocalValMap();
+    let preText = "";
+    for (let orig in argMap) {
+        preText += "let " + orig + "=" + argMap[orig] + ";\n";
+    }
+    text = preText + text;
+    console.log(text);
     let tokenObj = eval(text);
     out.setToken(tokenObj);
     out.addPreFunc(tokenObj);
@@ -91,6 +100,13 @@ function EArrProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpPReturn();
     let text = node.getArguments()[0].getText();
+    //替换变量
+    let argMap = this.getLocalValMap();
+    for (let orig in argMap) {
+        let tg = argMap[orig];
+        let regex = new RegExp("\\b" + orig + "\\b", "g");
+        text = text.replace(regex, tg);
+    }
     let tokenArr = eval(text);
     out.addPreFuncList(tokenArr);
     return out;
@@ -99,17 +115,19 @@ function EArrProcess(node) {
 function DefaultProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpPReturn();
-    //替换参数然后输出字符串
+    //替换参数然后输出 字符串类型的本地变量参数数组
     //node.getArguments();
     let args = argProcess(this, node.getArguments());
+    //将括号内的文本匹配并替换
     let text = node.getText();
-    let regex = /.*\((.*)\)/;
     let argsText = "";
     for (let arg of args) {
         if (argsText != "")
             argsText += ",";
         argsText += arg;
     }
+    //将捕获部分替换成 本地变量参数字符串
+    let regex = /.*\((.*)\)/;
     text = text.replace(regex, (match, p1) => {
         return match.replace(p1, argsText);
     });

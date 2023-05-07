@@ -28,6 +28,7 @@ export declare class CodeBlock {
     getSfd(): SourceFileData;
     addPassArgs(origVal: string, targetVal: string): void;
     getLocalVal(origVal: string): string;
+    getLocalValMap(): Record<string, string | null>;
     addEocField(str: string, val: JToken): void;
     /**处理代码块
      */

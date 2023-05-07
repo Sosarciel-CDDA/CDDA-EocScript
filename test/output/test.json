@@ -1,12 +1,5 @@
 [
   {
-    "id": "test_regenVatmin",
-    "type": "effect_on_condition",
-    "effect": [
-      {"math":["u_val(维他命)","+=","1"]}
-    ]
-  },
-  {
     "id": "test_regenVatmin_维他命A",
     "type": "effect_on_condition",
     "effect": [

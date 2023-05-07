@@ -1,0 +1,70 @@
+[
+  {
+    "id": "rand_switch_test_giveTask_任务1_opt",
+    "type": "effect_on_condition",
+    "effect": [
+      {"sometask":"任务1"},
+      {"math":["a","=","someFunc('任务1',a,'opt')"]}
+    ]
+  },
+  {
+    "id": "rand_switch_test_ca0",
+    "type": "effect_on_condition",
+    "effect": [
+      {"run_eocs":"rand_switch_test_giveTask_任务1_opt"}
+    ]
+  },
+  {
+    "id": "rand_switch_test_giveTask_任务2_opt",
+    "type": "effect_on_condition",
+    "effect": [
+      {"sometask":"任务2"},
+      {"math":["a","=","someFunc('任务2',a,'opt')"]}
+    ]
+  },
+  {
+    "id": "rand_switch_test_ca1",
+    "type": "effect_on_condition",
+    "effect": [
+      {"run_eocs":"rand_switch_test_giveTask_任务2_opt"}
+    ]
+  },
+  {
+    "id": "rand_switch_test_giveTask_任务3_opt",
+    "type": "effect_on_condition",
+    "effect": [
+      {"sometask":"任务3"},
+      {"math":["a","=","someFunc('任务3',a,'opt')"]}
+    ]
+  },
+  {
+    "id": "rand_switch_test_ca2",
+    "type": "effect_on_condition",
+    "effect": [
+      {"run_eocs":"rand_switch_test_giveTask_任务3_opt"}
+    ]
+  },
+  {
+    "id": "rand_switch_test_giveTask_任务4_opt",
+    "type": "effect_on_condition",
+    "effect": [
+      {"sometask":"任务4"},
+      {"math":["a","=","someFunc('任务4',a,'opt')"]}
+    ]
+  },
+  {
+    "id": "rand_switch_test_ca3",
+    "type": "effect_on_condition",
+    "effect": [
+      {"run_eocs":"rand_switch_test_giveTask_任务4_opt"}
+    ]
+  },
+  {
+    "id": "rand_switch_test",
+    "type": "effect_on_condition",
+    "effect": [
+      {"math":["_rd","=","rand(1,20)"]},
+      {"switch":{"math":["_rd"]},"cases":[{"case":1,"effect":[{"run_eocs":"rand_switch_test_ca0"}]},{"case":2,"effect":[{"run_eocs":"rand_switch_test_ca1"}]},{"case":3,"effect":[{"run_eocs":"rand_switch_test_ca2"}]},{"case":4,"effect":[{"run_eocs":"rand_switch_test_ca3"}]}]}
+    ]
+  }
+]

@@ -113,6 +113,10 @@ export class CodeBlock{
         let tg = this._passArgsTable[origVal];
         return tg==null? origVal:tg;
     }
+    //局部变量映射
+    getLocalValMap(){
+        return this._passArgsTable;
+    }
     //添加一个额外字段
     addEocField(str:string,val:JToken){
         this._eocFieldTable[str]=val;

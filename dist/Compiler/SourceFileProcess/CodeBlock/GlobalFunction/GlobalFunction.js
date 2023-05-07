@@ -47,14 +47,17 @@ class GlobalFunction {
         //传参
         if (args == null)
             args = [];
-        if (args.length > this._params.length)
-            throw (0, Functions_1.throwLog)(this._node, "传入参数超出定义个数");
+        if (args.length != this._params.length)
+            throw (0, Functions_1.throwLog)(this._node, "传入参数个数不等于定义个数");
         for (let i in args)
             cb.addPassArgs(this._params[i], args[i]);
         //let cb = new CodeBlock(codeBody,this._sfd,this._cbd.genSubBlock());
         cb.build();
         this._dynamicCodeBlockTable[cid] = cb;
         return cb;
+    }
+    getParams() {
+        return this._params;
     }
     /**获取全局函数返回值ID
      * @param rawFuncName

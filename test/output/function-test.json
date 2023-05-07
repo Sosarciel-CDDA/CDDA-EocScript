@@ -1,23 +1,5 @@
 [
   {
-    "id": "function_test_regenMana",
-    "type": "effect_on_condition",
-    "effect": [
-      {"math":["u_val('mana')","+=","num"]},
-      {"math":["function_test_regenMana_rtn","=","123"]}
-    ]
-  },
-  {
-    "id": "function_test_regenVal",
-    "type": "effect_on_condition",
-    "effect": [
-      {"math":["u_val(id,bp)","+=","1"]},
-      {"run_eocs":"anyUDefMathFunc"},
-      {"math":["a","+=","anyUDefMathFunc(bp)"]},
-      {"math":["function_test_regenVal_rtn","=","123"]}
-    ]
-  },
-  {
     "id": "function_test_regenVal_hp_bp1",
     "type": "effect_on_condition",
     "effect": [

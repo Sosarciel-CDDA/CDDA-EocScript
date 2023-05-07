@@ -37,14 +37,21 @@ class CodeExpression {
         this._node = node;
         this._codeBlock = codeBlock;
     }
+    //代码块
     getCodeBlock() {
         return this._codeBlock;
     }
+    //源数据
     getSfd() {
         return this.getCodeBlock().getSfd();
     }
+    //本地变量
     getLocalVal(origVal) {
         return this.getCodeBlock().getLocalVal(origVal);
+    }
+    //本地变量映射
+    getLocalValMap() {
+        return this.getCodeBlock().getLocalValMap();
     }
     build() {
         return this.process(this._node);

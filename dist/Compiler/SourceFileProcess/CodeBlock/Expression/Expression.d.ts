@@ -9,6 +9,7 @@ export declare class CodeExpression {
     getCodeBlock(): CodeBlock;
     getSfd(): SourceFileData;
     getLocalVal(origVal: string): string;
+    getLocalValMap(): Record<string, string | null>;
     build(): ExpPReturn;
     process(node: Node): ExpPReturn;
 }
