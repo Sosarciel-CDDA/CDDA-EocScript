@@ -89,7 +89,7 @@ function EObjProcess(node) {
         preText += "let " + orig + "=" + argMap[orig] + ";\n";
     }
     text = preText + text;
-    console.log(text);
+    //console.log(text)
     let tokenObj = eval(text);
     out.setToken(tokenObj);
     out.addPreFunc(tokenObj);
@@ -102,11 +102,11 @@ function EArrProcess(node) {
     let text = node.getArguments()[0].getText();
     //替换变量
     let argMap = this.getLocalValMap();
+    let preText = "";
     for (let orig in argMap) {
-        let tg = argMap[orig];
-        let regex = new RegExp("\\b" + orig + "\\b", "g");
-        text = text.replace(regex, tg);
+        preText += "let " + orig + "=" + argMap[orig] + ";\n";
     }
+    text = preText + text;
     let tokenArr = eval(text);
     out.addPreFuncList(tokenArr);
     return out;
