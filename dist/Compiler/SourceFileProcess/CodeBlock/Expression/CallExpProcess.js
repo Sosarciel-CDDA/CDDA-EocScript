@@ -4,8 +4,8 @@ exports.CallExpProcess = void 0;
 const ts_morph_1 = require("ts-morph");
 const EPInterface_1 = require("./EPInterface");
 const Functions_1 = require("../../Functions");
-const Expression_1 = require("./Expression");
 const CalcExpProcess_1 = require("./CalcExpProcess");
+const CondExpProcess_1 = require("./CondExpProcess");
 //特殊函数
 let _processFunc = {
     "eobj": EObjProcess,
@@ -20,7 +20,7 @@ let _processFunc = {
     "condition": CondFieldAddProcess,
     "global": FieldAddProcess,
     "run_for_npcs": FieldAddProcess,
-    "EOC_TYPE": FieldAddProcess,
+    "eoc_type": FieldAddProcess,
 };
 //处理并替换传入参数
 function argProcess(ce, nodes) {
@@ -126,7 +126,7 @@ function AndProcess(node) {
     let args = node.getArguments();
     for (let arg of args) {
         //let result = this.process(arg);
-        let result = Expression_1.IfStateExpProcess.bind(this)(arg);
+        let result = CondExpProcess_1.condExpProcess.bind(this)(arg);
         out.mergePreFuncList(result);
         arr.push(result.getToken());
     }
@@ -140,7 +140,7 @@ function OrProcess(node) {
     let args = node.getArguments();
     for (let arg of args) {
         //let result = this.process(arg);
-        let result = Expression_1.IfStateExpProcess.bind(this)(arg);
+        let result = CondExpProcess_1.condExpProcess.bind(this)(arg);
         out.mergePreFuncList(result);
         arr.push(result.getToken());
     }
@@ -152,7 +152,7 @@ function NotProcess(node) {
     let out = new EPInterface_1.ExpPReturn();
     let arg = node.getArguments()[0];
     //let result = this.process(arg);
-    let result = Expression_1.IfStateExpProcess.bind(this)(arg);
+    let result = CondExpProcess_1.condExpProcess.bind(this)(arg);
     out.mergePreFuncList(result);
     out.setToken({ not: result.getToken() });
     return out;

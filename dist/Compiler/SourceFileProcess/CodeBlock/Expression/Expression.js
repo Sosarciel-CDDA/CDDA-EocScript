@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CodeExpression = exports.IfStateExpProcess = void 0;
+exports.CodeExpression = void 0;
 const ts_morph_1 = require("ts-morph");
 const Functions_1 = require("../../Functions");
 const CallExpProcess_1 = require("./CallExpProcess");
@@ -8,6 +8,7 @@ const CalcExpProcess_1 = require("./CalcExpProcess");
 const EPInterface_1 = require("./EPInterface");
 const ValExpProcess_1 = require("./ValExpProcess");
 const MathExpProcess_1 = require("./MathExpProcess");
+const CondExpProcess_1 = require("./CondExpProcess");
 //直接调用函数
 function CallStateExpProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
@@ -18,25 +19,6 @@ function CallStateExpProcess(node) {
     //out.setToken(result.getToken());
     return out;
 }
-//条件表达式特殊处理 考虑分离
-function IfStateExpProcess(node) {
-    //checkKind(node,SyntaxKind.IfStatement);
-    let out = new EPInterface_1.ExpPReturn();
-    let exp = node;
-    if (node.isKind(ts_morph_1.SyntaxKind.IfStatement))
-        exp = node.getExpression();
-    let result = new EPInterface_1.ExpPReturn();
-    if (exp.isKind(ts_morph_1.SyntaxKind.CallExpression))
-        result = CallExpProcess_1.CallExpProcess.bind(this)(exp);
-    else
-        result = this.process(exp);
-    //取preFunc与token
-    out.setToken(result.getToken());
-    if (!result.isRtnNofuncReq())
-        out.addPreFuncList(result.getPreFuncs());
-    return out;
-}
-exports.IfStateExpProcess = IfStateExpProcess;
 //return申明
 function ReturnStateExpProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.ReturnStatement);
@@ -78,7 +60,7 @@ class CodeExpression {
         //条件表达式
         if (node.isKind(ts_morph_1.SyntaxKind.IfStatement)) {
             //return new ExpPReturn();
-            return IfStateExpProcess.bind(this)(node);
+            return CondExpProcess_1.condExpProcess.bind(this)(node);
         }
         //表达式
         if (node.isKind(ts_morph_1.SyntaxKind.BinaryExpression)) {

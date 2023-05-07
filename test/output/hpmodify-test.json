@@ -1,0 +1,11 @@
+[
+  {
+    "id": "hpmodify_test",
+    "type": "effect_on_condition",
+    "effect": [
+      {"math":["u_smaxhp","+=","1"]}
+    ],
+    "eoc_type": "EVENT",
+    "required_event": "charater_kill_monster"
+  }
+]

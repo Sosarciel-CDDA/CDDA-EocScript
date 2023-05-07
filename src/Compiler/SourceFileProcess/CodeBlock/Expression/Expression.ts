@@ -9,6 +9,7 @@ import { ValExpProcess } from "./ValExpProcess";
 import { CodeBlock } from "../CodeBlock";
 import { MathExpProcess } from "./MathExpProcess";
 import { JToken } from "@/src/Utils";
+import { condExpProcess } from "./CondExpProcess";
 
 
 
@@ -28,28 +29,7 @@ function CallStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     return out;
 }
 
-//条件表达式特殊处理 考虑分离
-export function IfStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{ 
-    //checkKind(node,SyntaxKind.IfStatement);
-    let out = new ExpPReturn();
 
-    let exp = node;
-    if(node.isKind(SyntaxKind.IfStatement))
-        exp = node.getExpression();
-
-    let result = new ExpPReturn();
-
-    if(exp.isKind(SyntaxKind.CallExpression))
-        result = CallExpProcess.bind(this)(exp);
-    else
-        result = this.process(exp);
-
-    //取preFunc与token
-    out.setToken(result.getToken());
-    if(!result.isRtnNofuncReq())
-        out.addPreFuncList(result.getPreFuncs());
-    return out;
-}
 
 //return申明
 function ReturnStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{ 
@@ -102,7 +82,7 @@ export class CodeExpression{
         //条件表达式
         if(node.isKind(SyntaxKind.IfStatement)){
             //return new ExpPReturn();
-            return IfStateExpProcess.bind(this)(node);
+            return condExpProcess.bind(this)(node);
         }
 
         //表达式

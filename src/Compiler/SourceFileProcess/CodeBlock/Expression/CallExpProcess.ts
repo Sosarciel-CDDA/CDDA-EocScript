@@ -3,8 +3,9 @@ import { SourceFileData } from "../../Interfaces";
 import { ExpProcess, ExpPReturn } from "./EPInterface";
 import { checkKind, throwLog } from "../../Functions";
 import { JArray, JToken } from "Utils";
-import { CodeExpression, IfStateExpProcess } from "./Expression";
+import { CodeExpression } from "./Expression";
 import { CalcExpProcess } from "./CalcExpProcess";
+import { condExpProcess } from "./CondExpProcess";
 
 //特殊函数
 let _processFunc:Record<string,ExpProcess|null> = {
@@ -20,7 +21,7 @@ let _processFunc:Record<string,ExpProcess|null> = {
     "condition"             : CondFieldAddProcess,
     "global"                : FieldAddProcess,
     "run_for_npcs"          : FieldAddProcess,
-    "EOC_TYPE"              : FieldAddProcess,
+    "eoc_type"              : FieldAddProcess,
 }
 
 //处理并替换传入参数
@@ -151,7 +152,7 @@ function AndProcess(this:CodeExpression,node: Node):ExpPReturn{
     let args = node.getArguments();
     for(let arg of args){
         //let result = this.process(arg);
-        let result = IfStateExpProcess.bind(this)(arg);
+        let result = condExpProcess.bind(this)(arg);
         out.mergePreFuncList(result);
         arr.push(result.getToken());
     }
@@ -165,7 +166,7 @@ function OrProcess(this:CodeExpression,node: Node):ExpPReturn{
     let args = node.getArguments();
     for(let arg of args){
         //let result = this.process(arg);
-        let result = IfStateExpProcess.bind(this)(arg);
+        let result = condExpProcess.bind(this)(arg);
         out.mergePreFuncList(result);
         arr.push(result.getToken());
     }
@@ -179,7 +180,7 @@ function NotProcess(this:CodeExpression,node: Node):ExpPReturn{
     let arg = node.getArguments()[0];
 
     //let result = this.process(arg);
-    let result = IfStateExpProcess.bind(this)(arg);
+    let result = condExpProcess.bind(this)(arg);
     out.mergePreFuncList(result);
 
     out.setToken({not:result.getToken()});

@@ -50,12 +50,12 @@
     "id": "test",
     "type": "effect_on_condition",
     "effect": [
+      {"run_eocs":"EOC_TYPE"},
       {"math":["i","+=","1"]},
       {"run_eocs":"test_if0"},
       {"earrt":1},
       {"earrt":2}
     ],
-    "EOC_TYPE": "test",
     "deactivate_condition": {"math":["a","==","1"]},
     "recurrence": [1,60]
   }
