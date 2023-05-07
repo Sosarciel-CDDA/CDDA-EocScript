@@ -92,5 +92,5 @@ Function | Description
 `deactivate_condition(exp)` |Set the `deactivate_condition` field on the eoc corresponding to the current code block to the `obj` compiled by `exp`
 `global(obj)`               |Set the `global`               field on the eoc corresponding to the current code block to `obj`
 `run_for_npcs(obj)`         |Set the `run_for_npcs`         field on the eoc corresponding to the current code block to `obj`
-`EOC_TYPE(obj)`             |Set the `EOC_TYPE`             field on the eoc corresponding to the current code block to `obj'
+`eoc_type(obj)`             |Set the `eoc_type`             field on the eoc corresponding to the current code block to `obj'
 `'any other function'(...)`	|Any function not declared with the `function` keyword will only resolve the incoming arguments and make no other changes, and will run the eoc of the same name when called directly
