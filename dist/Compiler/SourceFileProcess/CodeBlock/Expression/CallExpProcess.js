@@ -22,11 +22,6 @@ let _processFunc = {
     "run_for_npcs": FieldAddProcess,
     "eoc_type": FieldAddProcess,
 };
-//处理并替换传入参数
-function argProcess(ce, nodes) {
-    let args = nodes.map(val => ce.getLocalVal(val.getText()));
-    return args;
-}
 //字段添加
 function FieldAddProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
@@ -66,7 +61,8 @@ function CallExpProcess(node) {
     if (gfunc == null)
         return DefaultProcess.bind(this)(node);
     //全局函数处理
-    let args = argProcess(this, node.getArguments());
+    //处理并替换传入参数
+    let args = node.getArguments().map(val => this.getLocalVal(val.getText()));
     //动态创建代码块
     let cb = gfunc.getCodeBlock(args);
     out.addPreFunc({ "run_eocs": gfunc.getId(args) });
@@ -89,7 +85,11 @@ function EObjProcess(node) {
     let argMap = this.getLocalValMap();
     let preText = "";
     for (let orig in argMap) {
-        preText += "let " + orig + "=" + argMap[orig] + ";\n";
+        let val = argMap[orig];
+        let re = /^[a-zA-Z_$][a-zA-Z_$0-9]*$/;
+        if (val != null && re.test(val))
+            val = `'${val}'`;
+        preText += "let " + orig + "=" + val + ";\n";
     }
     text = preText + text;
     //console.log(text)
@@ -107,7 +107,11 @@ function EArrProcess(node) {
     let argMap = this.getLocalValMap();
     let preText = "";
     for (let orig in argMap) {
-        preText += "let " + orig + "=" + argMap[orig] + ";\n";
+        let val = argMap[orig];
+        let re = /^[a-zA-Z_$][a-zA-Z_$0-9]*$/;
+        if (val != null && re.test(val))
+            val = `'${val}'`;
+        preText += "let " + orig + "=" + val + ";\n";
     }
     text = preText + text;
     let tokenArr = eval(text);
@@ -120,7 +124,9 @@ function DefaultProcess(node) {
     let out = new EPInterface_1.ExpPReturn();
     //替换参数然后输出 字符串类型的本地变量参数数组
     //node.getArguments();
-    let args = argProcess(this, node.getArguments());
+    //全局函数处理
+    //处理并替换传入参数
+    let args = node.getArguments().map(val => this.getLocalVal(val.getText()));
     //将括号内的文本匹配并替换
     let text = node.getText();
     let argsText = "";
