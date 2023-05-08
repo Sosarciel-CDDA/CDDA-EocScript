@@ -176,6 +176,7 @@ export class CodeBlock{
                 throw e;
             }
         }
+        //console.log(effects)
         return effects;
     }
 }

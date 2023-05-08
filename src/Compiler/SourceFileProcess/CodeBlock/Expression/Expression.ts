@@ -25,6 +25,7 @@ function CallStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let result = CallExpProcess.bind(this)(node);
     //直接调用只取preFunc
     out.addPreFuncList(result.getPreFuncs());
+    //console.log(out.getPreFuncs());
     //out.setToken(result.getToken());
     return out;
 }

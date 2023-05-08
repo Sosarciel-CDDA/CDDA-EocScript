@@ -1,0 +1,32 @@
+[
+  {
+    "id": "tome4_update_stat",
+    "type": "effect_on_condition",
+    "effect": [
+      1,
+      {"math":["u_TStr","=","floor(u_strength/2)"]},
+      {"math":["u_TDex","=","u_dexterity"]},
+      {"math":["u_TCon","=","floor(u_strength/2)"]},
+      {"math":["u_TMag","=","u_intelligence"]},
+      {"math":["u_TWil","=","floor(u_perception/2)"]},
+      {"math":["u_TCun","=","floor(u_perception/2)"]}
+    ],
+    "recurrence": "60 s"
+  },
+  {
+    "id": "tome4_if0",
+    "type": "effect_on_condition",
+    "effect": [
+      {"u_cast_spell":"spell"}
+    ],
+    "condition": {"u_has_effect":"effect"}
+  },
+  {
+    "id": "tome4",
+    "type": "effect_on_condition",
+    "effect": [
+      {"run_eocs":"tome4_if0"}
+    ],
+    "recurrence": 1
+  }
+]

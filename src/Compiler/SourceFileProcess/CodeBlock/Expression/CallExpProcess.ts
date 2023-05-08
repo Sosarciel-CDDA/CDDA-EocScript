@@ -64,8 +64,11 @@ export function CallExpProcess(this:CodeExpression, node: Node):ExpPReturn{
 
     //特殊函数
     let spFunc = _processFunc[id];
-    if(spFunc!=null)
-        return spFunc.bind(this)(node);
+    if(spFunc!=null){
+        let spReturn = spFunc.bind(this)(node);
+        //console.log(spReturn.getToken())
+        return spReturn;
+    }
 
 
     let gfunc = this.getSfd().getGlobalFunction(id);

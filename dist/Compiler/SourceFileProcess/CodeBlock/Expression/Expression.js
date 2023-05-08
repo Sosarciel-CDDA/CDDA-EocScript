@@ -16,6 +16,7 @@ function CallStateExpProcess(node) {
     let result = CallExpProcess_1.CallExpProcess.bind(this)(node);
     //直接调用只取preFunc
     out.addPreFuncList(result.getPreFuncs());
+    //console.log(out.getPreFuncs());
     //out.setToken(result.getToken());
     return out;
 }

@@ -16,6 +16,7 @@ function ExpressionProcess(node) {
     let result = exp.build();
     out.addPreFuncList(result.getPreFuncs());
     out.addToken(result.getToken());
+    //console.log(out.getPreFuncs());
     return out;
     //throw throwLog(node,"未知的申明表达式类型");
 }

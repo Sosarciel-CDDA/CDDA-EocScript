@@ -7,6 +7,7 @@ export function SourceFileProcess(sourceFile: SourceFile,sfd:SourceFileData):Sou
 
     let cb = new CodeBlock(sfd.getId(),block,sfd);
     cb.build();
+    //console.log(sfd.getRootArray());
     return sfd;
 }
 

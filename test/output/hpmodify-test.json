@@ -3,7 +3,8 @@
     "id": "hpmodify_test",
     "type": "effect_on_condition",
     "effect": [
-      {"math":["u_smaxhp","+=","1"]}
+      {"math":["u_fpmaxhp","+=","0.1"]},
+      {"math":["u_smaxhp","+=","floor(u_fpmaxhp)"]}
     ],
     "eoc_type": "EVENT",
     "required_event": "charater_kill_monster"

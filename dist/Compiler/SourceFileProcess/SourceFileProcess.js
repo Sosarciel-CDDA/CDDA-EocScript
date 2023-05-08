@@ -6,6 +6,7 @@ function SourceFileProcess(sourceFile, sfd) {
     let block = sourceFile;
     let cb = new CodeBlock_1.CodeBlock(sfd.getId(), block, sfd);
     cb.build();
+    //console.log(sfd.getRootArray());
     return sfd;
 }
 exports.SourceFileProcess = SourceFileProcess;

@@ -11,18 +11,21 @@ function clearFormat(obj) {
         .replace(/"\{/g, '{')
         .replace(/\}"/g, '}');
 }
+function typeStringify(item) {
+    if (typeof item == 'number' || typeof item == 'string' || typeof item == 'boolean')
+        return item;
+    return JSON.stringify(item);
+}
 function customStringify(obj) {
     let formattedData = JSON.stringify(obj, (key, value) => {
         if (key === 'effect' || key === 'false_effect') {
             return value.map((item) => {
-                //if(item.switch!=null)
-                //    return customStringify(item);
-                return JSON.stringify(item);
+                return typeStringify(item);
             });
         }
         if (key === 'condition' || key === 'deactivate_condition' ||
             key === 'recurrence')
-            return JSON.stringify(value);
+            return typeStringify(value);
         return value;
     }, 2);
     //return formattedData;
@@ -41,6 +44,7 @@ class Compiler {
         let result = (0, SourceFileProcess_1.default)(this._sourceFile, sfd);
         //let str = JSON.stringify(result.getRootArray(),null,"  ");
         let str = customStringify(result.getRootArray());
+        //let str =  JSON.stringify(result.getRootArray());
         sfd.setSerializedText(str);
         //str = str.replace(/\\/g, '').replace(/\"\[/g, '[').replace(/\]\"/g,']');
         //console.log(str);
