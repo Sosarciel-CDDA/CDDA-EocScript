@@ -29,7 +29,8 @@ class GlobalFunction {
      * @param args 参数
      */
     getId(args) {
-        let base = this.getSfd().getId() + "_" + this.getRawName();
+        //let base = this.getSfd().getId();+"_"+this.getRawName();
+        let base = this.getRawName();
         if (args != null) {
             for (let arg of args)
                 base += "_" + arg;

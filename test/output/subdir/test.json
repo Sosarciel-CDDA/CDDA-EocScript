@@ -1,21 +1,21 @@
 [
   {
-    "id": "test_test2",
+    "id": "test2",
     "type": "effect_on_condition",
     "effect": [
       {"math":["a","=","a+1"]},
-      {"math":["test_test2_rtn","=","a"]}
+      {"math":["test2_rtn","=","a"]}
     ]
   },
   {
-    "id": "test_tsfunc",
+    "id": "tsfunc",
     "type": "effect_on_condition",
     "effect": [
       {"math":["e","=","1"]},
       {"math":["b","=","2"]},
       {"math":["c","=","3"]},
-      {"run_eocs":"test_test2"},
-      {"math":["test_tsfunc_rtn","=","test_test2_rtn"]}
+      {"run_eocs":"test2"},
+      {"math":["tsfunc_rtn","=","test2_rtn"]}
     ]
   },
   {
@@ -38,7 +38,7 @@
     "effect": [
       {"math":["b","=","2"]}
     ],
-    "condition": {"math":["a","==","test_tsfunc_rtn"]}
+    "condition": {"math":["a","==","tsfunc_rtn"]}
   },
   {
     "id": "test_if3",
@@ -66,10 +66,10 @@
       {"math":["b","=","2+(a+3)+c+d*2"]},
       {"switch":{"math":["a"]},"cases":[{"case":1,"effect":[{"run_eocs":"test_ca0"}]},{"case":2,"effect":[{"run_eocs":"test_ca1"}]}]},
       {"math":["c","=","3"]},
-      {"run_eocs":"test_tsfunc"},
-      {"run_eocs":"test_test2"},
-      {"math":["sss","=","test_test2_rtn"]},
-      {"run_eocs":"test_tsfunc"},
+      {"run_eocs":"tsfunc"},
+      {"run_eocs":"test2"},
+      {"math":["sss","=","test2_rtn"]},
+      {"run_eocs":"tsfunc"},
       {"run_eocs":"test_if2"},
       {"run_eocs":"test_if3"},
       {"run_eocs":"test_if4"}

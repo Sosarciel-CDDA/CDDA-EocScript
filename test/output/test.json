@@ -1,27 +1,27 @@
 [
   {
-    "id": "test_regenVatmin_维他命A",
+    "id": "regenVatmin_维他命A",
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val('维他命A')","+=","1"]}
     ]
   },
   {
-    "id": "test_regenVatmin_维他命B",
+    "id": "regenVatmin_维他命B",
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val('维他命B')","+=","1"]}
     ]
   },
   {
-    "id": "test_regenVatmin_维他命C",
+    "id": "regenVatmin_维他命C",
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val('维他命C')","+=","1"]}
     ]
   },
   {
-    "id": "test_regenVatmin_维他命D",
+    "id": "regenVatmin_维他命D",
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val('维他命D')","+=","1"]}
@@ -32,10 +32,10 @@
     "type": "effect_on_condition",
     "effect": [
       {"math":["i","=","0"]},
-      {"run_eocs":"test_regenVatmin_维他命A"},
-      {"run_eocs":"test_regenVatmin_维他命B"},
-      {"run_eocs":"test_regenVatmin_维他命C"},
-      {"run_eocs":"test_regenVatmin_维他命D"}
+      {"run_eocs":"regenVatmin_维他命A"},
+      {"run_eocs":"regenVatmin_维他命B"},
+      {"run_eocs":"regenVatmin_维他命C"},
+      {"run_eocs":"regenVatmin_维他命D"}
     ],
     "condition": {"math":["i",">=","3"]}
   },

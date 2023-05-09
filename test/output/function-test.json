@@ -1,41 +1,41 @@
 [
   {
-    "id": "function_test_regenVal_hp_bp1",
+    "id": "regenVal_hp_bp1",
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val('hp','bp1')","+=","1"]},
       {"run_eocs":"anyUDefMathFunc"},
       {"math":["a","+=","anyUDefMathFunc('bp1')"]},
-      {"math":["function_test_regenVal_hp_bp1_rtn","=","123"]}
+      {"math":["regenVal_hp_bp1_rtn","=","123"]}
     ]
   },
   {
-    "id": "function_test_regenVal_hp_bp2",
+    "id": "regenVal_hp_bp2",
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val('hp','bp2')","+=","1"]},
       {"run_eocs":"anyUDefMathFunc"},
       {"math":["a","+=","anyUDefMathFunc('bp2')"]},
-      {"math":["function_test_regenVal_hp_bp2_rtn","=","123"]}
+      {"math":["regenVal_hp_bp2_rtn","=","123"]}
     ]
   },
   {
-    "id": "function_test_regenMana_10",
+    "id": "regenMana_10",
     "type": "effect_on_condition",
     "effect": [
       {"math":["u_val('mana')","+=","10"]},
-      {"math":["function_test_regenMana_10_rtn","=","123"]}
+      {"math":["regenMana_10_rtn","=","123"]}
     ]
   },
   {
     "id": "function_test",
     "type": "effect_on_condition",
     "effect": [
-      {"run_eocs":"function_test_regenVal_hp_bp1"},
-      {"run_eocs":"function_test_regenVal_hp_bp2"},
-      {"run_eocs":"function_test_regenVal_hp_bp2"},
-      {"math":["c","=","function_test_regenVal_hp_bp2_rtn+1"]},
-      {"run_eocs":"function_test_regenMana_10"}
+      {"run_eocs":"regenVal_hp_bp1"},
+      {"run_eocs":"regenVal_hp_bp2"},
+      {"run_eocs":"regenVal_hp_bp2"},
+      {"math":["c","=","regenVal_hp_bp2_rtn+1"]},
+      {"run_eocs":"regenMana_10"}
     ]
   }
 ]
