@@ -25,13 +25,20 @@ function get_hurt(dmg){
 	//	target_part:"head"
 	//});
 	//torso
+	eobj({ "arithmetic": [ 
+			{ "global_val": "currHpTmp" }, "-", { "u_val": "hp", "bodypart":"head" }
+		]
+	});
+	if(dmg>currHpTmp)
+		overDmg = currHpTmp-0.01;
+	else
+		overDmg = dmg-1;
 	eobj({
 		u_set_hp:{ "arithmetic": [ 
-			{ "u_val": "hp", "bodypart":"head" }, "-", { "const": dmg } 
+			{ "u_val": "hp", "bodypart":"head" }, "-", { "global_val": "overDmg" }
 		] },
 		target_part:"head"
 	});
-	return 123;
 }
 
 function print_global_val(varName){
@@ -39,10 +46,10 @@ function print_global_val(varName){
 	//eobj( { u_message: {global_val:varName}})
 }
 
-function fireball(){
-	let b = get_hurt(10);
-	let testa = 100;
-	print_global_val(testa);
+function te4_fireball(){
+	let te4_fireball_dmg = 30;
+	print_global_val(te4_fireball_dmg);
+	get_hurt(te4_fireball_dmg);
 	//...
 }
 

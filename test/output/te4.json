@@ -13,28 +13,39 @@
     "recurrence": "60 s"
   },
   {
-    "id": "get_hurt_10",
+    "id": "print_global_val_te4_fireball_dmg",
     "type": "effect_on_condition",
     "effect": [
-      {"u_set_hp":{"arithmetic":[{"u_val":"hp","bodypart":"head"},"-",{"const":10}]},"target_part":"head"},
-      {"math":["get_hurt_10_rtn","=","123"]}
+      {"u_message":"全局变量 te4_fireball_dmg 当前的值为 : <global_val:te4_fireball_dmg>"}
     ]
   },
   {
-    "id": "print_global_val_testa",
+    "id": "te4_if0",
     "type": "effect_on_condition",
     "effect": [
-      {"u_message":"全局变量 testa 当前的值为 : <global_val:testa>"}
+      {"math":["overDmg","=","currHpTmp-0.01"]}
+    ],
+    "false_effect": [
+      {"math":["overDmg","=","te4_fireball_dmg-1"]}
+    ],
+    "condition": {"math":["te4_fireball_dmg",">","currHpTmp"]}
+  },
+  {
+    "id": "get_hurt_te4_fireball_dmg",
+    "type": "effect_on_condition",
+    "effect": [
+      {"arithmetic":[{"global_val":"currHpTmp"},"-",{"u_val":"hp","bodypart":"head"}]},
+      {"run_eocs":"te4_if0"},
+      {"u_set_hp":{"arithmetic":[{"u_val":"hp","bodypart":"head"},"-",{"global_val":"overDmg"}]},"target_part":"head"}
     ]
   },
   {
-    "id": "fireball",
+    "id": "te4_fireball",
     "type": "effect_on_condition",
     "effect": [
-      {"run_eocs":"get_hurt_10"},
-      {"math":["b","=","get_hurt_10_rtn"]},
-      {"math":["testa","=","100"]},
-      {"run_eocs":"print_global_val_testa"}
+      {"math":["te4_fireball_dmg","=","30"]},
+      {"run_eocs":"print_global_val_te4_fireball_dmg"},
+      {"run_eocs":"get_hurt_te4_fireball_dmg"}
     ]
   },
   {

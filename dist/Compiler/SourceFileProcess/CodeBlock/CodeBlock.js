@@ -96,8 +96,15 @@ class CodeBlock {
     }
     //获取局部变量
     getLocalVal(origVal) {
-        let tg = this._passArgsTable[origVal];
-        return tg == null ? origVal : tg;
+        //从当前块开始向父块搜索
+        let curr = this;
+        while (curr != null) {
+            let tg = curr._passArgsTable[origVal];
+            if (tg != null)
+                return tg;
+            curr = curr.getParentBlock();
+        }
+        return origVal;
     }
     //局部变量映射
     getLocalValMap() {
