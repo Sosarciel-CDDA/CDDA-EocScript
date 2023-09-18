@@ -7,14 +7,15 @@ import { CodeExpression } from "./Expression";
 import { MathExpProcess } from "./MathExpProcess";
 
 
-let _processFunc:Record<number,ExpProcess|null> = {
+const _processFunc:Record<number,ExpProcess|null> = {
     [SyntaxKind.VariableDeclaration ]:VarCalcExpProcess      ,//变量申明表达式
     [SyntaxKind.BinaryExpression    ]:BinaryCalcExpProcess   ,//表达式
     [SyntaxKind.SemicolonToken      ]:VoidExpProcess         ,//分号
 }
 
-//所有 (lval opera rval) 赋值/比较/定义 表达式
-//表达式处理路由
+/** 所有 (lval opera rval) 赋值/比较/定义 表达式
+ *  表达式处理路由
+ */
 export function CalcExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let out = new ExpPReturn();
 
@@ -23,12 +24,12 @@ export function CalcExpProcess(this:CodeExpression, node: Node):ExpPReturn{
         throw throwLog(node,"错误的 CalcExpProcess 表达式");
 
     let result = func.bind(this)(node);
-    out.addPreFuncList(result.getPreFuncs());
-    out.setToken(result.getToken());
+    out.preFuncs.push(...result.preFuncs);
+    out.token = result.token;
     return out;
 }
 
-//变量定义
+/**表达式处理 */
 function BinaryCalcExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.BinaryExpression);
     let out = new ExpPReturn();
@@ -37,18 +38,18 @@ function BinaryCalcExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let rit = MathExpProcess.bind(this)(node.getRight());
     let opera = node.getOperatorToken().getText();
 
-    out.addPreFuncList(lft.getPreFuncs());
-    out.addPreFuncList(rit.getPreFuncs());
+    out.preFuncs.push(...lft.preFuncs);
+    out.preFuncs.push(...rit.preFuncs);
 
     let obj:JToken = {};
 
-    obj = { "math": [ lft.getToken(), opera, rit.getToken() ]};
-    out.setToken(obj);
+    obj = { "math": [ lft.token, opera, rit.token ]};
+    out.token = obj;
 
     return out;
 }
 
-//变量定义
+/**变量申明表达式 */
 function VarCalcExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.VariableDeclaration);
     let out = new ExpPReturn();
@@ -56,10 +57,10 @@ function VarCalcExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let id = this.getLocalVal(node.getName());
     let rit = MathExpProcess.bind(this)(node.getInitializerOrThrow());
 
-    out.addPreFuncList(rit.getPreFuncs());
+    out.preFuncs.push(...rit.preFuncs);
     let obj:JToken = {};
-    obj = { "math": [ id , "=", rit.getToken() ]};
-    out.setToken(obj);
+    obj = { "math": [ id , "=", rit.token ]};
+    out.token = obj;
     return out;
 }
 

@@ -8,52 +8,41 @@
  * 	u_isInit = 1;
  * }
 **/
-function update_stat(){
-	recurrence("60 s");
-	u_TStr = 5+floor(u_strength/2);
-	u_TDex = u_dexterity;
-	u_TCon = 5+floor(u_strength/2);
-	u_TMag = u_intelligence;
-	u_TWil = 5+floor(u_perception/2);
-	u_TCun = 5+floor(u_perception/2);
+
+
+function set_spell_lvl(spell_id,spell_lvl){
+	_lvl = spell_lvl*20/3;
+	_int_lvl = round(_lvl);
+
+	eobj({"math":["u_val('spell_level','spell: "+spell_id+"')","=", '_int_lvl']})
 }
 
-function get_hurt(dmg){
-	//u_val('hp', 'bodypart: head')-=dmg;
-	//eobj({
-	//	u_set_hp:{ "math": ["u_val('hp', 'bodypart: head')-"+dmg] },
-	//	target_part:"head"
-	//});
-	//torso
-	eobj({ "arithmetic": [ 
-			{ "global_val": "currHpTmp" }, "-", { "u_val": "hp", "bodypart":"head" }
-		]
-	});
-	if(dmg>currHpTmp)
-		overDmg = currHpTmp-0.01;
-	else
-		overDmg = dmg-1;
-	eobj({
-		u_set_hp:{ "arithmetic": [ 
-			{ "u_val": "hp", "bodypart":"head" }, "-", { "global_val": "overDmg" }
-		] },
-		target_part:"head"
-	});
+function update_spell_lvl(stat){
+	set_spell_lvl(te4_fireball,stat);
 }
+
 
 function print_global_val(varName){
 	eobj( { u_message: "全局变量 "+varName+" 当前的值为 : <global_val:"+varName+">" })
 	//eobj( { u_message: {global_val:varName}})
 }
 
-function te4_fireball(){
-	let te4_fireball_dmg = 30;
-	print_global_val(te4_fireball_dmg);
-	get_hurt(te4_fireball_dmg);
-	//...
+function update_stat(){
+	recurrence("60 s");
+	u_TStr = 5+floor(u_val('strength')/2);
+	u_TDex = u_val('dexterity');
+	u_TCon = 5+floor(u_val('strength')/2);
+	u_TMag = u_val('intelligence');
+	u_TWil = 5+floor(u_val('perception')/2);
+	u_TCun = 5+floor(u_val('perception')/2);
+	mag = 1333;
+	print_global_val(mag);
+	update_spell_lvl(mag);
 }
 
 //recurrence(1);
+//global(false);
+//run_for_npcs(false);
 
 
 

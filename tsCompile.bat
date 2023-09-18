@@ -1,3 +1,3 @@
-@echo off
-tsc
+call tsc
+call tsc-alias
 pause

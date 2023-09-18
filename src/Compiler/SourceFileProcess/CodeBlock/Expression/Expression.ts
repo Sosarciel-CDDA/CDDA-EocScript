@@ -24,7 +24,7 @@ function CallStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{
 
     let result = CallExpProcess.bind(this)(node);
     //直接调用只取preFunc
-    out.addPreFuncList(result.getPreFuncs());
+    out.preFuncs.push(...result.preFuncs);
     //console.log(out.getPreFuncs());
     //out.setToken(result.getToken());
     return out;
@@ -39,10 +39,10 @@ function ReturnStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{
 
     let rit = MathExpProcess.bind(this)(node.getExpressionOrThrow());
 
-    out.addPreFuncList(rit.getPreFuncs());
+    out.preFuncs.push(...rit.preFuncs);
 
     //let obj:JToken = { "math": [ this.getCodeBlock().getReturnId(), "=", rit.getToken() ]};
-    out.setToken(rit.getToken());
+    out.token = rit.token;
     //return [{ "math": [ id, mid, lst ]}];
     return out;
 }

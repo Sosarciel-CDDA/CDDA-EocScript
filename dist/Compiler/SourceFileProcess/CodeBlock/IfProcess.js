@@ -15,13 +15,13 @@ function IfProcess(node) {
     let ifBlockStat = node.getThenStatement();
     let elseBlock = node.getElseStatement();
     //let ifid = this.getSfd().genBlockId(BlockType.IF);
-    let ifBlock = this.genSubBlock(CodeBlock_1.BlockType.IF, ifBlockStat, conditionObj.getToken(), elseBlock);
+    let ifBlock = this.genSubBlock(CodeBlock_1.BlockType.IF, ifBlockStat, conditionObj.token, elseBlock);
     let ifBlockObj = ifBlock.build();
     let out = new NPInterfaces_1.CBPReturn();
-    out.addPreFuncList(conditionObj.getPreFuncs());
+    out.preFuncs.push(...conditionObj.preFuncs);
     out.mergePreFuncList(ifBlockObj);
     //辅助函数
-    out.addToken({ "run_eocs": ifBlock.getId() });
+    out.tokens.push({ "run_eocs": ifBlock.getId() });
     return out;
 }
 exports.IfProcess = IfProcess;

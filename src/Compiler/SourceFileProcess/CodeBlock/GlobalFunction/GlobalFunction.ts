@@ -7,7 +7,7 @@ import CodeBlock from "../CodeBlock";
 
 export class GlobalFunction{
     _node:FunctionDeclaration;
-    _sfd:SourceFileData;
+    sfd:SourceFileData;
     _params:Array<string>=[];
     //动态生成的不同参数函数代码块
     _dynamicCodeBlockTable:Record<string,CodeBlock|null>={}
@@ -15,14 +15,11 @@ export class GlobalFunction{
     constructor(node:Node,sfd:SourceFileData){
         checkKind(node,SyntaxKind.FunctionDeclaration);
         this._node = node;
-        this._sfd = sfd;
+        this.sfd = sfd;
         this._params = node.getParameters().map((value)=> value.getText());
     }
     getNode(){
         return this._node;
-    }
-    getSfd(){
-        return this._sfd;
     }
     getRawName(){
         return this.getNode().getNameOrThrow();
@@ -49,7 +46,7 @@ export class GlobalFunction{
 
         let funcid = this.getId(args);
         let codeBody = this.getNode().getBodyOrThrow();
-        let cb = new CodeBlock(funcid,codeBody,this.getSfd());
+        let cb = new CodeBlock(funcid,codeBody,this.sfd);
 
         //传参
         if(args==null)

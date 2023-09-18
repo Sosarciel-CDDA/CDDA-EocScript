@@ -2,25 +2,25 @@
   {
     "id": "if_test_if1",
     "type": "effect_on_condition",
+    "condition": {"and":[{"math":["1"]},{"u_has_hp":10}]},
     "effect": [
       {"math":["c","=","4"]}
     ],
     "false_effect": [
       {"math":["d","=","5"]}
-    ],
-    "condition": {"and":[{"math":["1"]},{"u_has_hp":10}]}
+    ]
   },
   {
     "id": "if_test_if0",
     "type": "effect_on_condition",
+    "condition": {"math":["a","==","1"]},
     "effect": [
       {"math":["a","=","2"]},
       {"math":["b","=","3"]}
     ],
     "false_effect": [
       {"run_eocs":"if_test_if1"}
-    ],
-    "condition": {"math":["a","==","1"]}
+    ]
   },
   {
     "id": "if_test",

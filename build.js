@@ -52,10 +52,10 @@ async function copyAndPackage() {
 		console.error(`exec error: ${error}`);
 	}
     await execAsync('del ".\\bin\\Release\\node14-win-x64\\EocScript"');
-    const { stdout: copyStdout, stderr: copyStderr } = await execAsync('xcopy /E /I /Y "./dist" "./bin/Release/node14-win-x64/dist"');
-    console.log(`stdout: ${copyStdout}`);
-	if(copyStderr)
-		console.error(`stderr: ${copyStderr}`);
+    //const { stdout: copyStdout, stderr: copyStderr } = await execAsync('xcopy /E /I /Y "./dist" "./bin/Release/node14-win-x64/dist"');
+    //console.log(`stdout: ${copyStdout}`);
+	//if(copyStderr)
+	//	console.error(`stderr: ${copyStderr}`);
     const { stdout: pkgStdout, stderr: pkgStderr } = await execAsync('pkg app.js --targets node14-win-x64 --output ./bin/Release/node14-win-x64/EocScript.exe');
     console.log(`stdout: ${pkgStdout}`);
 	if(pkgStderr)

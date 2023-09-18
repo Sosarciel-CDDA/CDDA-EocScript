@@ -4,7 +4,7 @@ exports.SourceFileProcess = void 0;
 const CodeBlock_1 = require("./CodeBlock");
 function SourceFileProcess(sourceFile, sfd) {
     let block = sourceFile;
-    let cb = new CodeBlock_1.CodeBlock(sfd.getId(), block, sfd);
+    let cb = new CodeBlock_1.CodeBlock(sfd.id, block, sfd);
     cb.build();
     //console.log(sfd.getRootArray());
     return sfd;

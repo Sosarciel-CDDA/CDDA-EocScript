@@ -21,8 +21,8 @@ export function condExpProcess(this:CodeExpression, node: Node):ExpPReturn{
         result = this.process(exp);
 
     //取preFunc与token
-    out.setToken(result.getToken());
+    out.token = result.token;
     if(!result.isRtnNofuncReq())
-        out.addPreFuncList(result.getPreFuncs());
+        out.preFuncs.push(...result.preFuncs);
     return out;
 }

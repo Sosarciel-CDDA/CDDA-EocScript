@@ -5,7 +5,7 @@ import { SourceFileData } from "./Interfaces";
 export function SourceFileProcess(sourceFile: SourceFile,sfd:SourceFileData):SourceFileData{
     let block = sourceFile as any as Node;
 
-    let cb = new CodeBlock(sfd.getId(),block,sfd);
+    let cb = new CodeBlock(sfd.id,block,sfd);
     cb.build();
     //console.log(sfd.getRootArray());
     return sfd;

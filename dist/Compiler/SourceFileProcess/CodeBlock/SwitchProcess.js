@@ -11,9 +11,9 @@ function SwitchProcess(node) {
     let out = new NPInterfaces_1.CBPReturn();
     let exp = new Expression_1.CodeExpression(node.getExpression(), this);
     let expObj = exp.build();
-    out.addPreFuncList(expObj.getPreFuncs());
+    out.preFuncs.push(...expObj.preFuncs);
     let switchObj = {
-        "switch": expObj.getToken(),
+        "switch": expObj.token,
         "cases": [],
     };
     let cases = node.getCaseBlock().getClauses();
@@ -31,7 +31,7 @@ function SwitchProcess(node) {
             });
         }
     }
-    out.addToken(switchObj);
+    out.tokens.push(switchObj);
     return out;
 }
 exports.SwitchProcess = SwitchProcess;

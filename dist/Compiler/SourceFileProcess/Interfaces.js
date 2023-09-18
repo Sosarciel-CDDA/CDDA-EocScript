@@ -1,30 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SourceFileData = void 0;
-const Utils_1 = require("Utils");
+const Utils_1 = require("../../Utils");
 const GlobalFunction_1 = require("./CodeBlock/GlobalFunction");
 class SourceFileData {
-    _id;
+    /**主文件ID */
+    id;
+    /**基础的effect列表 */
     _rootArray;
-    _count = 0;
+    /**记录子代码块的数量 */
+    count = 0;
+    /**完成编译的文本 */
     _serializedText = null;
     //全局函数ID表 用于确认是否有对应参数的全局函数
     _globalFuncTable = {};
     constructor(id, rootArray) {
-        this._id = id;
+        this.id = id;
         this._rootArray = rootArray || [];
-    }
-    getCount() {
-        return this._count;
-    }
-    getId() {
-        return this._id;
     }
     /**获取一个不重复的随机ID
      * @returns 代码块ID
      */
     genRID() {
-        return this._count++;
+        return this.count++;
     }
     addGlobalFunction(node) {
         let gfunc = new GlobalFunction_1.GlobalFunction(node, this);
@@ -43,7 +41,7 @@ class SourceFileData {
     getRootEoc() {
         for (let obj of this._rootArray) {
             let aobj = obj;
-            if (aobj.id == this._id)
+            if (aobj.id == this.id)
                 return aobj;
         }
         return null;

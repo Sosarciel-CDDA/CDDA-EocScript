@@ -46,7 +46,7 @@ function CondFieldAddProcess(this:CodeExpression,node: Node):ExpPReturn{
     let id = node.getExpression().getText();
     let cond = node.getArguments()[0];
 
-    cb.addEocField(id, CalcExpProcess.bind(this)(cond).getToken());
+    cb.addEocField(id, CalcExpProcess.bind(this)(cond).token);
     return new ExpPReturn();
 }
 
@@ -78,11 +78,11 @@ export function CallExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     //动态创建代码块
     let cb = gfunc.getCodeBlock(args);
 
-    out.addPreFunc({ "run_eocs": gfunc.getId(args) });
+    out.preFuncs.push({ "run_eocs": gfunc.getId(args) });
 
     let returnid = gfunc.getReturnID(args);
     if(returnid!=null)
-        out.setToken(returnid);
+        out.token = returnid;
 
     return out;
 }
@@ -112,8 +112,8 @@ function EObjProcess(this:CodeExpression,node: Node):ExpPReturn{
     //console.log(text)
 
     let tokenObj = eval(text);
-    out.setToken(tokenObj);
-    out.addPreFunc(tokenObj);
+    out.token = tokenObj;
+    out.preFuncs.push(tokenObj);
     out.setRtnNofuncReq();
     return out;
 }
@@ -137,7 +137,7 @@ function EArrProcess(this:CodeExpression,node: Node):ExpPReturn{
     text=preText+text;
 
     let tokenArr = eval(text);
-    out.addPreFuncList(tokenArr);
+    out.preFuncs.push(...tokenArr);
     return out;
 }
 
@@ -152,7 +152,8 @@ function DefaultProcess(this:CodeExpression,node: Node):ExpPReturn{
     //全局函数处理
     //处理并替换传入参数
     let args = node.getArguments().map(val=>this.getLocalVal(val.getText()));
-
+    //console.log(args)
+    let id = node.getExpression().getText();
     //将括号内的文本匹配并替换
     let text = node.getText();
     let argsText = "";
@@ -162,14 +163,14 @@ function DefaultProcess(this:CodeExpression,node: Node):ExpPReturn{
         argsText+=arg
     }
     //将捕获部分替换成 本地变量参数字符串
-    let regex = /.*\((.*)\)/;
+    let regex = /.*?\((.*)\)/;
     text = text.replace(regex, (match, p1) => {
+        //console.log(id,match,p1)
         return match.replace(p1, argsText);
     });
 
-    let id = node.getExpression().getText();
-    out.addPreFunc({ "run_eocs": id });
-    out.setToken(text);
+    out.preFuncs.push({ "run_eocs": id });
+    out.token = text;
     out.setRtnNofuncReq();
     return out;
 }
@@ -183,9 +184,9 @@ function AndProcess(this:CodeExpression,node: Node):ExpPReturn{
         //let result = this.process(arg);
         let result = condExpProcess.bind(this)(arg);
         out.mergePreFuncList(result);
-        arr.push(result.getToken());
+        arr.push(result.token);
     }
-    out.setToken({and:arr});
+    out.token = {and:arr};
     return out;
 }
 function OrProcess(this:CodeExpression,node: Node):ExpPReturn{
@@ -197,9 +198,9 @@ function OrProcess(this:CodeExpression,node: Node):ExpPReturn{
         //let result = this.process(arg);
         let result = condExpProcess.bind(this)(arg);
         out.mergePreFuncList(result);
-        arr.push(result.getToken());
+        arr.push(result.token);
     }
-    out.setToken({or:arr});
+    out.token = {or:arr};
     return out;
 }
 function NotProcess(this:CodeExpression,node: Node):ExpPReturn{
@@ -212,7 +213,7 @@ function NotProcess(this:CodeExpression,node: Node):ExpPReturn{
     let result = condExpProcess.bind(this)(arg);
     out.mergePreFuncList(result);
 
-    out.setToken({not:result.getToken()});
+    out.token = {not:result.token};
     return out;
 }
 

@@ -13,8 +13,8 @@ function VariableProcess(node) {
     for (let declaration of declarationList) {
         let exp = new Expression_1.CodeExpression(declaration, this);
         let result = exp.build();
-        out.addPreFuncList(result.getPreFuncs());
-        out.addToken(result.getToken());
+        out.preFuncs.push(...result.preFuncs);
+        out.tokens.push(result.token);
     }
     return out;
     //return { "arithmetic": [ { "time_since_cataclysm": "turns" }, "=", { "u_val": "focus" }, "*", { "u_val": "mana_max" } ], "max":15 };

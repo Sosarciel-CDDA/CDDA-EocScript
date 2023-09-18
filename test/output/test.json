@@ -30,14 +30,14 @@
   {
     "id": "test_if0",
     "type": "effect_on_condition",
+    "condition": {"math":["i",">=","3"]},
     "effect": [
       {"math":["i","=","0"]},
       {"run_eocs":"regenVatmin_维他命A"},
       {"run_eocs":"regenVatmin_维他命B"},
       {"run_eocs":"regenVatmin_维他命C"},
       {"run_eocs":"regenVatmin_维他命D"}
-    ],
-    "condition": {"math":["i",">=","3"]}
+    ]
   },
   {
     "id": "test",

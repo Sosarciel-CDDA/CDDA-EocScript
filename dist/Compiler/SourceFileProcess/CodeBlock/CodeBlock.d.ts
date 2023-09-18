@@ -1,5 +1,5 @@
 import { Node } from "ts-morph";
-import { JArray, JToken } from "Utils";
+import { JArray, JObject, JToken } from "../../../Utils";
 import { SourceFileData } from "../Interfaces";
 import { NodeProcess, CBPReturn } from "./NPInterfaces";
 export declare enum BlockType {
@@ -35,6 +35,6 @@ export declare class CodeBlock {
     build(): CBPReturn;
     /**处理申明列表
      */
-    processStatments(node: Node | Array<Node>): (string | number | boolean | import("Utils").JObject | JArray | null)[];
+    processStatments(node: Node | Array<Node>): (string | number | boolean | JArray | JObject | null)[];
 }
 export default CodeBlock;

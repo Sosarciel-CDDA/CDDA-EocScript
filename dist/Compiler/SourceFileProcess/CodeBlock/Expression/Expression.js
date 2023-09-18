@@ -15,7 +15,7 @@ function CallStateExpProcess(node) {
     let out = new EPInterface_1.ExpPReturn();
     let result = CallExpProcess_1.CallExpProcess.bind(this)(node);
     //直接调用只取preFunc
-    out.addPreFuncList(result.getPreFuncs());
+    out.preFuncs.push(...result.preFuncs);
     //console.log(out.getPreFuncs());
     //out.setToken(result.getToken());
     return out;
@@ -25,9 +25,9 @@ function ReturnStateExpProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.ReturnStatement);
     let out = new EPInterface_1.ExpPReturn();
     let rit = MathExpProcess_1.MathExpProcess.bind(this)(node.getExpressionOrThrow());
-    out.addPreFuncList(rit.getPreFuncs());
+    out.preFuncs.push(...rit.preFuncs);
     //let obj:JToken = { "math": [ this.getCodeBlock().getReturnId(), "=", rit.getToken() ]};
-    out.setToken(rit.getToken());
+    out.token = rit.token;
     //return [{ "math": [ id, mid, lst ]}];
     return out;
 }

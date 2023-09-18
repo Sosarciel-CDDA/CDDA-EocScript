@@ -1,15 +1,17 @@
-import { JArray, JObject, JToken } from "Utils";
+import { JArray, JObject, JToken } from "../../Utils";
 import { GlobalFunction } from "./CodeBlock/GlobalFunction";
 import { Node } from "ts-morph";
 export declare class SourceFileData {
-    _id: string;
-    _rootArray: JArray;
-    _count: number;
-    _serializedText: string | null;
-    _globalFuncTable: Record<string, GlobalFunction | null>;
+    /**主文件ID */
+    id: string;
+    /**基础的effect列表 */
+    private _rootArray;
+    /**记录子代码块的数量 */
+    count: number;
+    /**完成编译的文本 */
+    private _serializedText;
+    private _globalFuncTable;
     constructor(id: string, rootArray?: JArray);
-    getCount(): number;
-    getId(): string;
     /**获取一个不重复的随机ID
      * @returns 代码块ID
      */

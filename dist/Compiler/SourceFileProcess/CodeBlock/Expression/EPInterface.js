@@ -1,35 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VoidExpProcess = exports.ExpPReturn = void 0;
+/**表达式的返回值 */
 class ExpPReturn {
-    _preFuncs;
-    _token;
+    /**需要预先执行的func */
+    preFuncs;
+    /**主要返回值 */
+    token;
     _noFuncReq = false;
     constructor(token, preFuncs) {
-        this._preFuncs = preFuncs || [];
-        this._token = token || null;
-    }
-    addPreFunc(obj) {
-        this._preFuncs.push(obj);
-    }
-    addPreFuncList(objs) {
-        for (let obj of objs)
-            this.addPreFunc(obj);
+        this.preFuncs = preFuncs || [];
+        this.token = token || null;
     }
     mergePreFuncList(obj) {
-        this.addPreFuncList(obj.getPreFuncs());
-    }
-    setToken(obj) {
-        this._token = obj;
-    }
-    getToken() {
-        return this._token;
-    }
-    getPreFuncs() {
-        return this._preFuncs;
+        this.preFuncs.push(...obj.preFuncs);
     }
     isVaild() {
-        return this._token != null;
+        return this.token != null;
     }
     //不需要调用函数
     //在嵌入表达式时不添加preFunc

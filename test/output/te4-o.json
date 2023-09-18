@@ -1,0 +1,56 @@
+[
+  {
+    "id": "update_stat",
+    "type": "effect_on_condition",
+    "effect": [
+      {"math":["u_TStr","=","5+floor(u_strength/2)"]},
+      {"math":["u_TDex","=","u_dexterity"]},
+      {"math":["u_TCon","=","5+floor(u_strength/2)"]},
+      {"math":["u_TMag","=","u_intelligence"]},
+      {"math":["u_TWil","=","5+floor(u_perception/2)"]},
+      {"math":["u_TCun","=","5+floor(u_perception/2)"]}
+    ],
+    "recurrence": "60 s"
+  },
+  {
+    "id": "print_global_val_te4_fireball_dmg",
+    "type": "effect_on_condition",
+    "effect": [
+      {"u_message":"全局变量 te4_fireball_dmg 当前的值为 : <global_val:te4_fireball_dmg>"}
+    ]
+  },
+  {
+    "id": "te4_o_if0",
+    "type": "effect_on_condition",
+    "condition": {"math":["te4_fireball_dmg",">","curr_hp"]},
+    "effect": [
+      {"math":["final_dmg","=","curr_hp-0.01"]}
+    ],
+    "false_effect": [
+      {"math":["final_dmg","=","te4_fireball_dmg-1"]}
+    ]
+  },
+  {
+    "id": "get_hurt_te4_fireball_dmg",
+    "type": "effect_on_condition",
+    "effect": [
+      {"arithmetic":[{"global_val":"var","var_name":"curr_hp"},"=",{"u_val":"hp"}]},
+      {"run_eocs":"te4_o_if0"},
+      {"u_set_hp":{"arithmetic":[{"global_val":"var","var_name":"curr_hp"},"-",{"global_val":"var","var_name":"final_dmg"}]},"target_part":"torso"}
+    ]
+  },
+  {
+    "id": "te4_fireball",
+    "type": "effect_on_condition",
+    "effect": [
+      {"math":["te4_fireball_dmg","=","30"]},
+      {"run_eocs":"print_global_val_te4_fireball_dmg"},
+      {"run_eocs":"get_hurt_te4_fireball_dmg"}
+    ]
+  },
+  {
+    "id": "te4_o",
+    "type": "effect_on_condition",
+    "effect": []
+  }
+]

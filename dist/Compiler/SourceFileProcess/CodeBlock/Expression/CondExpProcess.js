@@ -17,9 +17,9 @@ function condExpProcess(node) {
     else
         result = this.process(exp);
     //取preFunc与token
-    out.setToken(result.getToken());
+    out.token = result.token;
     if (!result.isRtnNofuncReq())
-        out.addPreFuncList(result.getPreFuncs());
+        out.preFuncs.push(...result.preFuncs);
     return out;
 }
 exports.condExpProcess = condExpProcess;

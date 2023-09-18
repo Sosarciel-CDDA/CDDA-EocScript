@@ -1,42 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VoidProcess = exports.CBPReturn = void 0;
+/**CodeBlock返回值 */
 class CBPReturn {
-    _preFuncs;
-    _tokens;
+    /**在应用前需要执行的函数 */
+    preFuncs;
+    /**主要返回值 JToken */
+    tokens;
+    /**
+     * @param tokens    JToken
+     * @param preFuncs  在应用前需要执行的函数
+     */
     constructor(tokens, preFuncs) {
-        this._preFuncs = preFuncs || [];
-        this._tokens = tokens || [];
-    }
-    addPreFunc(obj) {
-        this._preFuncs.push(obj);
-    }
-    addPreFuncList(objs) {
-        for (let obj of objs)
-            this.addPreFunc(obj);
+        this.preFuncs = preFuncs || [];
+        this.tokens = tokens || [];
     }
     mergePreFuncList(obj) {
-        this.addPreFuncList(obj.getPreFuncs());
-    }
-    addToken(obj) {
-        if (obj != null)
-            this._tokens.push(obj);
-    }
-    addTokenList(objs) {
-        for (let obj of objs)
-            this.addToken(obj);
+        this.preFuncs.push(...obj.preFuncs);
     }
     mergeTokenList(obj) {
-        this.addTokenList(obj.getTokens());
-    }
-    getTokens() {
-        return this._tokens;
-    }
-    getPreFuncs() {
-        return this._preFuncs;
+        this.tokens.push(...obj.tokens);
     }
     isVaild() {
-        return this._tokens.length > 0 || this._preFuncs.length > 0;
+        return this.tokens.length > 0 || this.preFuncs.length > 0;
     }
 }
 exports.CBPReturn = CBPReturn;

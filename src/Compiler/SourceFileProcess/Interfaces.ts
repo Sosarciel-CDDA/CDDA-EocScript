@@ -1,33 +1,30 @@
 import { JArray, JObject, JToken, deepClone } from "Utils";
 import { GlobalFunction } from "./CodeBlock/GlobalFunction";
 import { Node } from "ts-morph";
-import { BlockType, CodeBlock } from "./CodeBlock";
 
 export class SourceFileData{
-    _id:string;
-    _rootArray:JArray;
-    _count:number=0;
-    _serializedText:string|null=null;
+    /**主文件ID */
+    id:string;
+    /**基础的effect列表 */
+    private _rootArray:JArray;
+    /**记录子代码块的数量 */
+    count:number=0;
+    /**完成编译的文本 */
+    private _serializedText:string|null=null;
 
     //全局函数ID表 用于确认是否有对应参数的全局函数
-    _globalFuncTable:Record<string,GlobalFunction|null>={};
+    private _globalFuncTable:Record<string,GlobalFunction|null>={};
 
     constructor(id:string,rootArray?:JArray){
-        this._id=id;
+        this.id=id;
         this._rootArray=rootArray||[];
-    }
-    getCount(){
-        return this._count;
-    }
-    getId(){
-        return this._id;
     }
 
     /**获取一个不重复的随机ID
      * @returns 代码块ID
      */
     genRID(){
-        return this._count++;
+        return this.count++;
     }
 
     addGlobalFunction(node:Node){
@@ -48,7 +45,7 @@ export class SourceFileData{
     getRootEoc():JObject{
         for(let obj of this._rootArray){
             let aobj = obj as any;
-            if(aobj.id==this._id)
+            if(aobj.id==this.id)
                 return aobj;
         }
         return null as any;

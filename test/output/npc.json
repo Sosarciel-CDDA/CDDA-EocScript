@@ -1,0 +1,92 @@
+[
+  {
+    "id": "print_global_val_mag3",
+    "type": "effect_on_condition",
+    "effect": [
+      {"u_message":"全局变量 mag3 当前的值为 : <global_val:mag3>"}
+    ]
+  },
+  {
+    "id": "print_global_val_mag1",
+    "type": "effect_on_condition",
+    "effect": [
+      {"u_message":"全局变量 mag1 当前的值为 : <global_val:mag1>"}
+    ]
+  },
+  {
+    "id": "print_global_val_mag2",
+    "type": "effect_on_condition",
+    "effect": [
+      {"u_message":"全局变量 mag2 当前的值为 : <global_val:mag2>"}
+    ]
+  },
+  {
+    "id": "update_stat",
+    "type": "effect_on_condition",
+    "effect": [
+      {"run_eocs":"print_global_val_mag3"},
+      {"run_eocs":"print_global_val_mag1"},
+      {"run_eocs":"print_global_val_mag2"}
+    ],
+    "recurrence": "1 s"
+  },
+  {
+    "id": "npc_if0",
+    "type": "effect_on_condition",
+    "condition": {"math":["u_currhp","==","0"]},
+    "effect": [
+      {"math":["u_currhp","=","u_hp()"]}
+    ]
+  },
+  {
+    "id": "init_curr_hp",
+    "type": "effect_on_condition",
+    "effect": [
+      {"run_eocs":"npc_if0"}
+    ],
+    "eoc_type": "ACTIVATION"
+  },
+  {
+    "id": "update_mon_hp",
+    "type": "effect_on_condition",
+    "effect": [
+      {"u_cast_spell":{"id":"init_curr_hp_spell"}}
+    ],
+    "recurrence": 1
+  },
+  {
+    "id": "npc_if1",
+    "type": "effect_on_condition",
+    "condition": {"and":[{"math":["u_currhp",">","u_hp()"]},{"math":["has_target","==","0"]}]},
+    "effect": [
+      {"u_cast_spell":{"id":"tgsummon"}},
+      {"math":["has_target","=","1"]}
+    ]
+  },
+  {
+    "id": "check_curr_hp",
+    "type": "effect_on_condition",
+    "effect": [
+      {"math":["mag1","=","u_currhp"]},
+      {"math":["mag2","=","u_hp()"]},
+      {"run_eocs":"npc_if1"},
+      {"math":["u_currhp","=","u_hp()"]}
+    ],
+    "eoc_type": "ACTIVATION"
+  },
+  {
+    "id": "hiteocs",
+    "type": "effect_on_condition",
+    "effect": [
+      {"u_cast_spell":{"id":"check_mon_hp_spell"}},
+      {"math":["has_target","=","0"]},
+      {"u_cast_spell":{"id":"testconfire"},"targeted":true}
+    ],
+    "eoc_type": "ACTIVATION"
+  },
+  {
+    "id": "npc",
+    "type": "effect_on_condition",
+    "effect": []
+  }
+]

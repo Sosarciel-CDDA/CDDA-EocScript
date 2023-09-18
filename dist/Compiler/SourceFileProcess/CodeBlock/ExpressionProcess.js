@@ -14,8 +14,8 @@ function ExpressionProcess(node) {
     let subExp = node.getExpression();
     let exp = new Expression_1.CodeExpression(subExp, this);
     let result = exp.build();
-    out.addPreFuncList(result.getPreFuncs());
-    out.addToken(result.getToken());
+    out.preFuncs.push(...result.preFuncs);
+    out.tokens.push(result.token);
     //console.log(out.getPreFuncs());
     return out;
     //throw throwLog(node,"未知的申明表达式类型");

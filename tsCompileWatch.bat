@@ -1,3 +1,2 @@
-@echo off
-tsc -w
-pause
+start tsc -w
+start tsc-alias -w

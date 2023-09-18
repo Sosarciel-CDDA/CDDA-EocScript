@@ -1,9 +1,8 @@
 import { Node,SyntaxKind } from "ts-morph";
-import { JArray, JToken } from "Utils";
+import { JArray, JObject, JToken } from "Utils";
 import { SourceFileData } from "../Interfaces";
 import { VariableProcess } from "./VariableProcess";
 import { checkKind, throwLog } from '../Functions';
-import { Eoc } from "JsonClass";
 import { FunctionProcess } from "./FunctionProcess";
 import { CodeExpression } from "./Expression";
 import { NodeProcess, CBPReturn } from "./NPInterfaces";
@@ -38,10 +37,10 @@ function ReturnProcess(this:CodeBlock, node: Node):CBPReturn{
     let exp = new CodeExpression(node,this);
     let rit = exp.build();
 
-    outlist.addPreFuncList(rit.getPreFuncs());
+    outlist.preFuncs.push(...rit.preFuncs);
 
-    let obj:JToken = { "math": [ this.getReturnId(), "=", rit.getToken() ]};
-    outlist.addToken(obj);
+    let obj:JToken = { "math": [ this.getReturnId(), "=", rit.token ]};
+    outlist.tokens.push(obj);
     //return [{ "math": [ id, mid, lst ]}];
     return outlist;
 }
@@ -79,7 +78,7 @@ export class CodeBlock{
     }
 
     getRootId(){
-        return this.getSfd().getId();
+        return this.getSfd().id;
     }
 
     getReturnId(){
@@ -132,24 +131,25 @@ export class CodeBlock{
     /**处理代码块
      */
     build(){
-        let eoc = new Eoc(this.getId());
-
-        if(this._condition!=null)
-            eoc.setCondition(this._condition);
-
-        eoc.addEffectList(this.processStatments(this._node));
-        if(this._falseNode!=null)
-            eoc.addFalseEffectList(this.processStatments(this._falseNode));
-
-        let eocObj = eoc.build();
-        //额外字段
-        if(eocObj!=null){
-            for(let field in this._eocFieldTable)
-                (eocObj as any)[field] = this._eocFieldTable[field];
+        let eoc:JObject = {
+            id           : this.getId()         ,
+            type         : "effect_on_condition",
         }
 
-        this._sfd.addEoc(eocObj);
-        return new CBPReturn([eocObj]);
+        if(this._condition!=null)
+            eoc["condition"] = this._condition;
+
+        eoc["effect"] = [...this.processStatments(this._node)].filter(item=>item!=null)
+        if(this._falseNode!=null)
+            eoc["false_effect"] = [...this.processStatments(this._falseNode)].filter(item=>item!=null);
+
+        //额外字段
+        for(let field in this._eocFieldTable)
+            eoc[field] = this._eocFieldTable[field];
+
+
+        this._sfd.addEoc(eoc);
+        return new CBPReturn([eoc]);
     }
     /**处理申明列表
      */
@@ -171,8 +171,8 @@ export class CodeBlock{
                 let result = processFunc.bind(this)(stat);
                 if(!result.isVaild())
                     continue;
-                let preFuncs = result.getPreFuncs();
-                let tokens = result.getTokens();
+                let preFuncs = result.preFuncs;
+                let tokens = result.tokens;
                 for(let obj of preFuncs)
                     effects.push(obj);
                 for(let obj of tokens)

@@ -7,8 +7,8 @@ const MathExpProcess_1 = require("./MathExpProcess");
 function ValExpProcess(node) {
     let out = new EPInterface_1.ExpPReturn();
     let exp = MathExpProcess_1.MathExpProcess.bind(this)(node);
-    out.addPreFuncList(exp.getPreFuncs());
-    out.setToken({ "math": [exp.getToken()] });
+    out.preFuncs.push(...exp.preFuncs);
+    out.token = { math: [exp.token] };
     return out;
 }
 exports.ValExpProcess = ValExpProcess;

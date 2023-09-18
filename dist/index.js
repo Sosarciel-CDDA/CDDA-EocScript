@@ -15,5 +15,4 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./Utils"), exports);
-__exportStar(require("./JsonClass"), exports);
 __exportStar(require("./Compiler"), exports);

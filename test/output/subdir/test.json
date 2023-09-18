@@ -35,26 +35,26 @@
   {
     "id": "test_if2",
     "type": "effect_on_condition",
+    "condition": {"math":["a","==","tsfunc_rtn"]},
     "effect": [
       {"math":["b","=","2"]}
-    ],
-    "condition": {"math":["a","==","tsfunc_rtn"]}
+    ]
   },
   {
     "id": "test_if3",
     "type": "effect_on_condition",
+    "condition": {"testEtoken":1},
     "effect": [
       {"math":["b","=","2"]}
-    ],
-    "condition": {"testEtoken":1}
+    ]
   },
   {
     "id": "test_if4",
     "type": "effect_on_condition",
+    "condition": {"and":[{"math":["a","==","1"]},{"math":["b","==","2"]},{"math":["c","==","3"]},{"or":[{"math":["d","==","4"]},{"math":["e","==","5"]},{"not":{"math":["f","==","6"]}}]}]},
     "effect": [
       {"math":["b","=","2"]}
-    ],
-    "condition": {"and":[{"math":["a","==","1"]},{"math":["b","==","2"]},{"math":["c","==","3"]},{"or":[{"math":["d","==","4"]},{"math":["e","==","5"]},{"not":{"math":["f","==","6"]}}]}]}
+    ]
   },
   {
     "id": "test",

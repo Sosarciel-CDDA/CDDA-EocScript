@@ -1,39 +1,25 @@
 import { JArray, JToken } from "@/src/Utils";
-import { SourceFileData } from "../../Interfaces";
 import { Node } from "ts-morph";
 import { CodeExpression } from "./Expression";
 
 export type ExpProcess = (this:CodeExpression,node:Node)=>ExpPReturn;
 
+/**表达式的返回值 */
 export class ExpPReturn{
-    _preFuncs:JArray;
-    _token:JToken;
+    /**需要预先执行的func */
+    preFuncs:JArray;
+    /**主要返回值 */
+    token:JToken;
     _noFuncReq:boolean = false;
     constructor(token?:JToken,preFuncs?:JArray){
-        this._preFuncs = preFuncs||[];
-        this._token = token||null;
-    }
-    addPreFunc(obj:JToken){
-        this._preFuncs.push(obj);
-    }
-    addPreFuncList(objs:JArray){
-        for(let obj of objs)
-            this.addPreFunc(obj);
+        this.preFuncs = preFuncs||[];
+        this.token = token||null;
     }
     mergePreFuncList(obj:ExpPReturn){
-        this.addPreFuncList(obj.getPreFuncs());
-    }
-    setToken(obj:JToken){
-        this._token = obj;
-    }
-    getToken(){
-        return this._token;
-    }
-    getPreFuncs(){
-        return this._preFuncs;
+        this.preFuncs.push(...obj.preFuncs);
     }
     isVaild(){
-        return this._token!=null;
+        return this.token!=null;
     }
     //不需要调用函数
     //在嵌入表达式时不添加preFunc

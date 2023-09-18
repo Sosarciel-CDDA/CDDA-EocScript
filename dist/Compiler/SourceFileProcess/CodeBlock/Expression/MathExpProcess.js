@@ -22,8 +22,8 @@ function MathExpProcess(node) {
     if (func == null)
         throw (0, Functions_1.throwLog)(node, "错误的 NumberExpProcess 表达式");
     let result = func.bind(this)(node);
-    out.addPreFuncList(result.getPreFuncs());
-    out.setToken(result.getToken());
+    out.preFuncs.push(...result.preFuncs);
+    out.token = result.token;
     return out;
     //throw throwLog(node,"未知的数字表达式");
     //return outObj;
@@ -33,13 +33,13 @@ function IdMathExpProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.Identifier);
     let outObj = new EPInterface_1.ExpPReturn();
     let name = this.getLocalVal(node.getText());
-    outObj.setToken(name);
+    outObj.token = name;
     return outObj;
 }
 function NumMathExpProcess(node) {
     let outObj = new EPInterface_1.ExpPReturn();
     let name = node.getText();
-    outObj.setToken(name);
+    outObj.token = name;
     return outObj;
 }
 function CallMathExpProcess(node) {
@@ -48,7 +48,7 @@ function CallMathExpProcess(node) {
     let result = CallExpProcess_1.CallExpProcess.bind(this)(node);
     if (!result.isRtnNofuncReq())
         out.mergePreFuncList(result);
-    out.setToken(result.getToken());
+    out.token = result.token;
     return out;
 }
 function BinaryMathExpProcess(node) {
@@ -61,7 +61,7 @@ function BinaryMathExpProcess(node) {
         return outObj;
     outObj.mergePreFuncList(lft);
     outObj.mergePreFuncList(rit);
-    outObj.setToken(lft.getToken() + ope + rit.getToken());
+    outObj.token = (lft.token + ope + rit.token);
     return outObj;
     //return { "math": [fst,mid,lst]}
 }
@@ -70,6 +70,6 @@ function ParentMathExpProcess(node) {
     let outObj = new EPInterface_1.ExpPReturn();
     let subObj = MathExpProcess.bind(this)(node.getExpression());
     outObj.mergePreFuncList(subObj);
-    outObj.setToken("(" + subObj.getToken() + ")");
+    outObj.token = "(" + subObj.token + ")";
     return outObj;
 }

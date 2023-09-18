@@ -4,7 +4,6 @@ exports.CodeBlock = exports.BlockType = void 0;
 const ts_morph_1 = require("ts-morph");
 const VariableProcess_1 = require("./VariableProcess");
 const Functions_1 = require("../Functions");
-const JsonClass_1 = require("JsonClass");
 const FunctionProcess_1 = require("./FunctionProcess");
 const Expression_1 = require("./Expression");
 const NPInterfaces_1 = require("./NPInterfaces");
@@ -33,9 +32,9 @@ function ReturnProcess(node) {
     //特殊调用
     let exp = new Expression_1.CodeExpression(node, this);
     let rit = exp.build();
-    outlist.addPreFuncList(rit.getPreFuncs());
-    let obj = { "math": [this.getReturnId(), "=", rit.getToken()] };
-    outlist.addToken(obj);
+    outlist.preFuncs.push(...rit.preFuncs);
+    let obj = { "math": [this.getReturnId(), "=", rit.token] };
+    outlist.tokens.push(obj);
     //return [{ "math": [ id, mid, lst ]}];
     return outlist;
 }
@@ -69,7 +68,7 @@ class CodeBlock {
         return this._id;
     }
     getRootId() {
-        return this.getSfd().getId();
+        return this.getSfd().id;
     }
     getReturnId() {
         return this.getId() + "_rtn";
@@ -117,20 +116,20 @@ class CodeBlock {
     /**处理代码块
      */
     build() {
-        let eoc = new JsonClass_1.Eoc(this.getId());
+        let eoc = {
+            id: this.getId(),
+            type: "effect_on_condition",
+        };
         if (this._condition != null)
-            eoc.setCondition(this._condition);
-        eoc.addEffectList(this.processStatments(this._node));
+            eoc["condition"] = this._condition;
+        eoc["effect"] = [...this.processStatments(this._node)].filter(item => item != null);
         if (this._falseNode != null)
-            eoc.addFalseEffectList(this.processStatments(this._falseNode));
-        let eocObj = eoc.build();
+            eoc["false_effect"] = [...this.processStatments(this._falseNode)].filter(item => item != null);
         //额外字段
-        if (eocObj != null) {
-            for (let field in this._eocFieldTable)
-                eocObj[field] = this._eocFieldTable[field];
-        }
-        this._sfd.addEoc(eocObj);
-        return new NPInterfaces_1.CBPReturn([eocObj]);
+        for (let field in this._eocFieldTable)
+            eoc[field] = this._eocFieldTable[field];
+        this._sfd.addEoc(eoc);
+        return new NPInterfaces_1.CBPReturn([eoc]);
     }
     /**处理申明列表
      */
@@ -151,8 +150,8 @@ class CodeBlock {
                 let result = processFunc.bind(this)(stat);
                 if (!result.isVaild())
                     continue;
-                let preFuncs = result.getPreFuncs();
-                let tokens = result.getTokens();
+                let preFuncs = result.preFuncs;
+                let tokens = result.tokens;
                 for (let obj of preFuncs)
                     effects.push(obj);
                 for (let obj of tokens)

@@ -11,9 +11,9 @@ export function SwitchProcess(this:CodeBlock, node: Node):CBPReturn{
 
     let exp = new CodeExpression(node.getExpression(),this);
     let expObj = exp.build();
-    out.addPreFuncList(expObj.getPreFuncs());
+    out.preFuncs.push(...expObj.preFuncs);
     let switchObj:JToken={
-        "switch": expObj.getToken(),
+        "switch": expObj.token,
         "cases":[],
     };
 
@@ -33,6 +33,6 @@ export function SwitchProcess(this:CodeBlock, node: Node):CBPReturn{
             })
         }
     }
-    out.addToken(switchObj);
+    out.tokens.push(switchObj);
     return out;
 }

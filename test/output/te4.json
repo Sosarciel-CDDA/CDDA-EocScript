@@ -1,55 +1,46 @@
 [
   {
+    "id": "print_global_val_mag",
+    "type": "effect_on_condition",
+    "effect": [
+      {"u_message":"全局变量 mag 当前的值为 : <global_val:mag>"}
+    ]
+  },
+  {
+    "id": "set_spell_lvl_te4_fireball_mag",
+    "type": "effect_on_condition",
+    "effect": [
+      {"math":["_lvl","=","mag*20/3"]},
+      {"math":["_int_lvl","=","round(_lvl)"]},
+      {"math":["u_val('spell_level','spell: te4_fireball')","=","_int_lvl"]}
+    ]
+  },
+  {
+    "id": "update_spell_lvl_mag",
+    "type": "effect_on_condition",
+    "effect": [
+      {"run_eocs":"set_spell_lvl_te4_fireball_mag"}
+    ]
+  },
+  {
     "id": "update_stat",
     "type": "effect_on_condition",
     "effect": [
-      {"math":["u_TStr","=","5+floor(u_strength/2)"]},
-      {"math":["u_TDex","=","u_dexterity"]},
-      {"math":["u_TCon","=","5+floor(u_strength/2)"]},
-      {"math":["u_TMag","=","u_intelligence"]},
-      {"math":["u_TWil","=","5+floor(u_perception/2)"]},
-      {"math":["u_TCun","=","5+floor(u_perception/2)"]}
+      {"math":["u_TStr","=","5+floor(u_val('strength')/2)"]},
+      {"math":["u_TDex","=","u_val('dexterity')"]},
+      {"math":["u_TCon","=","5+floor(u_val('strength')/2)"]},
+      {"math":["u_TMag","=","u_val('intelligence')"]},
+      {"math":["u_TWil","=","5+floor(u_val('perception')/2)"]},
+      {"math":["u_TCun","=","5+floor(u_val('perception')/2)"]},
+      {"math":["mag","=","1333"]},
+      {"run_eocs":"print_global_val_mag"},
+      {"run_eocs":"update_spell_lvl_mag"}
     ],
     "recurrence": "60 s"
   },
   {
-    "id": "print_global_val_te4_fireball_dmg",
-    "type": "effect_on_condition",
-    "effect": [
-      {"u_message":"全局变量 te4_fireball_dmg 当前的值为 : <global_val:te4_fireball_dmg>"}
-    ]
-  },
-  {
-    "id": "te4_if0",
-    "type": "effect_on_condition",
-    "effect": [
-      {"math":["overDmg","=","currHpTmp-0.01"]}
-    ],
-    "false_effect": [
-      {"math":["overDmg","=","te4_fireball_dmg-1"]}
-    ],
-    "condition": {"math":["te4_fireball_dmg",">","currHpTmp"]}
-  },
-  {
-    "id": "get_hurt_te4_fireball_dmg",
-    "type": "effect_on_condition",
-    "effect": [
-      {"arithmetic":[{"global_val":"currHpTmp"},"-",{"u_val":"hp","bodypart":"head"}]},
-      {"run_eocs":"te4_if0"},
-      {"u_set_hp":{"arithmetic":[{"u_val":"hp","bodypart":"head"},"-",{"global_val":"overDmg"}]},"target_part":"head"}
-    ]
-  },
-  {
-    "id": "te4_fireball",
-    "type": "effect_on_condition",
-    "effect": [
-      {"math":["te4_fireball_dmg","=","30"]},
-      {"run_eocs":"print_global_val_te4_fireball_dmg"},
-      {"run_eocs":"get_hurt_te4_fireball_dmg"}
-    ]
-  },
-  {
     "id": "te4",
-    "type": "effect_on_condition"
+    "type": "effect_on_condition",
+    "effect": []
   }
 ]

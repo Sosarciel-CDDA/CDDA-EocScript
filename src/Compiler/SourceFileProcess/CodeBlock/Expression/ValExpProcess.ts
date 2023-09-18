@@ -11,9 +11,9 @@ export function ValExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let out = new ExpPReturn();
 
     let exp = MathExpProcess.bind(this)(node);
-    out.addPreFuncList(exp.getPreFuncs());
+    out.preFuncs.push(...exp.preFuncs);
 
-    out.setToken({"math":[exp.getToken()]});
+    out.token = {math:[exp.token]};
 
     return out;
 }

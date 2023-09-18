@@ -1,6 +1,8 @@
 import { KindToNodeMappings,SyntaxKind,Node } from "ts-morph";
 
 
+
+/**检测某个节点是否属于kind */
 export function checkKind<TKind extends SyntaxKind>(node:Node,kind:TKind,message?:string): asserts node is KindToNodeMappings[TKind]{
     if(!node.isKind(kind)){
         let str = "checkKindId 错误 statment.getKind()!="+SyntaxKind[kind] +

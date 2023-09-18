@@ -6,21 +6,18 @@ const Functions_1 = require("../../Functions");
 const CodeBlock_1 = require("../CodeBlock");
 class GlobalFunction {
     _node;
-    _sfd;
+    sfd;
     _params = [];
     //动态生成的不同参数函数代码块
     _dynamicCodeBlockTable = {};
     constructor(node, sfd) {
         (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.FunctionDeclaration);
         this._node = node;
-        this._sfd = sfd;
+        this.sfd = sfd;
         this._params = node.getParameters().map((value) => value.getText());
     }
     getNode() {
         return this._node;
-    }
-    getSfd() {
-        return this._sfd;
     }
     getRawName() {
         return this.getNode().getNameOrThrow();
@@ -44,7 +41,7 @@ class GlobalFunction {
             return this._dynamicCodeBlockTable[cid];
         let funcid = this.getId(args);
         let codeBody = this.getNode().getBodyOrThrow();
-        let cb = new CodeBlock_1.default(funcid, codeBody, this.getSfd());
+        let cb = new CodeBlock_1.default(funcid, codeBody, this.sfd);
         //传参
         if (args == null)
             args = [];
