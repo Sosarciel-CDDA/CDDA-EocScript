@@ -1,8 +1,7 @@
-import { Expression, Node, SyntaxKind } from "ts-morph";
-import { SourceFileData } from "../../Interfaces";
+import { Node, SyntaxKind } from "ts-morph";
 import { ExpProcess, ExpPReturn } from "./EPInterface";
-import { checkKind, throwLog } from "../../Functions";
-import { JArray, JToken } from "Utils";
+import { checkKind } from "../../Functions";
+import { JArray } from "Utils";
 import { CodeExpression } from "./Expression";
 import { CalcExpProcess } from "./CalcExpProcess";
 import { condExpProcess } from "./CondExpProcess";
@@ -24,10 +23,10 @@ let _processFunc:Record<string,ExpProcess|null> = {
     "eoc_type"              : FieldAddProcess,
 }
 
-//字段添加
+/** 字段添加函数 */
 function FieldAddProcess(this:CodeExpression,node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
-    let cb = this.getCodeBlock();
+    let cb = this.codeBlock;
     let id = node.getExpression().getText();
     let text = node.getArguments()[0].getText();
     //自动给OBJ括号
@@ -39,10 +38,10 @@ function FieldAddProcess(this:CodeExpression,node: Node):ExpPReturn{
     return new ExpPReturn();
 }
 
-//条件字段添加
+/** 条件字段添加函数 */
 function CondFieldAddProcess(this:CodeExpression,node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
-    let cb = this.getCodeBlock();
+    let cb = this.codeBlock;
     let id = node.getExpression().getText();
     let cond = node.getArguments()[0];
 
@@ -50,7 +49,7 @@ function CondFieldAddProcess(this:CodeExpression,node: Node):ExpPReturn{
     return new ExpPReturn();
 }
 
-//调用函数
+/** 调用函数 */
 export function CallExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
     let out = new ExpPReturn();
@@ -87,7 +86,7 @@ export function CallExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     return out;
 }
 
-//特殊函数EToken
+/**特殊函数EToken */
 function EObjProcess(this:CodeExpression,node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
 
@@ -117,6 +116,7 @@ function EObjProcess(this:CodeExpression,node: Node):ExpPReturn{
     out.setRtnNofuncReq();
     return out;
 }
+/**特殊函数EToken */
 function EArrProcess(this:CodeExpression,node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
 
@@ -141,7 +141,7 @@ function EArrProcess(this:CodeExpression,node: Node):ExpPReturn{
     return out;
 }
 
-//处理内置函数或eoc
+/**处理内置函数或eoc */
 function DefaultProcess(this:CodeExpression,node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
     let out = new ExpPReturn();

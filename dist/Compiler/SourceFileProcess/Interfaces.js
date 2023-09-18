@@ -1,13 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SourceFileData = void 0;
-const Utils_1 = require("../../Utils");
 const GlobalFunction_1 = require("./CodeBlock/GlobalFunction");
 class SourceFileData {
     /**主文件ID */
     id;
-    /**基础的effect列表 */
-    _rootArray;
+    /**effect列表 */
+    rootArray;
     /**记录子代码块的数量 */
     count = 0;
     /**完成编译的文本 */
@@ -16,7 +15,7 @@ class SourceFileData {
     _globalFuncTable = {};
     constructor(id, rootArray) {
         this.id = id;
-        this._rootArray = rootArray || [];
+        this.rootArray = rootArray || [];
     }
     /**获取一个不重复的随机ID
      * @returns 代码块ID
@@ -24,31 +23,33 @@ class SourceFileData {
     genRID() {
         return this.count++;
     }
+    /**添加一个全局函数 */
     addGlobalFunction(node) {
         let gfunc = new GlobalFunction_1.GlobalFunction(node, this);
         this._globalFuncTable[gfunc.getRawName()] = gfunc;
         return gfunc;
     }
+    /**获得一个全局函数 */
     getGlobalFunction(rawName) {
         return this._globalFuncTable[rawName];
     }
     addEoc(eocobj) {
-        this._rootArray.push(eocobj);
+        this.rootArray.push(eocobj);
     }
-    getRootArray() {
-        return (0, Utils_1.deepClone)(this._rootArray);
-    }
+    /**获取主EOC */
     getRootEoc() {
-        for (let obj of this._rootArray) {
+        for (let obj of this.rootArray) {
             let aobj = obj;
             if (aobj.id == this.id)
                 return aobj;
         }
         return null;
     }
+    /**设置输出文本 */
     setSerializedText(text) {
         this._serializedText = text;
     }
+    /**获取输出文本 */
     getSerializedText() {
         return this._serializedText;
     }

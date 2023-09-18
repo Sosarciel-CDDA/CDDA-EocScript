@@ -39,7 +39,7 @@ function ReturnProcess(node) {
     return outlist;
 }
 class CodeBlock {
-    _id;
+    id;
     _parentBlock;
     _node;
     _sfd;
@@ -58,32 +58,24 @@ class CodeBlock {
     //额外字段
     _eocFieldTable = {};
     constructor(id, node, sfd, condition, falseNode) {
-        this._id = id;
+        this.id = id;
         this._node = node;
         this._sfd = sfd;
         this._condition = condition;
         this._falseNode = falseNode;
     }
-    getId() {
-        return this._id;
-    }
     getRootId() {
         return this.getSfd().id;
     }
     getReturnId() {
-        return this.getId() + "_rtn";
+        return this.id + "_rtn";
     }
-    getParentBlock() {
-        return this._parentBlock;
-    }
-    setParentBlock(block) {
-        this._parentBlock = block;
-    }
+    /**生成一个子代码块 */
     genSubBlock(id, node, condition, falseNode) {
         let sfd = this.getSfd();
         let subBlockId = this.getRootId() + "_" + id + sfd.genRID();
         let subBlopck = new CodeBlock(subBlockId, node, sfd, condition, falseNode);
-        subBlopck.setParentBlock(this);
+        subBlopck._parentBlock = this;
         return subBlopck;
     }
     getSfd() {
@@ -101,7 +93,7 @@ class CodeBlock {
             let tg = curr._passArgsTable[origVal];
             if (tg != null)
                 return tg;
-            curr = curr.getParentBlock();
+            curr = curr._parentBlock;
         }
         return origVal;
     }
@@ -117,7 +109,7 @@ class CodeBlock {
      */
     build() {
         let eoc = {
-            id: this.getId(),
+            id: this.id,
             type: "effect_on_condition",
         };
         if (this._condition != null)
@@ -150,12 +142,8 @@ class CodeBlock {
                 let result = processFunc.bind(this)(stat);
                 if (!result.isVaild())
                     continue;
-                let preFuncs = result.preFuncs;
-                let tokens = result.tokens;
-                for (let obj of preFuncs)
-                    effects.push(obj);
-                for (let obj of tokens)
-                    effects.push(obj);
+                effects.push(...result.preFuncs);
+                effects.push(...result.tokens);
             }
             catch (e) {
                 console.log("processStatments 出现错误");

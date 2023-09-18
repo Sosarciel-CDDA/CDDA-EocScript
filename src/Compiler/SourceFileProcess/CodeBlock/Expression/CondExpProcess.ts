@@ -4,7 +4,7 @@ import { ExpPReturn, ExpProcess } from "./EPInterface";
 import { CodeExpression } from "./Expression";
 
 
-//条件表达式特殊处理
+/** 条件表达式特殊处理 */
 export function condExpProcess(this:CodeExpression, node: Node):ExpPReturn{ 
     //checkKind(node,SyntaxKind.IfStatement);
     let out = new ExpPReturn();

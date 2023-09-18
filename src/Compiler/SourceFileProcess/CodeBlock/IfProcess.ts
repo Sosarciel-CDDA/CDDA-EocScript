@@ -4,6 +4,7 @@ import { CBPReturn } from "./NPInterfaces";
 import { BlockType, CodeBlock } from "./CodeBlock";
 import { CodeExpression } from "./Expression";
 
+/**处理IF定义 */
 export function IfProcess(this:CodeBlock, node: Node):CBPReturn{
     checkKind(node,SyntaxKind.IfStatement);
     //let condition = node.getExpression();
@@ -21,7 +22,7 @@ export function IfProcess(this:CodeBlock, node: Node):CBPReturn{
     out.preFuncs.push(...conditionObj.preFuncs);
     out.mergePreFuncList(ifBlockObj);
     //辅助函数
-    out.tokens.push({ "run_eocs": ifBlock.getId() });
+    out.tokens.push({ "run_eocs": ifBlock.id });
 
     return out;
 }

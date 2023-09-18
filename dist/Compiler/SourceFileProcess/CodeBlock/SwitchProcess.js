@@ -6,6 +6,7 @@ const Functions_1 = require("../Functions");
 const NPInterfaces_1 = require("./NPInterfaces");
 const CodeBlock_1 = require("./CodeBlock");
 const Expression_1 = require("./Expression");
+/**处理 switch */
 function SwitchProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.ts.SyntaxKind.SwitchStatement);
     let out = new NPInterfaces_1.CBPReturn();
@@ -27,7 +28,7 @@ function SwitchProcess(node) {
             out.mergePreFuncList(blockObj);
             switchObj.cases.push({
                 case: caToken,
-                effect: [{ "run_eocs": block.getId() }] //辅助函数
+                effect: [{ "run_eocs": block.id }] //辅助函数
             });
         }
     }

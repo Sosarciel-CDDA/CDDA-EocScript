@@ -6,7 +6,7 @@ import { CBPReturn } from "./NPInterfaces";
 
 
 
-//处理全局函数定义
+/**处理全局函数定义 */
 export function FunctionProcess(this:CodeBlock,node: Node):CBPReturn{
     checkKind(node,SyntaxKind.FunctionDeclaration);
 

@@ -5,7 +5,7 @@ const ts_morph_1 = require("ts-morph");
 const NPInterfaces_1 = require("./NPInterfaces");
 const Functions_1 = require("../Functions");
 const Expression_1 = require("./Expression");
-//表达式申明处理
+/**表达式申明处理 */
 function ExpressionProcess(node) {
     //常规表达式列表
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.ExpressionStatement);

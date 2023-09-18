@@ -6,7 +6,7 @@ import { CodeBlock } from "../CodeBlock";
 import { CodeExpression } from "./Expression";
 
 
-//表达式申明处理
+/**表达式申明处理 */
 export function ExpressionProcess(this:CodeBlock, node: Node):CBPReturn{
     //常规表达式列表
     checkKind(node, SyntaxKind.ExpressionStatement);

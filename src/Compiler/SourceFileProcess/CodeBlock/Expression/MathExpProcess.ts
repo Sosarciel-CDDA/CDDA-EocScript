@@ -1,5 +1,4 @@
 import { Node,SyntaxKind } from "ts-morph";
-import { SourceFileData } from "../../Interfaces";
 import { checkKind, throwLog } from "../../Functions";
 import { ExpProcess, ExpPReturn } from "./EPInterface";
 import { CallExpProcess } from "./CallExpProcess";
@@ -17,9 +16,10 @@ let _processFunc:Record<number,ExpProcess|null> = {
     [SyntaxKind.ParenthesizedExpression ]:ParentMathExpProcess      ,//括号
 }
 
-//SyntaxKind:ParenthesizedExpression
-//处理表达式
-//计算 返回Math右值字符串值
+/**SyntaxKind:ParenthesizedExpression
+ * 处理表达式
+ * 计算 返回Math右值字符串值
+ */
 export function MathExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let out = new ExpPReturn();
     let func = _processFunc[node.getKind()];
@@ -67,7 +67,7 @@ function BinaryMathExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     let rit = MathExpProcess.bind(this)(node.getRight());
     let ope = node.getOperatorToken().getText();
 
-    if(!lft.isVaild() || !rit.isVaild() || ope==null)
+    if(!lft.token==null || !rit.token==null || ope==null)
         return outObj;
     outObj.mergePreFuncList(lft);
     outObj.mergePreFuncList(rit);

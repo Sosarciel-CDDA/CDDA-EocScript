@@ -46,9 +46,9 @@ function ReturnProcess(this:CodeBlock, node: Node):CBPReturn{
 }
 
 export class CodeBlock{
-    _id:string;
-    _parentBlock?:CodeBlock;
-    _node: Node|Array<Node>;
+    id:string;
+    private _parentBlock?:CodeBlock;
+    private _node: Node|Array<Node>;
     _sfd:SourceFileData;
     _condition?:JToken|null;
     _falseNode?: Node|Array<Node>;
@@ -67,14 +67,11 @@ export class CodeBlock{
     _eocFieldTable:Record<string,JToken>={}
 
     constructor(id:string,node: Node|Array<Node>,sfd:SourceFileData,condition?:JToken, falseNode?: Node|Array<Node>){
-        this._id    = id     ;
+        this.id     = id     ;
         this._node  = node   ;
         this._sfd   = sfd    ;
         this._condition = condition;
         this._falseNode = falseNode;
-    }
-    getId(){
-        return this._id;
     }
 
     getRootId(){
@@ -82,20 +79,15 @@ export class CodeBlock{
     }
 
     getReturnId(){
-        return this.getId()+"_rtn";
-    }
-    getParentBlock(){
-        return this._parentBlock;
-    }
-    setParentBlock(block:CodeBlock){
-        this._parentBlock = block;
+        return this.id+"_rtn";
     }
 
+    /**生成一个子代码块 */
     genSubBlock(id:BlockType,node: Node|Array<Node>,condition?:JToken, falseNode?: Node|Array<Node>){
         let sfd = this.getSfd();
         let subBlockId = this.getRootId()+"_"+id+sfd.genRID();
         let subBlopck = new CodeBlock(subBlockId,node,sfd,condition,falseNode);
-        subBlopck.setParentBlock(this);
+        subBlopck._parentBlock = this;
         return subBlopck;
     }
 
@@ -115,7 +107,7 @@ export class CodeBlock{
             let tg = curr._passArgsTable[origVal];
             if(tg!=null)
                 return tg;
-            curr = curr.getParentBlock();
+            curr = curr._parentBlock;
         }
         return origVal;
     }
@@ -132,7 +124,7 @@ export class CodeBlock{
      */
     build(){
         let eoc:JObject = {
-            id           : this.getId()         ,
+            id           : this.id              ,
             type         : "effect_on_condition",
         }
 
@@ -171,12 +163,8 @@ export class CodeBlock{
                 let result = processFunc.bind(this)(stat);
                 if(!result.isVaild())
                     continue;
-                let preFuncs = result.preFuncs;
-                let tokens = result.tokens;
-                for(let obj of preFuncs)
-                    effects.push(obj);
-                for(let obj of tokens)
-                    effects.push(obj);
+                effects.push(...result.preFuncs);
+                effects.push(...result.tokens);
             }catch(e){
                 console.log("processStatments 出现错误");
                 console.log(throwLog(stat));

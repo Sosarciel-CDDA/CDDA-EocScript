@@ -11,8 +11,12 @@ export declare class ExpPReturn {
     _noFuncReq: boolean;
     constructor(token?: JToken, preFuncs?: JArray);
     mergePreFuncList(obj: ExpPReturn): void;
-    isVaild(): boolean;
+    /**不需要调用函数
+     * 在嵌入表达式时不添加preFunc
+     */
     isRtnNofuncReq(): boolean;
+    /**设为不需要调用函数
+     */
     setRtnNofuncReq(): void;
 }
 export declare function VoidExpProcess(): ExpPReturn;

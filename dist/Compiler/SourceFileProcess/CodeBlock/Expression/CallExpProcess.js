@@ -22,10 +22,10 @@ let _processFunc = {
     "run_for_npcs": FieldAddProcess,
     "eoc_type": FieldAddProcess,
 };
-//字段添加
+/** 字段添加函数 */
 function FieldAddProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
-    let cb = this.getCodeBlock();
+    let cb = this.codeBlock;
     let id = node.getExpression().getText();
     let text = node.getArguments()[0].getText();
     //自动给OBJ括号
@@ -35,16 +35,16 @@ function FieldAddProcess(node) {
     cb.addEocField(id, tokenObj);
     return new EPInterface_1.ExpPReturn();
 }
-//条件字段添加
+/** 条件字段添加函数 */
 function CondFieldAddProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
-    let cb = this.getCodeBlock();
+    let cb = this.codeBlock;
     let id = node.getExpression().getText();
     let cond = node.getArguments()[0];
     cb.addEocField(id, CalcExpProcess_1.CalcExpProcess.bind(this)(cond).token);
     return new EPInterface_1.ExpPReturn();
 }
-//调用函数
+/** 调用函数 */
 function CallExpProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpPReturn();
@@ -72,7 +72,7 @@ function CallExpProcess(node) {
     return out;
 }
 exports.CallExpProcess = CallExpProcess;
-//特殊函数EToken
+/**特殊函数EToken */
 function EObjProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpPReturn();
@@ -99,6 +99,7 @@ function EObjProcess(node) {
     out.setRtnNofuncReq();
     return out;
 }
+/**特殊函数EToken */
 function EArrProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpPReturn();
@@ -118,7 +119,7 @@ function EArrProcess(node) {
     out.preFuncs.push(...tokenArr);
     return out;
 }
-//处理内置函数或eoc
+/**处理内置函数或eoc */
 function DefaultProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpPReturn();

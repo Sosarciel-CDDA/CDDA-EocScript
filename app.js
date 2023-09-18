@@ -16,7 +16,7 @@ const output = getArgValue('--output', './out');
 //console.log(`input: ${input}`);
 //console.log(`output: ${output}`);
 
-let fileList = findFiles(input,/.*[(\.js)(\.eocscript)]/);
+let fileList = findFiles(input,/.*((\.js)|(\.eocscript))$/);
 for(let filePath of fileList){
     console.log("compileing: "+filePath);
     try{

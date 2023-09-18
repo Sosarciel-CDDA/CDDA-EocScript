@@ -4,7 +4,7 @@ exports.condExpProcess = void 0;
 const ts_morph_1 = require("ts-morph");
 const CallExpProcess_1 = require("./CallExpProcess");
 const EPInterface_1 = require("./EPInterface");
-//条件表达式特殊处理
+/** 条件表达式特殊处理 */
 function condExpProcess(node) {
     //checkKind(node,SyntaxKind.IfStatement);
     let out = new EPInterface_1.ExpPReturn();

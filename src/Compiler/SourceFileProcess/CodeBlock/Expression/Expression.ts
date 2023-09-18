@@ -1,14 +1,11 @@
 import { Node, SyntaxKind } from "ts-morph";
-import { SourceFileData } from "../../Interfaces";
-import { NodeProcess, CBPReturn } from "../NPInterfaces";
-import { checkKind, throwLog } from "../../Functions";
+import { checkKind } from "../../Functions";
 import { CallExpProcess } from "./CallExpProcess";
 import { CalcExpProcess } from "./CalcExpProcess";
-import { ExpPReturn, ExpProcess } from "./EPInterface";
+import { ExpPReturn } from "./EPInterface";
 import { ValExpProcess } from "./ValExpProcess";
 import { CodeBlock } from "../CodeBlock";
 import { MathExpProcess } from "./MathExpProcess";
-import { JToken } from "@/src/Utils";
 import { condExpProcess } from "./CondExpProcess";
 
 
@@ -16,8 +13,8 @@ import { condExpProcess } from "./CondExpProcess";
 
 
 
-//直接调用函数
-function CallStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{ 
+/** 直接调用函数*/
+function CallStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     checkKind(node,SyntaxKind.CallExpression);
 
     let out = new ExpPReturn();
@@ -32,7 +29,7 @@ function CallStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{
 
 
 
-//return申明
+/** return申明*/
 function ReturnStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{ 
     checkKind(node,SyntaxKind.ReturnStatement);
     let out = new ExpPReturn();
@@ -47,37 +44,34 @@ function ReturnStateExpProcess(this:CodeExpression, node: Node):ExpPReturn{
     return out;
 }
 
+/**表达式 */
 export class CodeExpression{
-    _node:Node;
-    _codeBlock:CodeBlock;
+    private _node:Node;
+    /**处于哪个代码块 */
+    codeBlock:CodeBlock;
     constructor(node:Node,codeBlock:CodeBlock){
         this._node          = node      ;
-        this._codeBlock     = codeBlock ;
-    }
-    //代码块
-    getCodeBlock(){
-        return this._codeBlock;
+        this.codeBlock      = codeBlock ;
     }
     //源数据
     getSfd(){
-        return this.getCodeBlock().getSfd();
+        return this.codeBlock.getSfd();
     }
     //本地变量
     getLocalVal(origVal:string){
-        return this.getCodeBlock().getLocalVal(origVal);
+        return this.codeBlock.getLocalVal(origVal);
     }
     //本地变量映射
     getLocalValMap(){
-        return this.getCodeBlock().getLocalValMap();
+        return this.codeBlock.getLocalValMap();
     }
 
     build(){
         return this.process(this._node);
         //throw throwLog(node,"未知的申明表达式类型");
     }
-
+    /**处理表达式 */
     process(node:Node){
-
         //return
         if(node.isKind(SyntaxKind.ReturnStatement))
             return ReturnStateExpProcess.bind(this)(node);

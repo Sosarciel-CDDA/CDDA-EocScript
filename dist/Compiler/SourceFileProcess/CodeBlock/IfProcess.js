@@ -6,6 +6,7 @@ const Functions_1 = require("../Functions");
 const NPInterfaces_1 = require("./NPInterfaces");
 const CodeBlock_1 = require("./CodeBlock");
 const Expression_1 = require("./Expression");
+/**处理IF定义 */
 function IfProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.IfStatement);
     //let condition = node.getExpression();
@@ -21,7 +22,7 @@ function IfProcess(node) {
     out.preFuncs.push(...conditionObj.preFuncs);
     out.mergePreFuncList(ifBlockObj);
     //辅助函数
-    out.tokens.push({ "run_eocs": ifBlock.getId() });
+    out.tokens.push({ "run_eocs": ifBlock.id });
     return out;
 }
 exports.IfProcess = IfProcess;

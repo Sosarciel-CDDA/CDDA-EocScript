@@ -1,9 +1,10 @@
-import { Project, SourceFile } from "ts-morph";
 import { SourceFileData } from "./SourceFileProcess";
 declare class Compiler {
-    _sourceText: string;
-    _project: Project;
-    _sourceFile: SourceFile;
+    /**未编译的来源文本 */
+    sourceText: string;
+    /**来源文件 基础代码块 */
+    private _sourceFile;
+    private _project;
     constructor(sourceText: string);
     build(projectName: string): SourceFileData;
 }

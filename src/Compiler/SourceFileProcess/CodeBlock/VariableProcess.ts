@@ -4,7 +4,7 @@ import { CBPReturn } from "./NPInterfaces";
 import { CodeBlock } from "./CodeBlock";
 import { CodeExpression } from "./Expression";
 
-//变量声明处理
+/** 变量声明处理*/
 export function VariableProcess(this:CodeBlock, node: Node):CBPReturn{
     checkKind(node,SyntaxKind.VariableStatement);
 

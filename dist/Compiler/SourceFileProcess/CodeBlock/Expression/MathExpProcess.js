@@ -13,9 +13,10 @@ let _processFunc = {
     [ts_morph_1.SyntaxKind.BinaryExpression]: BinaryMathExpProcess,
     [ts_morph_1.SyntaxKind.ParenthesizedExpression]: ParentMathExpProcess, //括号
 };
-//SyntaxKind:ParenthesizedExpression
-//处理表达式
-//计算 返回Math右值字符串值
+/**SyntaxKind:ParenthesizedExpression
+ * 处理表达式
+ * 计算 返回Math右值字符串值
+ */
 function MathExpProcess(node) {
     let out = new EPInterface_1.ExpPReturn();
     let func = _processFunc[node.getKind()];
@@ -57,7 +58,7 @@ function BinaryMathExpProcess(node) {
     let lft = MathExpProcess.bind(this)(node.getLeft());
     let rit = MathExpProcess.bind(this)(node.getRight());
     let ope = node.getOperatorToken().getText();
-    if (!lft.isVaild() || !rit.isVaild() || ope == null)
+    if (!lft.token == null || !rit.token == null || ope == null)
         return outObj;
     outObj.mergePreFuncList(lft);
     outObj.mergePreFuncList(rit);

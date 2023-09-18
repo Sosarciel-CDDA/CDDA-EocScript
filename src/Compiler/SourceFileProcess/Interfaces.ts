@@ -5,8 +5,8 @@ import { Node } from "ts-morph";
 export class SourceFileData{
     /**主文件ID */
     id:string;
-    /**基础的effect列表 */
-    private _rootArray:JArray;
+    /**effect列表 */
+    rootArray:JArray;
     /**记录子代码块的数量 */
     count:number=0;
     /**完成编译的文本 */
@@ -17,7 +17,7 @@ export class SourceFileData{
 
     constructor(id:string,rootArray?:JArray){
         this.id=id;
-        this._rootArray=rootArray||[];
+        this.rootArray=rootArray||[];
     }
 
     /**获取一个不重复的随机ID
@@ -27,32 +27,34 @@ export class SourceFileData{
         return this.count++;
     }
 
+    /**添加一个全局函数 */
     addGlobalFunction(node:Node){
         let gfunc = new GlobalFunction(node,this);
         this._globalFuncTable[gfunc.getRawName()] = gfunc;
         return gfunc;
     }
+    /**获得一个全局函数 */
     getGlobalFunction(rawName:string){
         return this._globalFuncTable[rawName];
     }
 
     addEoc(eocobj:JToken){
-        this._rootArray.push(eocobj);
+        this.rootArray.push(eocobj);
     }
-    getRootArray():JArray{
-        return deepClone(this._rootArray) as JArray;
-    }
+    /**获取主EOC */
     getRootEoc():JObject{
-        for(let obj of this._rootArray){
+        for(let obj of this.rootArray){
             let aobj = obj as any;
             if(aobj.id==this.id)
                 return aobj;
         }
         return null as any;
     }
+    /**设置输出文本 */
     setSerializedText(text:string){
         this._serializedText = text;
     }
+    /**获取输出文本 */
     getSerializedText(){
         return this._serializedText;
     }

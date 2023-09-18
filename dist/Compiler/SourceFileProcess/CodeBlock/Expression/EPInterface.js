@@ -15,14 +15,14 @@ class ExpPReturn {
     mergePreFuncList(obj) {
         this.preFuncs.push(...obj.preFuncs);
     }
-    isVaild() {
-        return this.token != null;
-    }
-    //不需要调用函数
-    //在嵌入表达式时不添加preFunc
+    /**不需要调用函数
+     * 在嵌入表达式时不添加preFunc
+     */
     isRtnNofuncReq() {
         return this._noFuncReq;
     }
+    /**设为不需要调用函数
+     */
     setRtnNofuncReq() {
         this._noFuncReq = true;
     }

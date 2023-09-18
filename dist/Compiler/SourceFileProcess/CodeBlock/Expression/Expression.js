@@ -9,7 +9,7 @@ const EPInterface_1 = require("./EPInterface");
 const ValExpProcess_1 = require("./ValExpProcess");
 const MathExpProcess_1 = require("./MathExpProcess");
 const CondExpProcess_1 = require("./CondExpProcess");
-//直接调用函数
+/** 直接调用函数*/
 function CallStateExpProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.CallExpression);
     let out = new EPInterface_1.ExpPReturn();
@@ -20,7 +20,7 @@ function CallStateExpProcess(node) {
     //out.setToken(result.getToken());
     return out;
 }
-//return申明
+/** return申明*/
 function ReturnStateExpProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.ReturnStatement);
     let out = new EPInterface_1.ExpPReturn();
@@ -31,33 +31,32 @@ function ReturnStateExpProcess(node) {
     //return [{ "math": [ id, mid, lst ]}];
     return out;
 }
+/**表达式 */
 class CodeExpression {
     _node;
-    _codeBlock;
+    /**处于哪个代码块 */
+    codeBlock;
     constructor(node, codeBlock) {
         this._node = node;
-        this._codeBlock = codeBlock;
-    }
-    //代码块
-    getCodeBlock() {
-        return this._codeBlock;
+        this.codeBlock = codeBlock;
     }
     //源数据
     getSfd() {
-        return this.getCodeBlock().getSfd();
+        return this.codeBlock.getSfd();
     }
     //本地变量
     getLocalVal(origVal) {
-        return this.getCodeBlock().getLocalVal(origVal);
+        return this.codeBlock.getLocalVal(origVal);
     }
     //本地变量映射
     getLocalValMap() {
-        return this.getCodeBlock().getLocalValMap();
+        return this.codeBlock.getLocalValMap();
     }
     build() {
         return this.process(this._node);
         //throw throwLog(node,"未知的申明表达式类型");
     }
+    /**处理表达式 */
     process(node) {
         //return
         if (node.isKind(ts_morph_1.SyntaxKind.ReturnStatement))

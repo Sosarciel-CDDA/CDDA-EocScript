@@ -5,7 +5,7 @@ const ts_morph_1 = require("ts-morph");
 const Functions_1 = require("../Functions");
 const NPInterfaces_1 = require("./NPInterfaces");
 const Expression_1 = require("./Expression");
-//变量声明处理
+/** 变量声明处理*/
 function VariableProcess(node) {
     (0, Functions_1.checkKind)(node, ts_morph_1.SyntaxKind.VariableStatement);
     let declarationList = node.getDeclarationList().getDeclarations();

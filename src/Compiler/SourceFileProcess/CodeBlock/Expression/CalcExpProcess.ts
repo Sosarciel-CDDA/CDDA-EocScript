@@ -1,5 +1,4 @@
 import { Node, SyntaxKind } from "ts-morph";
-import { SourceFileData } from "../../Interfaces";
 import { ExpProcess, ExpPReturn, VoidExpProcess } from "./EPInterface";
 import { checkKind, throwLog } from "../../Functions";
 import { JToken } from "@/src/Utils";

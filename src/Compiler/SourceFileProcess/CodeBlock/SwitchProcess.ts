@@ -5,6 +5,7 @@ import { CBPReturn } from "./NPInterfaces";
 import { BlockType, CodeBlock } from "./CodeBlock";
 import { CodeExpression } from "./Expression";
 
+/**处理 switch */
 export function SwitchProcess(this:CodeBlock, node: Node):CBPReturn{
     checkKind(node,ts.SyntaxKind.SwitchStatement);
     let out = new CBPReturn();
@@ -29,7 +30,7 @@ export function SwitchProcess(this:CodeBlock, node: Node):CBPReturn{
             out.mergePreFuncList(blockObj);
             (switchObj.cases as JArray).push({
                 case:caToken,
-                effect:[{ "run_eocs": block.getId() }]//辅助函数
+                effect:[{ "run_eocs": block.id }]//辅助函数
             })
         }
     }
